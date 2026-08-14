@@ -1,4 +1,5 @@
 export * from './types';
+export {Table} from './components/Table/Table';
 export {renderCell, getColumnValue} from './columns/renderCell';
 export {
   EMPTY_CELL_PLACEHOLDER,
