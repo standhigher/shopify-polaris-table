@@ -6,6 +6,13 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-08-14
+
+### Changed
+
+- Clarified manual npm publishing with interactive web authentication.
+- Added GitHub Pages verification guidance and Pages workflow configuration.
+
 ## [0.2.0] - 2026-08-14
 
 ### Added
@@ -16,5 +23,6 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/standhigher/shopify-polaris-table/releases/tag/v0.2.0
