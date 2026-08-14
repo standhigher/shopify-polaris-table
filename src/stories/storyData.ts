@@ -52,34 +52,89 @@ export type StoryOffer = {
   endsAt: string;
 };
 
-export const storyProducts: readonly StoryProduct[] = [
-  {id: 'p_1', title: 'Minimal Sneaker', status: 'Active', inventory: 24, price: 89.9, currencyCode: 'USD', updatedAt: '2026-08-12T14:30:00.000Z'},
-  {id: 'p_2', title: 'Trail Jacket', status: 'Active', inventory: 8, price: 139, currencyCode: 'USD', updatedAt: '2026-08-10T09:20:00.000Z'},
-  {id: 'p_3', title: 'Canvas Tote', status: 'Draft', inventory: 120, price: 24.5, currencyCode: 'USD', updatedAt: '2026-08-09T17:45:00.000Z'},
-  {id: 'p_4', title: 'Running Cap', status: 'Active', inventory: 57, price: 19, currencyCode: 'USD', updatedAt: '2026-08-08T08:10:00.000Z'},
-];
+const MOCK_ROW_COUNT = 50;
+const currencies = ['USD', 'CAD', 'EUR', 'GBP'] as const;
+const productTitles = ['Minimal Sneaker', 'Trail Jacket', 'Canvas Tote', 'Running Cap', 'Studio Hoodie'] as const;
+const customerNames = ['Ava Rodriguez', 'Liam Chen', 'Mia Martin', 'Noah Smith', 'Emma Johnson', 'Oliver Brown', 'Sophia Davis', 'Lucas Wilson'] as const;
+const financialStatuses = ['Paid', 'Pending', 'Refunded'] as const;
+const fulfillmentStatuses = ['Fulfilled', 'Partial', 'Unfulfilled'] as const;
+const campaignChannels = ['Email', 'Ads', 'SMS', 'Social', 'Push'] as const;
+const campaignStatuses = ['Active', 'Paused', 'Draft'] as const;
+const offerTypes = ['Percentage', 'Shipping', 'Fixed amount', 'Bundle'] as const;
+const offerStatuses = ['Active', 'Scheduled', 'Expired'] as const;
 
-export const storyOrders: readonly StoryOrder[] = [
-  {id: 'o_1', name: '#1042', customerName: 'Ava Rodriguez', financialStatus: 'Paid', fulfillmentStatus: 'Fulfilled', total: 128.5, currencyCode: 'USD', createdAt: '2026-08-12T14:30:00.000Z'},
-  {id: 'o_2', name: '#1043', customerName: 'Liam Chen', financialStatus: 'Pending', fulfillmentStatus: 'Unfulfilled', total: 89.99, currencyCode: 'CAD', createdAt: '2026-08-11T09:15:00.000Z'},
-  {id: 'o_3', name: '#1044', customerName: 'Mia Martin', financialStatus: 'Refunded', fulfillmentStatus: 'Fulfilled', total: 240, currencyCode: 'USD', createdAt: '2026-08-10T18:45:00.000Z'},
-  {id: 'o_4', name: '#1045', customerName: 'Noah Smith', financialStatus: 'Paid', fulfillmentStatus: 'Partial', total: 64.75, currencyCode: 'USD', createdAt: '2026-08-09T12:00:00.000Z'},
-];
+function range(count: number): number[] {
+  return Array.from({length: count}, (_, index) => index + 1);
+}
 
-export const storyCustomers: readonly StoryCustomer[] = [
-  {id: 'c_1', name: 'Ava Rodriguez', email: 'ava@example.com', ordersCount: 12, totalSpent: 1285.5, currencyCode: 'USD', createdAt: '2026-07-12T14:30:00.000Z'},
-  {id: 'c_2', name: 'Liam Chen', email: 'liam@example.com', ordersCount: 5, totalSpent: 499.9, currencyCode: 'CAD', createdAt: '2026-06-11T09:15:00.000Z'},
-  {id: 'c_3', name: 'Mia Martin', email: 'mia@example.com', ordersCount: 18, totalSpent: 2200, currencyCode: 'USD', createdAt: '2026-05-10T18:45:00.000Z'},
-];
+function cycle<T>(items: readonly T[], index: number): T {
+  return items[index % items.length] as T;
+}
 
-export const storyCampaigns: readonly StoryCampaign[] = [
-  {id: 'm_1', name: 'August Launch', channel: 'Email', status: 'Active', budget: 4000, spend: 1730, currencyCode: 'USD', startsAt: '2026-08-01T00:00:00.000Z', endsAt: '2026-08-31T23:59:59.000Z'},
-  {id: 'm_2', name: 'Retargeting Push', channel: 'Ads', status: 'Paused', budget: 2200, spend: 1800, currencyCode: 'USD', startsAt: '2026-08-05T00:00:00.000Z', endsAt: '2026-09-05T23:59:59.000Z'},
-  {id: 'm_3', name: 'VIP Winback', channel: 'SMS', status: 'Draft', budget: 1200, spend: 0, currencyCode: 'USD', startsAt: '2026-08-15T00:00:00.000Z', endsAt: '2026-09-15T23:59:59.000Z'},
-];
+function daysAgo(days: number): string {
+  const date = new Date(Date.UTC(2026, 7, 14, 12, 0, 0));
+  date.setUTCDate(date.getUTCDate() - days);
+  return date.toISOString();
+}
 
-export const storyOffers: readonly StoryOffer[] = [
-  {id: 'of_1', name: 'Welcome 10', type: 'Percentage', status: 'Active', discount: 10, currencyCode: 'USD', startsAt: '2026-08-01T00:00:00.000Z', endsAt: '2026-12-31T23:59:59.000Z'},
-  {id: 'of_2', name: 'Free Shipping', type: 'Shipping', status: 'Active', discount: 0, currencyCode: 'USD', startsAt: '2026-07-01T00:00:00.000Z', endsAt: '2026-10-01T23:59:59.000Z'},
-  {id: 'of_3', name: 'VIP 20', type: 'Percentage', status: 'Scheduled', discount: 20, currencyCode: 'USD', startsAt: '2026-09-01T00:00:00.000Z', endsAt: '2026-10-01T23:59:59.000Z'},
-];
+function daysFrom(startDay: number, offset: number): string {
+  return new Date(Date.UTC(2026, 7, startDay + offset, 0, 0, 0)).toISOString();
+}
+
+export const storyProducts: readonly StoryProduct[] = range(MOCK_ROW_COUNT).map((number) => ({
+  id: `p_${number}`,
+  title: `${cycle(productTitles, number - 1)} ${number}`,
+  status: number % 5 === 0 ? 'Draft' : 'Active',
+  inventory: 8 + ((number * 17) % 140),
+  price: Number((19 + ((number * 7) % 220) + 0.9).toFixed(2)),
+  currencyCode: cycle(currencies, number - 1),
+  updatedAt: daysAgo(number),
+}));
+
+export const storyOrders: readonly StoryOrder[] = range(MOCK_ROW_COUNT).map((number) => ({
+  id: `o_${number}`,
+  name: `#${1041 + number}`,
+  customerName: cycle(customerNames, number - 1),
+  financialStatus: cycle(financialStatuses, number - 1),
+  fulfillmentStatus: cycle(fulfillmentStatuses, number),
+  total: Number((48 + ((number * 23) % 480) + 0.5).toFixed(2)),
+  currencyCode: cycle(currencies, number),
+  createdAt: daysAgo(number - 1),
+}));
+
+export const storyCustomers: readonly StoryCustomer[] = range(MOCK_ROW_COUNT).map((number) => {
+  const name = cycle(customerNames, number - 1);
+  const emailName = name.toLowerCase().replaceAll(' ', '.');
+  return {
+    id: `c_${number}`,
+    name: `${name} ${number}`,
+    email: `${emailName}.${number}@example.com`,
+    ordersCount: 1 + ((number * 3) % 26),
+    totalSpent: Number((120 + ((number * 137) % 3600) + 0.75).toFixed(2)),
+    currencyCode: cycle(currencies, number - 1),
+    createdAt: daysAgo(number + 20),
+  };
+});
+
+export const storyCampaigns: readonly StoryCampaign[] = range(MOCK_ROW_COUNT).map((number) => ({
+  id: `m_${number}`,
+  name: `${cycle(['August Launch', 'Retargeting Push', 'VIP Winback', 'Holiday Warmup', 'New Arrivals'], number - 1)} ${number}`,
+  channel: cycle(campaignChannels, number - 1),
+  status: cycle(campaignStatuses, number - 1),
+  budget: 800 + ((number * 211) % 7200),
+  spend: 120 + ((number * 137) % 5000),
+  currencyCode: cycle(currencies, number - 1),
+  startsAt: daysFrom(1, number - 1),
+  endsAt: daysFrom(15, number - 1),
+}));
+
+export const storyOffers: readonly StoryOffer[] = range(MOCK_ROW_COUNT).map((number) => ({
+  id: `of_${number}`,
+  name: `${cycle(['Welcome', 'Free Shipping', 'VIP', 'Bundle', 'Retention'], number - 1)} ${number}`,
+  type: cycle(offerTypes, number - 1),
+  status: cycle(offerStatuses, number - 1),
+  discount: cycle(offerTypes, number - 1) === 'Percentage' ? 5 + ((number * 5) % 35) : Number((10 + ((number * 3) % 90)).toFixed(2)),
+  currencyCode: cycle(currencies, number - 1),
+  startsAt: daysFrom(1, number - 1),
+  endsAt: daysFrom(30, number - 1),
+}));

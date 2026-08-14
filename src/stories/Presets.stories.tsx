@@ -19,7 +19,7 @@ import {
 import {defaultFormatOptions, useStoryTable} from './storyTableHelpers';
 
 const meta = {
-  title: 'Presets',
+  title: 'Presets/Tables',
   parameters: {
     docs: {
       description: {

@@ -14,6 +14,20 @@ const preview: Preview = {
   parameters: {
     controls: {expanded: true},
     layout: 'padded',
+    options: {
+      storySort: {
+        order: [
+          'Components',
+          ['Overview', 'Table'],
+          'Features',
+          ['Overview', 'Selection', 'Query State'],
+          'Presets',
+          ['Overview', 'Tables'],
+          'Advanced',
+          ['Overview', 'V3', 'V4'],
+        ],
+      },
+    },
   },
 };
 

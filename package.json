@@ -1,6 +1,6 @@
 {
   "name": "@standhigher/polaris-data-table",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Controlled, server-driven data tables for Shopify Polaris applications.",
   "keywords": [
     "typescript",

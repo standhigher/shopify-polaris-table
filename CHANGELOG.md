@@ -6,6 +6,19 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-14
+
+### Added
+
+- Added Storybook overview entries for Components, Features, Presets, and Advanced groups.
+- Added richer Storybook sample navigation so every top-level group leads with a visible example, not only configuration-oriented stories.
+
+### Changed
+
+- Reordered the Storybook sidebar to `Components`, `Features`, `Presets`, and `Advanced`.
+- Expanded Storybook mock datasets to 50 rows for every published domain example.
+- Redirected the documentation homepage to the Storybook `Presets / OrderTable` example.
+
 ## [0.3.0] - 2026-08-14
 
 ### Added
@@ -31,7 +44,8 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/standhigher/shopify-polaris-table/releases/tag/v0.2.0
