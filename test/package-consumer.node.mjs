@@ -63,7 +63,11 @@ test('typechecks a NodeNext consumer installed from the packed tarball', () => {
       ],
       consumerDirectory,
     );
-    run(join(repositoryRoot, 'node_modules', 'typescript', 'bin', 'tsc'), ['-p', 'tsconfig.json'], consumerDirectory);
+    run(
+      process.execPath,
+      [join(repositoryRoot, 'node_modules', 'typescript', 'lib', 'tsc.js'), '-p', 'tsconfig.json'],
+      consumerDirectory,
+    );
 
     const installedPackage = JSON.parse(
       readFileSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'package.json'), 'utf8'),
