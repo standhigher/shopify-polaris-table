@@ -6,8 +6,8 @@ const [organizationName = 'standhigher', projectName = 'shopify-polaris-table'] 
 const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === 'true';
 
 const config: Config = {
-  title: 'Shopify Polaris Table',
-  tagline: 'Server-driven data tables for Shopify Polaris',
+  title: 'Polaris Data Table',
+  tagline: 'Controlled, server-driven data tables for Shopify Polaris',
   url: process.env.DOCUSAURUS_URL ?? `https://${organizationName}.github.io`,
   baseUrl: process.env.DOCUSAURUS_BASE_URL ?? (isGitHubPagesBuild ? `/${projectName}/` : '/'),
   organizationName,
@@ -48,7 +48,7 @@ const config: Config = {
   ],
   themeConfig: {
     navbar: {
-      title: 'Shopify Polaris Table',
+      title: 'Polaris Data Table',
       items: [
         {
           type: 'docSidebar',

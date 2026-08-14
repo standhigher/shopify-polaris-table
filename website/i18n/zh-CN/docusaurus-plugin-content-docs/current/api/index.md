@@ -4,7 +4,7 @@ sidebar_position: 1
 title: API 概览
 ---
 
-生成的 signatures 和 TypeScript types 位于 [API reference](./api/reference)。本页按用途归类 public exports，并记录仅凭 signatures 无法表达的 behavioral rules。
+生成的 signatures 和 TypeScript types 位于 [API reference](/api/reference)。本页按用途归类 public exports，并记录仅凭 signatures 无法表达的 behavioral rules。
 
 ## Table 与 query
 
@@ -30,4 +30,4 @@ V3 exports 包含 cursor/infinite helpers、virtual-window calculation、column 
 
 使用 `CoreSchema`、`CoreQuery`、`CoreSelection` 及其 helpers 为 UI-independent data behavior 建模。`createPolarisRendererAdapter` 和 `assertPolarisRendererAdapter` 构成从这些 contracts 到 Polaris renderer 的显式边界。
 
-对于 package-wide symbols，请从[生成的 reference index](./api/reference)开始。对于 integration rules，请优先阅读 guides，不要从 type signatures 推断行为。
+对于 package-wide symbols，请从[生成的 reference index](/api/reference)开始。对于 integration rules，请优先阅读 guides，不要从 type signatures 推断行为。

@@ -2,7 +2,7 @@
 id: intro
 slug: /
 sidebar_position: 1
-title: Shopify Polaris Table
+title: Polaris Data Table
 ---
 
 使用 Shopify Polaris 构建受控、服务端驱动的数据表格。该包根据应用管理的 query、数据、选择状态和格式化状态来渲染表格；它不会假定后端、路由、租户模型或持久化方案。

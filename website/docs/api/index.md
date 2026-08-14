@@ -4,7 +4,7 @@ sidebar_position: 1
 title: API overview
 ---
 
-Generated signatures and TypeScript types are available in the [API reference](./api/reference). This page groups the public exports by purpose and records behavioral rules that signatures alone cannot express.
+Generated signatures and TypeScript types are available in the [API reference](/api/reference). This page groups the public exports by purpose and records behavioral rules that signatures alone cannot express.
 
 ## Table and query
 
@@ -30,4 +30,4 @@ The V3 exports include cursor/infinite helpers, virtual-window calculation, colu
 
 Use `CoreSchema`, `CoreQuery`, `CoreSelection`, and their helper functions to model UI-independent data behavior. `createPolarisRendererAdapter` and `assertPolarisRendererAdapter` form the explicit boundary from those contracts to a Polaris renderer.
 
-For package-wide symbols, start with the [generated reference index](./api/reference). For integration rules, prefer the guides over inferred behavior from type signatures.
+For package-wide symbols, start with the [generated reference index](/api/reference). For integration rules, prefer the guides over inferred behavior from type signatures.

@@ -2,7 +2,7 @@
 id: intro
 slug: /
 sidebar_position: 1
-title: Shopify Polaris Table
+title: Polaris Data Table
 ---
 
 Build controlled, server-driven tables with Shopify Polaris. The package renders a table from application-owned query, data, selection, and formatting state; it never assumes a backend, router, tenant model, or persistence layer.
