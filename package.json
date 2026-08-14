@@ -1,7 +1,7 @@
 {
   "name": "@standhigher/polaris-data-table",
   "version": "0.2.0",
-  "description": "A controlled, server-driven data table for Shopify Polaris admin applications.",
+  "description": "Controlled, server-driven data tables for Shopify Polaris applications.",
   "keywords": [
     "typescript",
     "react",
@@ -52,10 +52,11 @@
     "website"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json --resolve-full-paths --resolve-full-extension .js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:package": "npm run build && node --test test/package-entry.node.mjs test/package-consumer.node.mjs",
     "lint": "eslint .",
     "docs:api": "typedoc --options website/typedoc.json",
     "docs:build": "npm run build && npm run docs:api && npm --prefix website run build",
@@ -80,6 +81,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typedoc": "0.28.20",
+    "tsc-alias": "1.9.1",
     "typedoc-plugin-markdown": "4.12.0",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
