@@ -44,7 +44,7 @@ export function ProductTable({page}: {page: TableDataPage<Product>}) {
 
 ## Contracts to keep explicit
 
-- **Offset pagination:** `query.page` is one-based. Derive the server offset as `(page - 1) * pageSize`; return `data` and the unfiltered `total` for the active query.
+- **Offset pagination:** `query.page` is one-based. Derive the server offset as `(page - 1) * pageSize`; return `data` and the unpaginated count after the active search and filters as `total`.
 - **Filters:** use typed, JSON-safe filter values with stable, allowlisted field names. Do not send display labels as filter values.
 - **Formatting:** the host application supplies `locale`, `timeZone`, and a default currency. A row or column can provide a more specific currency code.
 - **Selection:** an `allMatching` selection is a server-issued, query-bound token—not a client-side list of every matching ID. Send an idempotency key with every bulk request.

@@ -41,6 +41,6 @@ export function OrdersTable({page}: {page: TableDataPage<Order>}) {
 
 `TableQuery` must always include `page` and `pageSize`. `TableDataPage<T>` always includes `data` and `total`. Keep `selection` explicit even when the screen has no bulk actions so the component remains fully controlled.
 
-When search, filters, sort, or page size changes, reset to page 1. `useTableQuery` and `updateCoreQuery` implement that reset rule for their respective query types. Next, define the [server-side offset pagination contract](../guides/server-side-offset-pagination).
+When search, filters, sort, or page size changes, reset to page 1. `useTableQuery` applies that rule for its query updates; `updateCoreQuery` resets only search, sort, and filter changes. Next, define the [server-side offset pagination contract](../guides/server-side-offset-pagination).
 
 The repository's [server query example](https://github.com/standhigher/shopify-polaris-table/blob/main/examples/server-side-query.tsx) is the smallest reference implementation; it is not a backend client.
