@@ -7,7 +7,7 @@ title: 安装
 连同 peer dependencies 一起安装表格库：
 
 ```bash
-npm install @standhigher/shopify-polaris-table @shopify/polaris react react-dom
+npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
 ```
 
 该包支持 `@shopify/polaris >=12 <15`、React 18 或更新版本，以及 React DOM 18 或更新版本。请让 Polaris 版本与应用其余部分保持一致。

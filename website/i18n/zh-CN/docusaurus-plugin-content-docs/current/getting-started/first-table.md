@@ -13,7 +13,7 @@ import {
   type TableDataPage,
   type TableQuery,
   type TableSelection,
-} from '@standhigher/shopify-polaris-table';
+} from '@standhigher/polaris-data-table';
 
 type Order = {id: string; name: string; total: number; currencyCode: string; createdAt: string};
 
