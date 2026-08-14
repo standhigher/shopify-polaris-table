@@ -6,5 +6,4 @@ coverage/
 .DS_Store
 website/.docusaurus/
 website/build/
-website/docs/api/reference/*
-!website/docs/api/reference/.gitkeep
+website/docs/api/reference/
