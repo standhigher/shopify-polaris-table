@@ -44,16 +44,29 @@ npm whoami --registry=https://registry.npmjs.org/
 
 Complete the browser flow before continuing. Do not paste or commit auth tokens. Confirm that the authenticated account can publish to the `@standhigher` scope.
 
+## Verify GitHub Pages
+
+Before expecting the public documentation site to appear, confirm the repository has GitHub Pages enabled with **Source: GitHub Actions** in repository settings. The documentation workflow builds and uploads `website/build`; GitHub Pages must be enabled for the deploy job to create `https://standhigher.github.io/shopify-polaris-table/`.
+
+If `https://api.github.com/repos/standhigher/shopify-polaris-table/pages` returns `404`, the Pages site is not enabled yet. Enable Pages in GitHub, rerun the `Documentation` workflow from `main`, then verify:
+
+```bash
+curl -I https://standhigher.github.io/shopify-polaris-table/
+curl -I https://standhigher.github.io/shopify-polaris-table/storybook/
+```
+
 ## Publish a stable release
 
 From the verified, merged `main` commit:
 
 ```bash
-npm publish --access public --tag latest --registry=https://registry.npmjs.org/
+npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/
 npm view @standhigher/polaris-data-table version dist-tags --json --registry=https://registry.npmjs.org/
 ```
 
-`latest` is the default install channel and is reserved for stable releases. Publishing a scoped package publicly requires `--access public`.
+Run `npm publish` in an interactive terminal. When npm prints `Authenticate your account at:` and `Press ENTER to open in the browser...`, press ENTER, complete the npmjs browser challenge with the local passkey, security key, or fingerprint prompt, then return to the terminal and wait for the publish confirmation. A non-interactive publish can fall back to an `EOTP` message even when the account uses web authentication instead of a six-digit authenticator code.
+
+`latest` is the default install channel and is reserved for stable releases. Publishing a scoped package publicly requires `--access public`. Use `--auth-type=web` by default for manual npmjs releases.
 
 After npm confirms the publish, create and push an annotated tag for that exact commit:
 

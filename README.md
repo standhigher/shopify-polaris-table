@@ -152,10 +152,10 @@ Releases are made from merged `main` only. Verify the package contents and all c
 ```bash
 npm run release:check
 npm login --auth-type=web --registry=https://registry.npmjs.org/
-npm publish --access public --tag latest --registry=https://registry.npmjs.org/
+npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/
 ```
 
-Follow the full [release guide](docs/release.md) for registry checks, versioning, annotated tags, prerelease tags, and post-publish verification.
+Run publish from an interactive terminal so npm can open the browser authentication link for passkey, security key, or fingerprint verification. Follow the full [release guide](docs/release.md) for registry checks, versioning, annotated tags, prerelease tags, and post-publish verification.
 
 ## Contributing and support
 

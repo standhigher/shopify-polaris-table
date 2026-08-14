@@ -152,10 +152,10 @@ npm run docs:start
 ```bash
 npm run release:check
 npm login --auth-type=web --registry=https://registry.npmjs.org/
-npm publish --access public --tag latest --registry=https://registry.npmjs.org/
+npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/
 ```
 
-完整的 registry 检查、版本升级、annotated tag、预发布 tag 和发布后验证流程见[发布指南](docs/release.md)。
+发布命令默认在交互式终端执行，确保 npm 能打开浏览器验证链接，并通过 passkey、安全密钥或本机指纹完成 npmjs 验证。完整的 registry 检查、版本升级、annotated tag、预发布 tag 和发布后验证流程见[发布指南](docs/release.md)。
 
 ## 贡献与支持
 
