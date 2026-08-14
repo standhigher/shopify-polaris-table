@@ -47,6 +47,10 @@ export {createOrderColumns} from './presets/order';
 export type {OrderColumnOverrides, OrderRow} from './presets/order';
 export {createCustomerColumns} from './presets/customer';
 export type {CustomerColumnOverrides, CustomerRow} from './presets/customer';
+export {createCampaignColumns} from './presets/campaign';
+export type {CampaignColumnOverrides, CampaignRow} from './presets/campaign';
+export {createOfferColumns} from './presets/offer';
+export type {OfferColumnOverrides, OfferRow} from './presets/offer';
 export * from './core';
 export {
   assertPolarisRendererAdapter,
