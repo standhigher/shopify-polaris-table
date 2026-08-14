@@ -1,0 +1,17 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "entryPointStrategy": "resolve",
+  "tsconfig": "tsconfig.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "out": "website/docs/api/reference",
+  "readme": "none",
+  "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "disableSources": true,
+  "flattenOutputFiles": true,
+  "outputFileStrategy": "members",
+  "sort": ["source-order"]
+}
