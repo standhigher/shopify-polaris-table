@@ -1,0 +1,94 @@
+{
+  "name": "@standhigher/polaris-data-table",
+  "version": "0.2.0",
+  "description": "Controlled, server-driven data tables for Shopify Polaris applications.",
+  "keywords": [
+    "typescript",
+    "react",
+    "shopify",
+    "polaris",
+    "data-table",
+    "admin",
+    "ecommerce",
+    "server-driven",
+    "pagination",
+    "filtering",
+    "bulk-actions",
+    "embedded-app"
+  ],
+  "homepage": "https://github.com/standhigher/shopify-polaris-table#readme",
+  "bugs": {
+    "url": "https://github.com/standhigher/shopify-polaris-table/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/standhigher/shopify-polaris-table.git"
+  },
+  "author": "StandHigher",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "workspaces": [
+    "website"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json --resolve-full-paths --resolve-full-extension .js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:package": "npm run build && node --test test/package-entry.node.mjs test/package-consumer.node.mjs",
+    "lint": "eslint .",
+    "build-storybook": "storybook build --output-dir website/static/storybook",
+    "docs:api": "typedoc --options website/typedoc.json",
+    "docs:build": "npm run build-storybook && npm run build && npm run docs:api && npm --prefix website run build",
+    "docs:start": "npm --prefix website run start",
+    "release:check": "npm run lint && npm test && npm run typecheck && npm run build && npm run build-storybook && npm run docs:build && npm pack --dry-run --registry=https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "@shopify/polaris": ">=12 <15",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@shopify/polaris": "^13.9.5",
+    "@storybook/react-vite": "^10.5.8",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "jsdom": "^26.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "^10.5.8",
+    "tsc-alias": "1.9.1",
+    "typedoc": "0.28.20",
+    "typedoc-plugin-markdown": "4.12.0",
+    "typescript": "^5.9.2",
+    "vite": "^8.2.1",
+    "vitest": "^3.2.4"
+  }
+}

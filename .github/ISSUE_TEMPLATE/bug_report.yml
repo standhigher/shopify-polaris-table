@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible problem with Polaris Data Table.
+title: "[Bug]: "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the project. Do not include tokens, credentials, customer data, or other sensitive information.
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: Which version of `@standhigher/polaris-data-table` is affected?
+      placeholder: 0.2.0
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Include Node.js, React, and `@shopify/polaris` versions.
+      placeholder: Node 22, React 18.3, Polaris 13.9
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide the smallest public code sample and steps that demonstrate the problem.
+      placeholder: |
+        1. Render ...
+        2. Select ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and removed sensitive information from this report.
+          required: true

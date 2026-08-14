@@ -1,0 +1,35 @@
+name: Feature request
+description: Suggest an improvement for Polaris Data Table.
+title: "[Feature]: "
+labels: [enhancement, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing an idea. Do not include customer data, credentials, product roadmaps, or other sensitive information.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Describe the public developer problem or workflow.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Explain the expected API or behavior. Public examples are welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe current workarounds or other approaches.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and removed sensitive information from this request.
+          required: true

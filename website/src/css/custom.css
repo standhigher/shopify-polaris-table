@@ -1,0 +1,16 @@
+:root {
+  --ifm-container-width-xl: 1280px;
+  --ifm-code-font-size: 92%;
+}
+
+.markdown > pre {
+  max-height: 38rem;
+}
+
+.table-contract {
+  border-left: 4px solid var(--ifm-color-primary);
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-alert-background-color);
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+}

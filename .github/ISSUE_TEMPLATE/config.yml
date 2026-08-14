@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Usage documentation
+    url: https://standhigher.github.io/shopify-polaris-table/
+    about: Check installation, examples, and API guidance before opening an issue.
+  - name: Security vulnerability
+    url: https://github.com/standhigher/shopify-polaris-table/security/advisories/new
+    about: Report security-sensitive issues privately. Do not disclose them in public issues.
+  - name: Discussions
+    url: https://github.com/standhigher/shopify-polaris-table/discussions
+    about: Ask usage questions and share ideas with the community.

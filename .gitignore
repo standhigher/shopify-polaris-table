@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+.turbo/
+.worktrees/
+.DS_Store
+website/.docusaurus/
+website/build/
+website/docs/api/reference/
+.storybook-static/
+website/static/storybook/
