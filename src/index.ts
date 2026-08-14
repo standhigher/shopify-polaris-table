@@ -1,6 +1,7 @@
 export * from './types';
 export {Table} from './components/Table/Table';
 export {renderCell, getColumnValue} from './columns/renderCell';
+export type {UseTableQueryOptions, UseTableQueryResult} from './hooks/useTableQuery';
 export {
   EMPTY_CELL_PLACEHOLDER,
   formatDateTime,
@@ -15,6 +16,15 @@ export {
   reconcileVisibleColumnState,
   sanitizeVisibleColumnKeys,
 } from './features/visibleColumns';
+export type {
+  ReconciledVisibleColumnState,
+  ReconcileVisibleColumnStateOptions,
+} from './features/visibleColumns';
+export type {
+  FormatDateTimeOptions,
+  FormatMoneyOptions,
+  FormatTextOptions,
+} from './utils/formatters';
 export {decodeTableQuery, encodeTableQuery} from './adapters/urlQuery';
 export type {TableQueryUrlOptions} from './adapters/urlQuery';
 export {applyFilterPreset} from './views/filterPresets';

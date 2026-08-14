@@ -2,18 +2,21 @@ import type {TableColumn, TableFormatOptions, TableFormatWarning} from '../types
 
 export const EMPTY_CELL_PLACEHOLDER = '—';
 
-interface FormatTextOptions {
+/** Optional text presentation settings. */
+export interface FormatTextOptions {
   maxLength?: number;
 }
 
-interface FormatMoneyOptions {
+/** Locale, currency, and warning settings for money formatting. */
+export interface FormatMoneyOptions {
   locale: string;
   currencyCode?: string;
   columnKey?: string;
   onWarning?: (warning: TableFormatWarning) => void;
 }
 
-interface FormatDateTimeOptions {
+/** Locale and IANA time-zone settings for date-time formatting. */
+export interface FormatDateTimeOptions {
   locale: string;
   timeZone: string;
 }

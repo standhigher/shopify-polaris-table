@@ -4,6 +4,8 @@ export type {
   TableBulkFailure,
   TableColumn,
   TableColumnAlignment,
+  TableColumnBase,
+  TableColumnRenderer,
   TableColumnType,
   TableDataPage,
   TableFilterDefinition,

@@ -2,12 +2,14 @@ import {useCallback, useMemo} from 'react';
 
 import type {TableFilters, TableQuery, TableFilterValue} from '../types';
 
+/** Controlled query state and optional accepted page sizes for `useTableQuery`. */
 export interface UseTableQueryOptions {
   query: TableQuery;
   onQueryChange: (query: TableQuery) => void;
   pageSizeOptions?: readonly number[];
 }
 
+/** Query-update callbacks returned by `useTableQuery`. */
 export interface UseTableQueryResult {
   setSearch: (search: string) => void;
   setFilters: (filters: TableFilters) => void;

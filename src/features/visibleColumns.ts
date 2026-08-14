@@ -28,12 +28,14 @@ export function getVisibleColumns<T extends object>(
   return columns.filter((column) => visible.has(String(column.key)));
 }
 
+/** Persisted visibility and query state to reconcile against the current column schema. */
 export interface ReconcileVisibleColumnStateOptions<T extends object> {
   columns: readonly TableColumn<T>[];
   visibleColumnKeys: readonly string[];
   query: TableQuery;
 }
 
+/** Safe visible-column keys and query returned after reconciliation. */
 export interface ReconciledVisibleColumnState {
   visibleColumnKeys: readonly string[];
   query: TableQuery;

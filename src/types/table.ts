@@ -63,7 +63,8 @@ export interface TableFormatWarning {
   reason: 'missing-currency-code';
 }
 
-interface TableColumnBase<T extends object> {
+/** Shared configuration accepted by every table-column variant. */
+export interface TableColumnBase<T extends object> {
   key: string;
   title: ReactNode;
   sortable?: boolean;
@@ -73,7 +74,8 @@ interface TableColumnBase<T extends object> {
   statusTone?: Readonly<Record<string, TableStatusTone>>;
 }
 
-type TableColumnRenderer<T extends object> = (value: unknown, row: T) => ReactNode;
+/** Renders a cell value when a built-in column presentation is insufficient. */
+export type TableColumnRenderer<T extends object> = (value: unknown, row: T) => ReactNode;
 
 export type TableColumn<T extends object> =
   | (TableColumnBase<T> & {
