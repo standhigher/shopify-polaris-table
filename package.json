@@ -1,8 +1,53 @@
 {
-  "name": "@standhigher/shopify-polaris-table",
-  "version": "0.1.0",
+  "name": "@standhigher/polaris-data-table",
+  "version": "0.2.0",
+  "description": "A controlled, server-driven data table for Shopify Polaris admin applications.",
+  "keywords": [
+    "typescript",
+    "react",
+    "shopify",
+    "polaris",
+    "data-table",
+    "admin",
+    "ecommerce",
+    "server-driven",
+    "pagination",
+    "filtering",
+    "bulk-actions",
+    "embedded-app"
+  ],
+  "homepage": "https://github.com/standhigher/shopify-polaris-table#readme",
+  "bugs": {
+    "url": "https://github.com/standhigher/shopify-polaris-table/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/standhigher/shopify-polaris-table.git"
+  },
+  "author": "StandHigher",
+  "license": "MIT",
   "private": false,
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "workspaces": [
     "website"
   ],

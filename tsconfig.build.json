@@ -9,5 +9,5 @@
     "types": [],
     "allowJs": false
   },
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts"]
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/test", "test"]
 }

@@ -7,3 +7,5 @@ coverage/
 website/.docusaurus/
 website/build/
 website/docs/api/reference/
+.storybook-static/
+website/static/storybook/
