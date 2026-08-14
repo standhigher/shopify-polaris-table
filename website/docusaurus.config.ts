@@ -8,7 +8,6 @@ const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === 'true';
 const config: Config = {
   title: 'Shopify Polaris Table',
   tagline: 'Server-driven data tables for Shopify Polaris',
-  favicon: 'img/favicon.ico',
   url: process.env.DOCUSAURUS_URL ?? `https://${organizationName}.github.io`,
   baseUrl: process.env.DOCUSAURUS_BASE_URL ?? (isGitHubPagesBuild ? `/${projectName}/` : '/'),
   organizationName,
@@ -48,7 +47,6 @@ const config: Config = {
     ],
   ],
   themeConfig: {
-    image: 'img/social-card.png',
     navbar: {
       title: 'Shopify Polaris Table',
       items: [
@@ -72,7 +70,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-      additionalLanguages: ['bash', 'json5', 'typescript', 'tsx'],
+      additionalLanguages: ['bash', 'json', 'json5', 'typescript', 'tsx'],
     },
   },
 };
