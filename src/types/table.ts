@@ -63,6 +63,17 @@ export interface TableFormatWarning {
   reason: 'missing-currency-code';
 }
 
+export interface TableLabels {
+  empty: ReactNode;
+  loading: string;
+  retry: string;
+  selectionExpired: ReactNode;
+  pagination: string;
+  previousPage: string;
+  nextPage: string;
+  itemsPerPage: string;
+}
+
 /** Shared configuration accepted by every table-column variant. */
 export interface TableColumnBase<T extends object> {
   key: string;
@@ -163,6 +174,7 @@ export interface TableProps<T extends object> {
   rowActions?: readonly TableRowAction<T>[];
   bulkActions?: readonly TableBulkAction[];
   onFormatWarning?: (warning: TableFormatWarning) => void;
+  labels?: Partial<TableLabels>;
   loading?: boolean;
   error?: ReactNode;
   emptyState?: ReactNode;

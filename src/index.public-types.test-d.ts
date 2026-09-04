@@ -6,6 +6,8 @@ import type {
   ReconcileVisibleColumnStateOptions,
   TableColumnBase,
   TableColumnRenderer,
+  TableLabels,
+  TableProps,
   UseTableQueryOptions,
   UseTableQueryResult,
 } from './index';
@@ -18,6 +20,8 @@ export type PublicSignatureTypes = [
   ReconcileVisibleColumnStateOptions<{id: string}>,
   TableColumnBase<{id: string}>,
   TableColumnRenderer<{id: string}>,
+  TableLabels,
+  TableProps<{id: string}>,
   UseTableQueryOptions,
   UseTableQueryResult,
 ];

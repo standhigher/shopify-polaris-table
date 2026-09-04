@@ -21,6 +21,7 @@ It renders familiar Polaris table UI while your application retains control of f
 - [Storybook demo](https://standhigher.github.io/shopify-polaris-table/storybook/)
 - [API reference](https://standhigher.github.io/shopify-polaris-table/api/)
 - [Usage guides](https://standhigher.github.io/shopify-polaris-table/getting-started/first-table)
+- [Roadmap](docs/roadmap.md)
 - [Changelog](https://github.com/standhigher/shopify-polaris-table/blob/main/CHANGELOG.md)
 
 ## Installation

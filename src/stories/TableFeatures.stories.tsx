@@ -4,7 +4,7 @@ import {useMemo, useState} from 'react';
 
 import {Table, createProductColumns} from '../index';
 import type {ProductRow} from '../index';
-import type {TableColumn, TableRowAction, TableSelection} from '../types';
+import type {TableColumn, TableLabels, TableRowAction, TableSelection} from '../types';
 import {storyProducts} from './storyData';
 import {defaultFormatOptions, explicitSelection, useStoryTable} from './storyTableHelpers';
 
@@ -36,6 +36,7 @@ function ProductTableStory({
   loading,
   error,
   emptyState,
+  labels,
 }: {
   pageSize?: number;
   selection: TableSelection;
@@ -45,6 +46,7 @@ function ProductTableStory({
   loading?: boolean;
   error?: string;
   emptyState?: string;
+  labels?: Partial<TableLabels>;
 }) {
   const {query, setQuery, visiblePage} = useStoryTable(storyProducts, pageSize);
   const columns = createProductColumns({status: {statusTone: {Active: 'success', Draft: 'info'}}});
@@ -66,6 +68,7 @@ function ProductTableStory({
     {...(error ? {error} : {})}
     {...(emptyState ? {emptyState} : {})}
     {...(emptyState ? {onRetry: () => setQuery({page: 1, pageSize})} : {})}
+    {...(labels ? {labels} : {})}
   />;
 }
 
@@ -158,5 +161,17 @@ export const RowActions: Story = {
       />
       <div style={{marginTop: '1rem'}}><Text as="p" variant="bodySm">{message}</Text></div>
     </>;
+  },
+};
+
+export const LocalizedStates: Story = {
+  name: 'Localized States and Pagination',
+  render: () => {
+    const [selection, setSelection] = useState<TableSelection>(explicitSelection);
+    return <ProductTableStory
+      selection={selection}
+      onSelectionChange={setSelection}
+      labels={{loading: '正在加载商品', retry: '重试', empty: '暂无商品', pagination: '商品分页', previousPage: '上一页', nextPage: '下一页', itemsPerPage: '每页商品数'}}
+    />;
   },
 };

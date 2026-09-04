@@ -15,6 +15,7 @@ export type {
   TableFilterValue,
   TableFormatOptions,
   TableFormatWarning,
+  TableLabels,
   TablePagination,
   TableProps,
   TableQuery,

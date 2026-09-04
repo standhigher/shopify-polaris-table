@@ -33,6 +33,6 @@ bulkActions: [{
 }]
 ```
 
-`archiveOrders` 是 application-owned integration code。它必须校验 token 或 IDs、当前 authorization 与 idempotency key，然后返回 `completed` 或 `accepted` `TableBulkActionResult`。只有在收到该 response 后才遵从 `clearSelection`（或 `shouldClearSelection`）。
+`archiveOrders` 是 application-owned integration code。它必须校验 token 或 IDs、当前 authorization 与 idempotency key，然后返回 `completed` 或 `accepted` `TableBulkActionResult`。只有当返回结果的 `clearSelection: true` 时，table 才会清除 selection；因此 partial failure 可以保留当前 selection 以便重试。
 
 请查看完整的[选择与操作示例](../examples/selection-and-actions)。

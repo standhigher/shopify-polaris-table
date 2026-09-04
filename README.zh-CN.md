@@ -21,6 +21,7 @@
 - [Storybook 示例](https://standhigher.github.io/shopify-polaris-table/storybook/)
 - [API Reference](https://standhigher.github.io/shopify-polaris-table/api/)
 - [使用指南](https://standhigher.github.io/shopify-polaris-table/getting-started/first-table)
+- [Roadmap](docs/roadmap.md)
 - [更新日志](https://github.com/standhigher/shopify-polaris-table/blob/main/CHANGELOG.md)
 
 ## 安装

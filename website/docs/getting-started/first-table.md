@@ -43,4 +43,6 @@ export function OrdersTable({page}: {page: TableDataPage<Order>}) {
 
 When search, filters, sort, or page size changes, reset to page 1. `useTableQuery` applies that rule for its query updates; `updateCoreQuery` resets only search, sort, and filter changes. Next, define the [server-side offset pagination contract](../guides/server-side-offset-pagination).
 
+For an embedded Admin screen, pass `labels` when the host application's locale differs from the built-in English copy. It supports `loading`, `retry`, `empty`, `selectionExpired`, `pagination`, `previousPage`, `nextPage`, and `itemsPerPage`. `emptyState` still takes precedence over the default empty state.
+
 The repository's [server query example](https://github.com/standhigher/shopify-polaris-table/blob/main/examples/server-side-query.tsx) is the smallest reference implementation; it is not a backend client.

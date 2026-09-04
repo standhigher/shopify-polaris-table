@@ -43,4 +43,6 @@ export function OrdersTable({page}: {page: TableDataPage<Order>}) {
 
 当搜索、筛选、排序或 page size 改变时，请重置到第 1 页。`useTableQuery` 会在更新 query 时应用此规则；`updateCoreQuery` 仅在搜索、排序和筛选改变时重置。接下来请定义[服务端 offset 分页契约](../guides/server-side-offset-pagination)。
 
+对于嵌入式 Admin 页面，如果宿主应用不是使用内置英文文案，可以传入 `labels`。它支持 `loading`、`retry`、`empty`、`selectionExpired`、`pagination`、`previousPage`、`nextPage` 和 `itemsPerPage`。`emptyState` 仍然优先于默认 empty state。
+
 仓库中的 [server query example](https://github.com/standhigher/shopify-polaris-table/blob/main/examples/server-side-query.tsx) 是最小参考实现；它不是后端 client。

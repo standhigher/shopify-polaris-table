@@ -6,6 +6,13 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
+### Changed
+
+- Completed the 0.5 Admin table stability pass for typed filter controls, including partial date ranges and definition-driven operator allowlists.
+- Isolated row actions from row selection and preserved `ReactNode` action content in the Actions column.
+- Added bulk-action feedback for completed, partial-failure, accepted, rejected, and expired-selection states, with per-invocation idempotency keys.
+- Added controlled table-state labels for loading, error retry, empty, selection-expired, and pagination copy.
+
 ## [0.4.0] - 2026-08-14
 
 ### Added

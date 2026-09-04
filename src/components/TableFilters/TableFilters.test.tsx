@@ -32,4 +32,44 @@ describe('TableFilters', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: /enabled/i }));
     expect(onQueryChange).toHaveBeenCalledWith({ page: 1, pageSize: 10, filters: { enabled: { operator: 'equals', value: false } } });
   });
+
+  it('renders both date range boundaries and preserves a partial range', () => {
+    const onQueryChange = vi.fn();
+    render(
+      <TableFilters
+        query={{page: 2, pageSize: 10}}
+        filters={[{key: 'createdAt', label: 'Created', type: 'date-range', operators: ['between']}]}
+        onQueryChange={onQueryChange}
+        searchDebounceMs={0}
+      />,
+    );
+
+    fireEvent.change(screen.getByRole('textbox', {name: /created from/i}), {target: {value: '2026-01-01'}});
+    expect(onQueryChange).toHaveBeenCalledWith({
+      page: 1,
+      pageSize: 10,
+      filters: {createdAt: {operator: 'between', value: {from: '2026-01-01'}}},
+    });
+
+    expect(screen.getByRole('textbox', {name: /created to/i})).toBeInTheDocument();
+  });
+
+  it('uses only an operator declared by the filter definition', () => {
+    const onQueryChange = vi.fn();
+    render(
+      <TableFilters
+        query={{page: 1, pageSize: 10}}
+        filters={[{key: 'status', label: 'Status', type: 'select', operators: ['notEquals'], options: [{label: 'Active', value: 'active'}]}]}
+        onQueryChange={onQueryChange}
+        searchDebounceMs={0}
+      />,
+    );
+
+    fireEvent.change(screen.getByRole('combobox', {name: /status/i}), {target: {value: 'active'}});
+    expect(onQueryChange).toHaveBeenCalledWith({
+      page: 1,
+      pageSize: 10,
+      filters: {status: {operator: 'notEquals', value: 'active'}},
+    });
+  });
 });
