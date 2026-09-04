@@ -6,6 +6,10 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
+No unreleased changes.
+
+## [0.5.0] - 2026-09-04
+
 ### Changed
 
 - Completed the 0.5 Admin table stability pass for typed filter controls, including partial date ranges and definition-driven operator allowlists.
@@ -51,7 +55,8 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.0...v0.2.1
