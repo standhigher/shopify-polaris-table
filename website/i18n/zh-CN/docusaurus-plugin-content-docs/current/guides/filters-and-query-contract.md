@@ -22,6 +22,16 @@ const query = {
 
 用 `TableFilterDefinition` 定义面向用户的控件，但仍要在 server 再次校验 request。该包建模 client state；它不会为字段授权，也不会将 filter 翻译为 database query。
 
+内置控件使用由 definition 声明的 operator allowlist：
+
+- `text`：`contains`，其次为 `equals` 或 `notEquals`
+- `select`：`equals` 或 `notEquals`
+- `multi-select`：`in` 或 `notIn`
+- `boolean`：`equals` 或 `notEquals`
+- `date-range`：`between`
+
+如果 definition 没有声明该控件支持的 operator，控件不会渲染。日期范围使用两个独立边界，因此只填写 `from` 或只填写 `to` 都是合法值。UI 会为字段值写入 string；业务格式的解析和校验仍由 server 负责。
+
 `cleanFilters` 会在状态更新前移除空值。条件改变必须将从 1 开始的页码重置为 1。若需可分享的 query state，请使用[URL state、已保存视图与预设](./url-state-saved-views-presets)中的 allowlisted URL adapter。
 
 :::caution 在每个边界维护 allowlist

@@ -39,4 +39,20 @@ describe('TablePagination', () => {
     rerender(<TablePagination query={{ page: 4, pageSize: 10 }} total={35} onQueryChange={vi.fn()} />);
     expect(screen.getAllByRole('button', { name: /next/i }).at(-1)).toHaveAttribute('aria-disabled', 'true');
   });
+
+  it('uses caller-provided pagination labels', () => {
+    render(
+      <TablePagination
+        query={query}
+        total={35}
+        onQueryChange={vi.fn()}
+        labels={{pagination: 'Order pages', previousPage: 'Older orders', nextPage: 'Newer orders', itemsPerPage: 'Orders per page'}}
+      />,
+    );
+
+    expect(screen.getByRole('navigation', {name: 'Order pages'})).toBeInTheDocument();
+    expect(screen.getAllByRole('button', {name: 'Older orders'}).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('button', {name: 'Newer orders'}).length).toBeGreaterThan(0);
+    expect(screen.getByRole('combobox', {name: 'Orders per page'})).toBeInTheDocument();
+  });
 });

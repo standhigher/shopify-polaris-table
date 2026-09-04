@@ -1,6 +1,6 @@
 import {Pagination, Select} from '@shopify/polaris';
 
-import type {TableQuery} from '../../types';
+import type {TableLabels, TableQuery} from '../../types';
 
 export interface TablePaginationProps {
   query: TableQuery;
@@ -8,6 +8,7 @@ export interface TablePaginationProps {
   onQueryChange: (query: TableQuery) => void;
   pageSizeOptions?: readonly number[] | undefined;
   loading?: boolean | undefined;
+  labels?: Partial<TableLabels> | undefined;
 }
 
 export function TablePagination({
@@ -16,6 +17,7 @@ export function TablePagination({
   onQueryChange,
   pageSizeOptions = [10, 25, 50, 100],
   loading = false,
+  labels = {},
 }: TablePaginationProps) {
   const pageCount = Math.ceil(total / query.pageSize);
   const hasPrevious = query.page > 1;
@@ -24,8 +26,8 @@ export function TablePagination({
   return (
     <div aria-live="polite">
       <Pagination
-        accessibilityLabel="Table pagination"
-        accessibilityLabels={{previous: 'Previous page', next: 'Next page'}}
+        accessibilityLabel={labels.pagination ?? 'Table pagination'}
+        accessibilityLabels={{previous: labels.previousPage ?? 'Previous page', next: labels.nextPage ?? 'Next page'}}
         hasPrevious={hasPrevious && !loading}
         hasNext={hasNext && !loading}
         label={`${total === 0 ? 0 : query.page} of ${pageCount || 0} · ${total} items`}
@@ -33,7 +35,7 @@ export function TablePagination({
         onNext={() => onQueryChange({...query, page: query.page + 1})}
       />
       <Select
-        label="Items per page"
+        label={labels.itemsPerPage ?? 'Items per page'}
         options={pageSizeOptions.map((pageSize) => ({label: String(pageSize), value: String(pageSize)}))}
         value={String(query.pageSize)}
         disabled={loading}

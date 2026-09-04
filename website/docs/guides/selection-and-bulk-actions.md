@@ -33,6 +33,6 @@ bulkActions: [{
 }]
 ```
 
-`archiveOrders` is application-owned integration code. It must validate the token or IDs, current authorization, and idempotency key, then return either a `completed` or `accepted` `TableBulkActionResult`. Honor `clearSelection` (or `shouldClearSelection`) only after receiving that response.
+`archiveOrders` is application-owned integration code. It must validate the token or IDs, current authorization, and idempotency key, then return either a `completed` or `accepted` `TableBulkActionResult`. The table clears selection only when the returned result has `clearSelection: true`; partial failures can therefore leave the selection available for retry.
 
 See the complete [selection and actions example](../examples/selection-and-actions).

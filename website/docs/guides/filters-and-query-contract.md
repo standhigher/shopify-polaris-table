@@ -22,6 +22,16 @@ Supported operators are `equals`, `notEquals`, `contains`, `in`, `notIn`, `betwe
 
 Define user-facing controls with `TableFilterDefinition`, but validate the request again on the server. The package models client state; it does not authorize fields or translate a filter into a database query.
 
+The built-in controls use an operator allowlist declared by each definition:
+
+- `text`: `contains`, then `equals` or `notEquals`
+- `select`: `equals` or `notEquals`
+- `multi-select`: `in` or `notIn`
+- `boolean`: `equals` or `notEquals`
+- `date-range`: `between`
+
+If a definition does not declare one of the operators supported by its control, that control is not rendered. A date range writes two independent boundaries, so a `from`-only or `to`-only value is valid. The UI writes strings for field values; the server remains responsible for parsing and validating business-specific formats.
+
 `cleanFilters` removes empty values before a state update. A criteria change must reset the one-based page to 1. For shareable query state, use the allowlisted URL adapter in [URL state, saved views, and presets](./url-state-saved-views-presets).
 
 :::caution Allowlist at every boundary

@@ -42,6 +42,13 @@ npm login --auth-type=web --registry=https://registry.npmjs.org/
 npm whoami --registry=https://registry.npmjs.org/
 ```
 
+The equivalent package scripts are:
+
+```bash
+npm run npm:login
+npm run npm:whoami
+```
+
 Complete the browser flow before continuing. Do not paste or commit auth tokens. Confirm that the authenticated account can publish to the `@standhigher` scope.
 
 ## Verify GitHub Pages
@@ -62,6 +69,12 @@ From the verified, merged `main` commit:
 ```bash
 npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/
 npm view @standhigher/polaris-data-table version dist-tags --json --registry=https://registry.npmjs.org/
+```
+
+The guarded publish script runs the complete release check first:
+
+```bash
+npm run npm:publish
 ```
 
 Run `npm publish` in an interactive terminal. When npm prints `Authenticate your account at:` and `Press ENTER to open in the browser...`, press ENTER, complete the npmjs browser challenge with the local passkey, security key, or fingerprint prompt, then return to the terminal and wait for the publish confirmation. A non-interactive publish can fall back to an `EOTP` message even when the account uses web authentication instead of a six-digit authenticator code.
