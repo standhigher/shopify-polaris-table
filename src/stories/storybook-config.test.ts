@@ -28,6 +28,7 @@ const storyFiles = [
   'src/stories/AdvancedOverview.stories.tsx',
   'src/stories/AdvancedV3.stories.tsx',
   'src/stories/AdvancedV4.stories.tsx',
+  'src/stories/ExperimentalStickyTable.stories.tsx',
 ] as const;
 
 describe('Storybook release integration', () => {

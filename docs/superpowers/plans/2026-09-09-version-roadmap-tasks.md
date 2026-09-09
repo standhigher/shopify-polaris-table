@@ -111,6 +111,13 @@
 - [ ] 为每个进入稳定 API 的能力提供独立 opt-in API、测试、Storybook 和文档。
 - [ ] 只发布完成性能及可访问性验证的能力；未达标 POC 保留为实验记录。
 
+**进行中：Sticky header / column POC（不公开发布）**
+
+- [x] 建立固定列宽的内部 sticky renderer，复用 column-layout offset helper，且不改变 V1 `Table`。
+- [x] 记录堆叠层级、Safari/RTL/浮层风险、验收指标与回滚方案，见 [`2026-09-09-v0.8-sticky-columns-poc.md`](2026-09-09-v0.8-sticky-columns-poc.md)。
+- [x] 增加 start/end offset 和 header 堆叠的 React 测试，以及实验性 Storybook 场景。
+- [ ] 在 Chrome、Safari 和真实嵌入容器验证横向/纵向滚动、焦点、RTL、popover 裁剪和行选择/排序兼容性；通过前不得将 POC 从公共入口导出。
+
 **版本退出条件：** 已发布能力均有真实场景证据，且不默认改变 V1 `Table` 行为。
 
 ## Version 1.0 — 产品矩阵级稳定 API
