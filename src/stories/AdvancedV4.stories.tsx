@@ -10,7 +10,7 @@ import {
   validateCoreSchema,
 } from '../index';
 
-const meta = {title: 'Advanced/V4'} satisfies Meta;
+const meta = {title: 'Advanced helpers/V4'} satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

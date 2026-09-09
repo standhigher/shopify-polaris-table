@@ -15,7 +15,7 @@ import type {TableQuery} from '../types';
 import type {TableViewRepository} from '../views/tableViews';
 
 const meta = {
-  title: 'Features/Query State',
+  title: 'Integration features/Query State',
   parameters: {
     docs: {
       description: {

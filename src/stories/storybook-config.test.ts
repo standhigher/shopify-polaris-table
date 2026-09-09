@@ -15,10 +15,14 @@ const packageJsonPath = resolve(process.cwd(), 'package.json');
 const eslintConfigPath = resolve(process.cwd(), 'eslint.config.js');
 const docsIntroPath = resolve(process.cwd(), 'website/docs/intro.md');
 const previewConfigPath = resolve(process.cwd(), '.storybook/preview.tsx');
+const mainConfigPath = resolve(process.cwd(), '.storybook/main.ts');
 const storyFiles = [
   'src/stories/ComponentsOverview.stories.tsx',
   'src/stories/Table.stories.tsx',
   'src/stories/ExtensionTable.stories.tsx',
+  'src/stories/TableColumnVisibility.stories.tsx',
+  'src/stories/TableFilterPresets.stories.tsx',
+  'src/stories/TableViews.stories.tsx',
   'src/stories/TableFeatures.stories.tsx',
   'src/stories/FeaturesOverview.stories.tsx',
   'src/stories/Presets.stories.tsx',
@@ -52,14 +56,26 @@ describe('Storybook release integration', () => {
     expect(eslintConfig).toContain("'website/static/storybook/**'");
   });
 
-  it('keeps the sidebar order aligned to components, features, presets, and advanced stories', async () => {
+  it('keeps the sidebar order aligned to components, integration features, presets, helpers, and internal experiments', async () => {
     const previewConfig = await readFile(previewConfigPath, 'utf8');
 
     expect(previewConfig).toContain("'Components'");
-    expect(previewConfig).toContain("'Features'");
+    expect(previewConfig).toContain("'Integration features'");
     expect(previewConfig).toContain("'Presets'");
-    expect(previewConfig).toContain("'Advanced'");
+    expect(previewConfig).toContain("'Advanced helpers'");
+    expect(previewConfig).toContain("'Internal experiments'");
     expect(previewConfig).toContain("'Overview'");
+  });
+
+  it('ships Docs, accessibility checks, responsive viewports, and an English-first language toggle', async () => {
+    const [mainConfig, previewConfig] = await Promise.all([readFile(mainConfigPath, 'utf8'), readFile(previewConfigPath, 'utf8')]);
+
+    expect(mainConfig).toContain("'@storybook/addon-docs'");
+    expect(mainConfig).toContain("'@storybook/addon-a11y'");
+    expect(previewConfig).toContain("defaultValue: 'en'");
+    expect(previewConfig).toContain("'zh-CN'");
+    expect(previewConfig).toContain('mobile320');
+    expect(previewConfig).toContain('tablet768');
   });
 
   it('covers the published Storybook example set', async () => {

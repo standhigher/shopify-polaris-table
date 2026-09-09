@@ -155,9 +155,45 @@ function SelectionAndBulkActionExample() {
   </>;
 }
 
+type TablePlaygroundProps = {pageSize: number; showFilters: boolean; loading: boolean};
+
+function TablePlayground({pageSize, showFilters, loading}: TablePlaygroundProps) {
+  const {query, selection, setQuery, setSelection} = useControlledTable();
+  const adjustedQuery = {...query, pageSize};
+  const visibleOrders = useMemo(() => {
+    const search = adjustedQuery.search?.trim().toLowerCase();
+    const matchingOrders = search
+      ? orders.filter((order) => order.customer.toLowerCase().includes(search) || order.id.includes(search))
+      : orders;
+    const sortedOrders = adjustedQuery.sort
+      ? [...matchingOrders].sort((left, right) => {
+          const leftValue = String(left[adjustedQuery.sort?.field as keyof Order] ?? '');
+          const rightValue = String(right[adjustedQuery.sort?.field as keyof Order] ?? '');
+          return adjustedQuery.sort?.direction === 'asc' ? leftValue.localeCompare(rightValue) : rightValue.localeCompare(leftValue);
+        })
+      : matchingOrders;
+    const offset = (adjustedQuery.page - 1) * adjustedQuery.pageSize;
+    return {data: sortedOrders.slice(offset, offset + adjustedQuery.pageSize), total: sortedOrders.length};
+  }, [adjustedQuery]);
+
+  return <Table
+    columns={columns}
+    data={visibleOrders.data}
+    rowId="id"
+    query={adjustedQuery}
+    pagination={{total: visibleOrders.total}}
+    formatOptions={formatOptions}
+    {...(showFilters ? {filters: [{key: 'customer', label: 'Customer', type: 'text' as const, operators: ['contains' as const]}]} : {})}
+    selection={selection}
+    onSelectionChange={setSelection}
+    onQueryChange={(nextQuery) => setQuery({...nextQuery, pageSize})}
+    loading={loading}
+  />;
+}
+
 const meta = {
   title: 'Components/Table',
-  component: ControlledTableExample,
+  component: TablePlayground,
   parameters: {
     docs: {
       description: {
@@ -165,13 +201,23 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof ControlledTableExample>;
+  argTypes: {
+    pageSize: {control: {type: 'select'}, options: [2, 3, 5]},
+    showFilters: {control: 'boolean'},
+    loading: {control: 'boolean'},
+  },
+} satisfies Meta<typeof TablePlayground>;
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<TablePlaygroundProps>;
 
 export const ControlledTable: Story = {render: () => <ControlledTableExample />};
+
+export const Playground: Story = {
+  args: {pageSize: 3, showFilters: true, loading: false},
+  render: (args) => <TablePlayground {...args} />,
+};
 
 export const LoadingAndEmptyState: Story = {render: () => <LoadingAndEmptyStateExample />};
 

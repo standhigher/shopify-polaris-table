@@ -16,7 +16,7 @@ import {
 } from '../index';
 
 const meta = {
-  title: 'Advanced/Overview',
+  title: 'Advanced helpers/Overview',
   parameters: {
     docs: {
       description: {

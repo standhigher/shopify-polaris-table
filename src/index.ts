@@ -7,6 +7,7 @@ export type {
   ExtensionTableColumnType,
   ExtensionTableHostCapabilities,
   ExtensionTableHostContext,
+  ExtensionTableLabels,
   ExtensionTableProps,
   ExtensionTableRowAction,
 } from './components/ExtensionTable/ExtensionTable';

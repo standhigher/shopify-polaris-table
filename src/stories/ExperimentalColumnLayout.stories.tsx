@@ -4,6 +4,7 @@ import {useState} from 'react';
 
 import {ColumnLayoutPOC} from '../experimental/ColumnLayoutPOC';
 import {createColumnLayoutState} from '../v3/columns';
+import {useStorybookCopy} from './storybookI18n';
 
 const rows = [
   {id: '1', customer: 'Ada Lovelace', status: 'Active', total: '$320.00'},
@@ -18,7 +19,7 @@ const initialLayout = createColumnLayoutState([
 ]);
 
 const meta = {
-  title: 'Advanced/Experimental Column Layout',
+  title: 'Internal experiments/Column Layout',
   parameters: {docs: {description: {component: 'Internal 0.8 POC. Controlled resize/reorder boundaries only; not a public API or a drag-and-drop implementation.'}}},
 } satisfies Meta;
 
@@ -28,8 +29,9 @@ type Story = StoryObj<typeof meta>;
 export const ControlledResizeAndReorder: Story = {
   render: function Render() {
     const [layout, setLayout] = useState(initialLayout);
+    const {text} = useStorybookCopy();
     return <Card>
-      <Text as="p" variant="bodySm">Use the header arrow buttons or Alt+ArrowLeft / Alt+ArrowRight to reorder. Range controls resize each column. State is controlled in the host; persistence, drag-and-drop, sticky columns, and V1 Table integration are deliberately out of scope.</Text>
+      <Text as="p" variant="bodySm">{text('Internal experiment: use header arrows or Alt+ArrowLeft / Alt+ArrowRight to reorder. Range controls resize columns. Persistence, drag-and-drop, sticky columns, and V1 Table integration remain out of scope.', '内部实验：使用表头箭头或 Alt+方向键调整顺序，范围控件调整列宽。持久化、拖放、固定列与 V1 Table 集成均不在范围内。')}</Text>
       <ColumnLayoutPOC
         columns={[
           {id: 'customer', heading: 'Customer', minWidth: 120, maxWidth: 300, render: (row) => row.customer},
@@ -40,7 +42,7 @@ export const ControlledResizeAndReorder: Story = {
         onLayoutChange={setLayout}
         rows={rows}
         rowId={(row) => row.id}
-        ariaLabel="Experimental controlled column layout"
+        ariaLabel={text('Experimental controlled column layout', '实验性受控列布局')}
       />
     </Card>;
   },

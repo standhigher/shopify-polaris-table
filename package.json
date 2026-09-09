@@ -1,6 +1,6 @@
 {
   "name": "@standhigher/polaris-data-table",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Controlled, server-driven data tables for Shopify Polaris applications.",
   "keywords": [
     "typescript",
@@ -89,6 +89,8 @@
   },
   "devDependencies": {
     "@shopify/polaris": "^13.9.5",
+    "@storybook/addon-a11y": "^10.6.0",
+    "@storybook/addon-docs": "^10.6.0",
     "@storybook/react-vite": "^10.5.8",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",

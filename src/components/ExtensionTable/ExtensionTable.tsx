@@ -38,6 +38,20 @@ export interface ExtensionTableRowAction<T extends object> {
   perform: (context: {row: T; rowId: string; host: ExtensionTableHostContext}) => void | Promise<void>;
 }
 
+/** Strings owned by ExtensionTable. Hosts can localize them without coupling to Polaris Admin globals. */
+export interface ExtensionTableLabels {
+  table: string;
+  select: string;
+  selectRow: (rowId: string) => string;
+  action: string;
+  loading: string;
+  noResults: string;
+  retry: string;
+  actionFailed: string;
+  loadMore: string;
+  loadMoreFailed: string;
+}
+
 export interface ExtensionTableProps<T extends object> {
   columns: readonly ExtensionTableColumn<T>[];
   data: readonly T[];
@@ -59,23 +73,24 @@ export interface ExtensionTableProps<T extends object> {
   hasMore?: boolean;
   loadingMore?: boolean;
   onLoadMore?: () => void | Promise<void>;
+  labels?: Partial<ExtensionTableLabels>;
 }
 
 function getRowId<T extends object>(row: T, rowId: ExtensionTableProps<T>['rowId']): string {
   return typeof rowId === 'function' ? rowId(row) : String(row[rowId]);
 }
 
-function defaultErrorState(error: ReactNode, onRetry?: () => void) {
+function defaultErrorState(error: ReactNode, onRetry: (() => void) | undefined, retryLabel: string) {
   return <div role="alert">
     <div>{error}</div>
-    {onRetry ? <button type="button" onClick={onRetry}>Retry</button> : null}
+    {onRetry ? <button type="button" onClick={onRetry}>{retryLabel}</button> : null}
   </div>;
 }
 
 /** A narrow-host renderer with no URL state, Saved Views, bulk selection, or offset pagination. */
 export function ExtensionTable<T extends object>({
   columns, data, rowId, host, readOnly = false, compact = false, selectedRowId, onSelectionChange, rowAction,
-  loading = false, error, onRetry, loadingState, emptyState, errorState, hasMore = false, loadingMore = false, onLoadMore,
+  loading = false, error, onRetry, loadingState, emptyState, errorState, hasMore = false, loadingMore = false, onLoadMore, labels = {},
 }: ExtensionTableProps<T>) {
   const [actionError, setActionError] = useState<ReactNode>();
   const [pendingRowId, setPendingRowId] = useState<string>();
@@ -86,28 +101,33 @@ export function ExtensionTable<T extends object>({
   const loadMoreEnabled = host.capabilities?.loadMore !== false && onLoadMore !== undefined;
   const gridColumns = `${selectionEnabled ? 'auto ' : ''}repeat(${visibleColumns.length}, minmax(0, 1fr))${actionEnabled ? ' auto' : ''}`;
   const cellStyle = {minWidth: 0, overflowWrap: 'anywhere' as const, padding: compact ? '0.375rem' : '0.75rem'};
+  const text: ExtensionTableLabels = {
+    table: labels.table ?? 'Extension table', select: labels.select ?? 'Select', selectRow: labels.selectRow ?? ((id) => `Select ${id}`),
+    action: labels.action ?? 'Action', loading: labels.loading ?? 'Loading…', noResults: labels.noResults ?? 'No results', retry: labels.retry ?? 'Retry',
+    actionFailed: labels.actionFailed ?? 'Action failed', loadMore: labels.loadMore ?? 'Load more', loadMoreFailed: labels.loadMoreFailed ?? 'Could not load more rows',
+  };
 
-  if (error) return <>{errorState ? errorState({error, ...(onRetry ? {onRetry} : {})}) : defaultErrorState(error, onRetry)}</>;
-  if (loading && data.length === 0) return <div role="status">{loadingState ?? 'Loading…'}</div>;
-  if (data.length === 0) return <>{emptyState ?? <div>No results</div>}</>;
+  if (error) return <>{errorState ? errorState({error, ...(onRetry ? {onRetry} : {})}) : defaultErrorState(error, onRetry, text.retry)}</>;
+  if (loading && data.length === 0) return <div role="status">{loadingState ?? text.loading}</div>;
+  if (data.length === 0) return <>{emptyState ?? <div>{text.noResults}</div>}</>;
 
   return <div data-extension-table="true">
-    <div role="table" aria-label="Extension table">
+    <div role="table" aria-label={text.table}>
       <div role="row" style={{display: 'grid', gridTemplateColumns: gridColumns, fontWeight: 600}}>
-        {selectionEnabled ? <div role="columnheader" style={cellStyle}>Select</div> : null}
+        {selectionEnabled ? <div role="columnheader" style={cellStyle}>{text.select}</div> : null}
         {visibleColumns.map((column) => <div key={column.key} role="columnheader" style={cellStyle}>{column.title}</div>)}
-        {actionEnabled ? <div role="columnheader" style={cellStyle}>Action</div> : null}
+        {actionEnabled ? <div role="columnheader" style={cellStyle}>{text.action}</div> : null}
       </div>
       {data.map((row) => {
         const id = getRowId(row, rowId);
         return <div key={id} role="row" style={{display: 'grid', gridTemplateColumns: gridColumns, alignItems: 'center', borderTop: '1px solid var(--p-color-border-secondary, #d2d5d8)'}}>
-          {selectionEnabled ? <div role="cell" style={cellStyle}><input type="radio" aria-label={`Select ${id}`} checked={selectedRowId === id} onChange={() => onSelectionChange(selectedRowId === id ? undefined : id)} /></div> : null}
+          {selectionEnabled ? <div role="cell" style={cellStyle}><input type="radio" aria-label={text.selectRow(id)} checked={selectedRowId === id} onChange={() => onSelectionChange(selectedRowId === id ? undefined : id)} /></div> : null}
           {visibleColumns.map((column) => <div key={column.key} role="cell" style={cellStyle}>{column.render({row, columnKey: column.key, host})}</div>)}
           {actionEnabled && rowAction ? <div role="cell" style={cellStyle}><button type="button" disabled={pendingRowId === id} onClick={() => {
             setActionError(undefined);
             setPendingRowId(id);
             void Promise.resolve(rowAction.perform({row, rowId: id, host})).catch((reason: unknown) => {
-              setActionError(reason instanceof Error ? reason.message : 'Action failed');
+              setActionError(reason instanceof Error ? reason.message : text.actionFailed);
             }).finally(() => setPendingRowId(undefined));
           }}>{rowAction.content}</button></div> : null}
         </div>;
@@ -116,8 +136,8 @@ export function ExtensionTable<T extends object>({
     {actionError ? <div role="alert">{actionError}</div> : null}
     {hasMore && loadMoreEnabled ? <div style={{marginTop: compact ? '0.5rem' : '0.75rem'}}><button type="button" disabled={loadingMore} onClick={() => {
       setLoadMoreError(undefined);
-      void Promise.resolve(onLoadMore()).catch((reason: unknown) => setLoadMoreError(reason instanceof Error ? reason.message : 'Could not load more rows'));
-    }}>{loadingMore ? 'Loading…' : 'Load more'}</button></div> : null}
+      void Promise.resolve(onLoadMore()).catch((reason: unknown) => setLoadMoreError(reason instanceof Error ? reason.message : text.loadMoreFailed));
+    }}>{loadingMore ? text.loading : text.loadMore}</button></div> : null}
     {loadMoreError ? <div role="alert">{loadMoreError}</div> : null}
   </div>;
 }

@@ -15,7 +15,7 @@ type SelectAllMatchingHandler = (query: TableQuery) => Promise<{
 }>;
 
 const meta = {
-  title: 'Features/Selection',
+  title: 'Integration features/Selection',
   parameters: {
     docs: {
       description: {

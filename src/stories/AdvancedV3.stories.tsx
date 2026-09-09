@@ -22,7 +22,7 @@ import {
 } from '../index';
 import type {ExpandableRowsState} from '../v3/expandable';
 
-const meta = {title: 'Advanced/V3'} satisfies Meta;
+const meta = {title: 'Advanced helpers/V3'} satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

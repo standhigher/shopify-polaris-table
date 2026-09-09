@@ -84,4 +84,15 @@ describe('ExtensionTable', () => {
     expect(await screen.findByText('Action denied')).toBeInTheDocument();
     expect(await screen.findByText('No connection')).toBeInTheDocument();
   });
+
+  it('accepts host-owned labels for its built-in UI', () => {
+    render(<ExtensionTable
+      columns={columns}
+      data={[]}
+      rowId="id"
+      host={{locale: 'zh-CN', timeZone: 'UTC'}}
+      labels={{noResults: '暂无结果', loading: '正在加载…', retry: '重试'}}
+    />);
+    expect(screen.getByText('暂无结果')).toBeInTheDocument();
+  });
 });

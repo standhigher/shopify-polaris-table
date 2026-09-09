@@ -8,6 +8,20 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 No unreleased changes.
 
+## [1.1.0] - 2026-09-09
+
+### Added
+
+- Added Storybook Docs, axe-based accessibility checks, and 320px, 375px, and 768px responsive preview presets.
+- Added English-first Storybook language switching with Simplified Chinese preview copy for key component and internal-experiment scenarios.
+- Added controlled Storybook examples for `TableColumnVisibility`, `TableFilterPresets`, and `TableViews`, plus Table and Extension Table playground controls.
+- Added Extension Table state coverage for loading, empty, retry, Load More failure, and row-action failure, and added host-overridable `ExtensionTableLabels` for built-in UI copy.
+- Added a bilingual StandHigher product-discovery section and website page for BestTrack, BestUpsell, BestFeed AI, and BestBundle.
+
+### Changed
+
+- Reorganized Storybook navigation around components, integration features, presets, advanced helpers, and explicitly labeled internal experiments.
+
 ## [1.0.0] - 2026-09-09
 
 ### Added
@@ -109,7 +123,8 @@ No unreleased changes.
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/standhigher/shopify-polaris-table/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.8.0...v1.0.0
 [0.8.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.1...v0.7.0
