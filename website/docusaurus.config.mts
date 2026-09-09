@@ -57,6 +57,11 @@ const config: Config = {
           label: 'Documentation',
         },
         {
+          to: '/products',
+          position: 'left',
+          label: 'Products',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
         },

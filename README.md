@@ -24,6 +24,17 @@ It renders familiar Polaris table UI while your application retains control of f
 - [Roadmap](docs/roadmap.md)
 - [Changelog](https://github.com/standhigher/shopify-polaris-table/blob/main/CHANGELOG.md)
 
+## Built by standhigher
+
+`@standhigher/polaris-data-table` is built by standhigher for Shopify app teams. Explore [standhigher Products](https://standhigher.github.io/shopify-polaris-table/products?utm_source=GitHub&utm_medium=social&utm_content=standhigher-polaris-data-table) to discover apps that help merchants grow.
+
+| App | What it helps with |
+| --- | --- |
+| [BestTrack](https://apps.shopify.com/besttrack?utm_source=GitHub&utm_medium=social) | Branded order tracking and proactive delivery updates. |
+| [BestUpsell](https://apps.shopify.com/bestupsellapp?utm_source=GitHub&utm_medium=social) | Upsells, bundles, cart offers, and post-purchase deals. |
+| [BestFeed AI](https://apps.shopify.com/bestfeed?utm_source=GitHub&utm_medium=social) | Product optimization for AI search experiences. |
+| [BestBundle: AI Bundles](https://apps.shopify.com/bestbundle?utm_source=GitHub&utm_medium=social) | AI-assisted bundles, gifts, and offer performance tracking. |
+
 ## Installation
 
 ```bash

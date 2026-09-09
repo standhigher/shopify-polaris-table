@@ -14,3 +14,86 @@
   margin: 1.5rem 0;
   padding: 1rem 1.25rem;
 }
+
+.products-page {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 4rem 1.5rem;
+}
+
+.products-hero {
+  margin-bottom: 2.5rem;
+  max-width: 42rem;
+}
+
+.products-hero h1 {
+  margin-bottom: 0.75rem;
+}
+
+.products-eyebrow {
+  color: var(--ifm-color-primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.products-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.product-card {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.product-heading {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.product-heading h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.product-logo {
+  border-radius: 0.75rem;
+  flex: 0 0 auto;
+}
+
+.product-card > p {
+  flex: 1;
+  margin: 1rem 0 1.25rem;
+}
+
+.product-cta {
+  align-self: flex-start;
+  background: var(--ifm-color-primary);
+  border-radius: var(--ifm-button-border-radius);
+  color: var(--ifm-button-color);
+  font-weight: var(--ifm-button-font-weight);
+  padding: var(--ifm-button-padding-vertical) var(--ifm-button-padding-horizontal);
+}
+
+.product-cta:hover {
+  color: var(--ifm-button-color);
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .products-page {
+    padding: 2.5rem 1rem;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}

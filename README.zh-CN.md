@@ -24,6 +24,17 @@
 - [Roadmap](docs/roadmap.md)
 - [更新日志](https://github.com/standhigher/shopify-polaris-table/blob/main/CHANGELOG.md)
 
+## 由 standhigher 打造
+
+`@standhigher/polaris-data-table` 由 standhigher 为 Shopify 应用团队打造。访问 [standhigher Products](https://standhigher.github.io/shopify-polaris-table/products?utm_source=GitHub&utm_medium=social&utm_content=standhigher-polaris-data-table)，探索帮助商家增长的应用。
+
+| 应用 | 可帮助商家完成 |
+| --- | --- |
+| [BestTrack](https://apps.shopify.com/besttrack?utm_source=GitHub&utm_medium=social) | 品牌化订单追踪和主动送达通知。 |
+| [BestUpsell](https://apps.shopify.com/bestupsellapp?utm_source=GitHub&utm_medium=social) | 加购推荐、组合销售、购物车优惠和购后优惠。 |
+| [BestFeed AI](https://apps.shopify.com/bestfeed?utm_source=GitHub&utm_medium=social) | 面向 AI 搜索体验的商品内容优化。 |
+| [BestBundle: AI Bundles](https://apps.shopify.com/bestbundle?utm_source=GitHub&utm_medium=social) | AI 辅助组合、赠品与优惠效果追踪。 |
+
 ## 安装
 
 ```bash
