@@ -2,11 +2,11 @@
 
 本文档描述 `@standhigher/polaris-data-table` 面向 Shopify App 产品矩阵的产品定位、当前能力、后续迭代和长期演进方向。
 
-当前仓库版本：`v0.4.0`
+当前仓库版本：`v0.5.0`
 
 > 本文档中的版本号是建议的里程碑，不代表已经承诺的发布日期。每个阶段都应以真实业务接入、兼容性验证和验收结果为准。
 
-按版本拆分的编码任务见 [`docs/superpowers/plans/2026-09-04-shopify-app-table-version-roadmap.md`](superpowers/plans/2026-09-04-shopify-app-table-version-roadmap.md)。当前只完成任务拆分，尚未开始编码。
+按版本拆分的现行开发任务见 [`docs/superpowers/plans/2026-09-09-version-roadmap-tasks.md`](superpowers/plans/2026-09-09-version-roadmap-tasks.md)。0.5 的原始任务拆分保留为[历史记录](superpowers/plans/2026-09-04-shopify-app-table-version-roadmap.md)；其稳定性工作已随 `v0.5.0` 发布完成，后续迭代从 0.6 开始。
 
 ## 1. 产品定位
 
@@ -107,22 +107,13 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 
 ## 4. 当前主要缺口
 
-以下问题应优先于新增复杂能力：
+`v0.5.0` 已完成 V1 行为闭环，包括 date-range 部分范围输入、definition-driven filter operator allowlist、行操作与行选择隔离、Actions 列结构、ReactNode action content 保留、批量操作及 selection token 反馈，以及受控状态文案。详见 [`CHANGELOG.md`](../CHANGELOG.md)。
 
-### V1 行为闭环
-
-- date-range 当前尚未完整提供 from/to 双端输入
-- filter operator allowlist 尚未在所有控件中严格执行
-- 行操作按钮存在触发行选择的冒泡风险
-- 行操作列缺少统一的 Actions heading
-- 批量操作结果尚未完整反馈成功数、失败数和异步 operation ID
-- ReactNode action content 当前可能被转换成字符串
-- all-matching token 的过期、失败和权限变化缺少完整 UI 闭环
-- 搜索 debounce 和部分状态文案还不够完整可配置
+以下剩余问题应优先于新增复杂能力：
 
 ### Admin 产品化
 
-- visible columns helper 尚未成为 `Table` 的正式受控 props
+- `Table` 的受控 visible columns、必需列保护、schema reconcile 和列配置控件已完成，待随 `0.6` 发布
 - Saved Views 和 Filter Presets 目前主要是底层协议，不是完整交互模块
 - UI 文案国际化配置不足
 - status、image、error 等 renderer 还需要更完整的 Polaris 体验
@@ -136,11 +127,11 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 
 ## 5. Roadmap
 
-### Milestone 0.5：V1 基础稳定性
+### Milestone 0.5：V1 基础稳定性（已完成，`v0.5.0`）
 
-目标：让当前 Admin Table 的核心交互形成完整、可预期的闭环。
+已实现目标：让 Admin Table 的核心交互形成完整、可预期的闭环。
 
-重点工作：
+已完成工作：
 
 - 完整实现 date-range filter
 - 统一执行 filter operator allowlist
@@ -152,7 +143,7 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 - 统一错误、重试、空态和页面越界行为
 - 增加键盘操作、屏幕阅读器和真实 Polaris DOM 测试
 
-验收标准：
+验收结果：
 
 - Product、Order、Customer 三类典型列表可以接入
 - 查询、选择、行操作和批量操作不会互相误触发
@@ -165,7 +156,7 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 
 重点工作：
 
-- 将 `visibleColumnKeys` / `onVisibleColumnsChange` 接入 `Table`
+- 已完成：将 `visibleColumnKeys` / `onVisibleColumnsChange` 接入 `Table`
 - 增加列显示/隐藏、列重置和 schema migration 体验
 - 提供 Saved Views 的默认视图、切换、创建、重命名和删除流程
 - 提供 Filter Presets 的展示和应用组件
@@ -275,7 +266,7 @@ src/presets/
 ## 6. 版本与发布策略
 
 - `0.x`：允许快速补齐行为，但每次变更必须记录公共 API 影响
-- `0.5`：优先修复 V1 交互闭环
+- `0.5`：已完成 V1 交互闭环（`v0.5.0`）
 - `0.6`：优先提升 Admin 产品复用效率
 - `0.7`：交付 Extension-safe 最小能力
 - `0.8`：按业务证据推进性能和复杂交互

@@ -27,7 +27,20 @@ const restoredQuery = decodeTableQuery(search, options);
 
 `TableView` 会捕获 `TableQuery`、visible column keys、owner 和 update timestamp。在应用中实现 `TableViewRepository` 以处理 storage、authorization、uniqueness 和 conflict responses，然后用 `createTableViewManager` 包装它来获得 local write state。
 
-在 column schema 改变后恢复 saved view 时，使用 `sanitizeVisibleColumnKeys`、`getVisibleColumns` 和 `reconcileVisibleColumnState`。visibility 永远不会改变 data，但 reconciliation 会移除已隐藏字段上的 saved sort 或 filter。
+`Table` 可以提供列显隐 UI，而应用继续持有偏好状态。传入 `visibleColumnKeys` 和 `onVisibleColumnsChange`；省略 `visibleColumnKeys` 时，所有声明的列都会显示。使用 `requiredColumnKeys` 标记绝不能隐藏的标识列。
+
+```tsx
+const [visibleColumnKeys, setVisibleColumnKeys] = useState(['id', 'name', 'status']);
+
+<Table
+  {...tableProps}
+  visibleColumnKeys={visibleColumnKeys}
+  requiredColumnKeys={['id']}
+  onVisibleColumnsChange={setVisibleColumnKeys}
+/>
+```
+
+内置的 **Columns** 控件支持显示、隐藏和重置列。保存的偏好若引用了已删除或重复的 key，`Table` 会通过 `onVisibleColumnsChange` 回传清理后的 keys；同时会通过 `onQueryChange` 移除刚隐藏字段上的 sort 和 filters。若在 `Table` 外恢复 saved state，请使用 `sanitizeVisibleColumnKeys`、`getVisibleColumns` 和 `reconcileVisibleColumnState`。
 
 ## Filter presets
 

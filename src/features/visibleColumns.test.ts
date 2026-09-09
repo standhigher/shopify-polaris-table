@@ -25,4 +25,21 @@ describe('visible column state', () => {
     expect(result.visibleColumnKeys).toEqual(['id', 'name']);
     expect(result.query).toEqual({page: 2, pageSize: 25, filters: {name: {operator: 'contains', value: 'shoe'}}});
   });
+
+  it('keeps required columns visible while reconciling stale preferences', () => {
+    const result = reconcileVisibleColumnState({
+      columns,
+      visibleColumnKeys: ['status', 'removed'],
+      requiredColumnKeys: ['id', 'missing'],
+      query: {page: 1, pageSize: 25, sort: {field: 'id', direction: 'asc'}},
+    });
+
+    expect(result.visibleColumnKeys).toEqual(['status', 'id']);
+    expect(result.query).toEqual({page: 1, pageSize: 25, sort: {field: 'id', direction: 'asc'}});
+    expect(getVisibleColumns(columns, result.visibleColumnKeys, ['id']).map((column) => column.key)).toEqual(['id', 'status']);
+  });
+
+  it('keeps the first declared column when a stale preference hides every column', () => {
+    expect(sanitizeVisibleColumnKeys([], columns)).toEqual(['id']);
+  });
 });

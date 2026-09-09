@@ -162,6 +162,12 @@ export interface TableSelectAllMatchingResult {
 
 export interface TableProps<T extends object> {
   columns: readonly TableColumn<T>[];
+  /** Controlled visible column keys. Omit to render every declared column. */
+  visibleColumnKeys?: readonly string[];
+  /** Receives a sanitized column preference after the user changes visibility or the schema changes. */
+  onVisibleColumnsChange?: (visibleColumnKeys: readonly string[]) => void;
+  /** Column keys that must remain visible whenever column visibility is controlled. */
+  requiredColumnKeys?: readonly string[];
   data: readonly T[];
   rowId: Extract<keyof T, string> | ((row: T) => string);
   query: TableQuery;

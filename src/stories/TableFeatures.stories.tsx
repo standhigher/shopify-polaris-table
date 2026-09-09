@@ -175,3 +175,26 @@ export const LocalizedStates: Story = {
     />;
   },
 };
+
+export const ColumnVisibility: Story = {
+  name: 'Column Visibility',
+  render: () => {
+    const {query, setQuery, selection, setSelection, visiblePage} = useStoryTable(storyProducts);
+    const [visibleColumnKeys, setVisibleColumnKeys] = useState(['title', 'status', 'inventory', 'price', 'updatedAt']);
+
+    return <Table
+      columns={createProductColumns()}
+      visibleColumnKeys={visibleColumnKeys}
+      requiredColumnKeys={['title']}
+      onVisibleColumnsChange={(keys) => setVisibleColumnKeys([...keys])}
+      data={visiblePage.data}
+      rowId={(row) => row.id}
+      query={query}
+      pagination={{total: visiblePage.total}}
+      formatOptions={defaultFormatOptions}
+      selection={selection}
+      onSelectionChange={setSelection}
+      onQueryChange={setQuery}
+    />;
+  },
+};

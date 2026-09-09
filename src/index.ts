@@ -1,5 +1,7 @@
 export * from './types';
 export {Table} from './components/Table/Table';
+export {TableColumnVisibility} from './components/TableColumnVisibility/TableColumnVisibility';
+export type {TableColumnVisibilityProps} from './components/TableColumnVisibility/TableColumnVisibility';
 export {renderCell, getColumnValue} from './columns/renderCell';
 export type {UseTableQueryOptions, UseTableQueryResult} from './hooks/useTableQuery';
 export {

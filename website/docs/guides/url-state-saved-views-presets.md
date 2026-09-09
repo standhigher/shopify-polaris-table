@@ -27,7 +27,20 @@ Only allowlisted, non-sensitive filters are written or restored. Malformed filte
 
 A `TableView` captures a `TableQuery`, visible column keys, owner, and update timestamp. Implement `TableViewRepository` in the application for storage, authorization, uniqueness, and conflict responses, then wrap it with `createTableViewManager` for local write state.
 
-Use `sanitizeVisibleColumnKeys`, `getVisibleColumns`, and `reconcileVisibleColumnState` when restoring a saved view after a column schema change. Visibility never changes data, but a saved sort or filter for a now-hidden field is removed by reconciliation.
+`Table` can own the visible-column UI while the application retains the preference. Pass `visibleColumnKeys` and `onVisibleColumnsChange`; omit `visibleColumnKeys` to render every declared column. Use `requiredColumnKeys` for identifiers that must never be hidden.
+
+```tsx
+const [visibleColumnKeys, setVisibleColumnKeys] = useState(['id', 'name', 'status']);
+
+<Table
+  {...tableProps}
+  visibleColumnKeys={visibleColumnKeys}
+  requiredColumnKeys={['id']}
+  onVisibleColumnsChange={setVisibleColumnKeys}
+/>
+```
+
+The built-in **Columns** control supports show, hide, and reset. When a saved preference references removed or duplicate keys, `Table` calls `onVisibleColumnsChange` with the sanitized keys. It also calls `onQueryChange` with any sort or filters for newly hidden fields removed. Use `sanitizeVisibleColumnKeys`, `getVisibleColumns`, and `reconcileVisibleColumnState` when restoring saved state outside `Table`.
 
 ## Filter presets
 

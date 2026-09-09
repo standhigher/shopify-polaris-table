@@ -5,7 +5,9 @@ import type {ReactNode} from 'react';
 import {renderCell} from '../../columns/renderCell';
 import {createIdempotencyKey} from '../../core';
 import type {TableProps} from '../../types';
+import {getVisibleColumns, reconcileVisibleColumnState} from '../../features/visibleColumns';
 import {addExcludedId, clearSelection, getRowId, isRowSelected, isSelectionExpired, removeExcludedId, selectCurrentPage, toggleExplicitId} from '../../features/selection';
+import {TableColumnVisibility} from '../TableColumnVisibility/TableColumnVisibility';
 import {TablePagination} from '../TablePagination/TablePagination';
 import {TableFilters} from '../TableFilters/TableFilters';
 import {TableRow} from './TableRow';
@@ -13,12 +15,28 @@ import {TableState} from './TableState';
 
 export function Table<T extends object>(props: TableProps<T>) {
   const {
-    columns, data, rowId, query, pagination, formatOptions, filters, selection, onSelectionChange,
+    columns, visibleColumnKeys, onVisibleColumnsChange, requiredColumnKeys, data, rowId, query, pagination, formatOptions, filters, selection, onSelectionChange,
     onSelectAllMatching, rowActions = [], bulkActions = [], onFormatWarning, labels = {}, loading, error, emptyState,
     onRetry, onQueryChange,
   } = props;
   const [pendingAction, setPendingAction] = useState<string | null>(null);
   const [actionFeedback, setActionFeedback] = useState<ReactNode>(null);
+  const reconciledColumnState = useMemo(() => visibleColumnKeys === undefined ? undefined : reconcileVisibleColumnState({
+    columns,
+    visibleColumnKeys,
+    query,
+    ...(requiredColumnKeys ? {requiredColumnKeys} : {}),
+  }), [columns, query, requiredColumnKeys, visibleColumnKeys]);
+  useEffect(() => {
+    if (!reconciledColumnState) return;
+
+    if (onVisibleColumnsChange && JSON.stringify(visibleColumnKeys) !== JSON.stringify(reconciledColumnState.visibleColumnKeys)) {
+      onVisibleColumnsChange(reconciledColumnState.visibleColumnKeys);
+    }
+    if (JSON.stringify(query) !== JSON.stringify(reconciledColumnState.query)) {
+      onQueryChange(reconciledColumnState.query);
+    }
+  }, [onQueryChange, onVisibleColumnsChange, query, reconciledColumnState, visibleColumnKeys]);
   const querySnapshot = JSON.stringify(query);
   const previousQuerySnapshot = useRef(querySnapshot);
   useEffect(() => {
@@ -31,7 +49,7 @@ export function Table<T extends object>(props: TableProps<T>) {
   useEffect(() => {
     if (selectionExpired) onSelectionChange(clearSelection());
   }, [onSelectionChange, selectionExpired]);
-  const visibleColumns = columns;
+  const visibleColumns = getVisibleColumns(columns, visibleColumnKeys, requiredColumnKeys);
   const ids = useMemo(() => data.map((row) => getRowId(row, rowId)), [data, rowId]);
   const selectedOnPage = ids.filter((id) => isRowSelected(selection, id));
   const allPageSelected = ids.length > 0 && selectedOnPage.length === ids.length;
@@ -96,6 +114,12 @@ export function Table<T extends object>(props: TableProps<T>) {
   })) : undefined;
 
   return <>
+    {onVisibleColumnsChange ? <TableColumnVisibility
+      columns={columns}
+      visibleColumnKeys={visibleColumnKeys}
+      onVisibleColumnsChange={onVisibleColumnsChange}
+      {...(requiredColumnKeys ? {requiredColumnKeys} : {})}
+    /> : null}
     {filters ? <TableFilters query={query} filters={filters} onQueryChange={onQueryChange} loading={loading ?? false} /> : null}
     {selectionExpired ? <Banner tone="warning">{labels.selectionExpired ?? 'Selection has expired. Please select the rows again.'}</Banner> : null}
     {actionFeedback}

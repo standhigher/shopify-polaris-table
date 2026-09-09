@@ -198,4 +198,51 @@ describe('Table', () => {
     );
     await waitFor(() => expect(screen.getByText('Order selection expired')).toBeInTheDocument());
   });
+
+  it('renders only controlled visible columns and keeps required columns visible', async () => {
+    const onVisibleColumnsChange = vi.fn();
+    render(
+      <Table
+        {...baseProps}
+        visibleColumnKeys={['amount']}
+        requiredColumnKeys={['name']}
+        onVisibleColumnsChange={onVisibleColumnsChange}
+      />,
+    );
+
+    expect(screen.getByRole('columnheader', {name: 'Name'})).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', {name: 'Amount'})).toBeInTheDocument();
+    await waitFor(() => expect(onVisibleColumnsChange).toHaveBeenCalledWith(['amount', 'name']));
+  });
+
+  it('reconciles stale visible-column preferences and removes hidden query fields', async () => {
+    const onVisibleColumnsChange = vi.fn();
+    const onQueryChange = vi.fn();
+    const query = {
+      page: 1,
+      pageSize: 10,
+      sort: {field: 'amount', direction: 'desc' as const},
+      filters: {
+        amount: {operator: 'equals' as const, value: 2},
+        name: {operator: 'contains' as const, value: 'Shoe'},
+      },
+    };
+    render(
+      <Table
+        {...baseProps}
+        query={query}
+        visibleColumnKeys={['name', 'removed']}
+        onVisibleColumnsChange={onVisibleColumnsChange}
+        onQueryChange={onQueryChange}
+      />,
+    );
+
+    expect(screen.queryByRole('columnheader', {name: 'Amount'})).not.toBeInTheDocument();
+    await waitFor(() => expect(onVisibleColumnsChange).toHaveBeenCalledWith(['name']));
+    await waitFor(() => expect(onQueryChange).toHaveBeenCalledWith({
+      page: 1,
+      pageSize: 10,
+      filters: {name: {operator: 'contains', value: 'Shoe'}},
+    }));
+  });
 });

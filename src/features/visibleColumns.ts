@@ -7,24 +7,37 @@ import type {TableColumn, TableQuery} from '../types';
 export function sanitizeVisibleColumnKeys<T extends object>(
   visibleColumnKeys: readonly string[],
   columns: readonly TableColumn<T>[],
+  requiredColumnKeys: readonly string[] = [],
 ): string[] {
   const knownKeys = new Set(columns.map((column) => String(column.key)));
   const seen = new Set<string>();
+  const sanitizedRequiredKeys = requiredColumnKeys.filter((key) => knownKeys.has(key));
 
-  return visibleColumnKeys.filter((key) => {
+  const sanitizedKeys = visibleColumnKeys.filter((key) => {
     if (!knownKeys.has(key) || seen.has(key)) return false;
     seen.add(key);
     return true;
   });
+
+  for (const key of sanitizedRequiredKeys) {
+    if (!seen.has(key)) sanitizedKeys.push(key);
+  }
+
+  if (sanitizedKeys.length === 0 && columns[0]) {
+    sanitizedKeys.push(String(columns[0].key));
+  }
+
+  return sanitizedKeys;
 }
 
 /** The rendering order always follows the declared schema, never stored preference order. */
 export function getVisibleColumns<T extends object>(
   columns: readonly TableColumn<T>[],
   visibleColumnKeys: readonly string[] | undefined,
+  requiredColumnKeys: readonly string[] = [],
 ): readonly TableColumn<T>[] {
   if (visibleColumnKeys === undefined) return columns;
-  const visible = new Set(sanitizeVisibleColumnKeys(visibleColumnKeys, columns));
+  const visible = new Set(sanitizeVisibleColumnKeys(visibleColumnKeys, columns, requiredColumnKeys));
   return columns.filter((column) => visible.has(String(column.key)));
 }
 
@@ -32,6 +45,7 @@ export function getVisibleColumns<T extends object>(
 export interface ReconcileVisibleColumnStateOptions<T extends object> {
   columns: readonly TableColumn<T>[];
   visibleColumnKeys: readonly string[];
+  requiredColumnKeys?: readonly string[];
   query: TableQuery;
 }
 
@@ -50,9 +64,10 @@ export interface ReconciledVisibleColumnState {
 export function reconcileVisibleColumnState<T extends object>({
   columns,
   visibleColumnKeys,
+  requiredColumnKeys,
   query,
 }: ReconcileVisibleColumnStateOptions<T>): ReconciledVisibleColumnState {
-  const sanitizedKeys = sanitizeVisibleColumnKeys(visibleColumnKeys, columns);
+  const sanitizedKeys = sanitizeVisibleColumnKeys(visibleColumnKeys, columns, requiredColumnKeys);
   const visible = new Set(sanitizedKeys);
   const next: TableQuery = {...query};
 
