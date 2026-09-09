@@ -155,6 +155,7 @@
 ### 1.0.1 API、兼容性与迁移冻结
 
 - [ ] 列出稳定、实验、内部和弃用 API，并定义弃用周期。
+- [x] 固定仅支持包根路径导入，并以 npm 包消费者测试阻止 `src/experimental` 进入 tarball。
 - [ ] 为每个 breaking change 准备迁移前后示例和迁移文档。
 - [ ] 验证 React 18/19、Node.js 20+、Polaris 12/13/14 的兼容矩阵。
 - [ ] 确认 Admin 与 Extension 不共享不必要的 UI 依赖。

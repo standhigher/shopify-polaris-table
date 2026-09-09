@@ -39,6 +39,7 @@
   },
   "files": [
     "dist",
+    "!dist/experimental",
     "README.md",
     "README.zh-CN.md",
     "LICENSE",

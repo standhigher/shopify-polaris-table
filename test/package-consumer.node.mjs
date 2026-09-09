@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
-import {mkdtempSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
+import {existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import test from 'node:test';
@@ -22,8 +22,14 @@ test('typechecks a NodeNext consumer installed from the packed tarball', () => {
       ['pack', '--json', '--pack-destination', packDirectory, '--registry=https://registry.npmjs.org/'],
       repositoryRoot,
     );
-    const [{filename}] = JSON.parse(packOutput);
+    const [{filename, files}] = JSON.parse(packOutput);
     const tarballPath = join(packDirectory, filename);
+
+    assert.equal(
+      files.some(({path}) => path.startsWith('dist/experimental/')),
+      false,
+      'internal experiments must not be shipped in the npm tarball',
+    );
 
     writeFileSync(
       join(consumerDirectory, 'package.json'),
@@ -73,6 +79,11 @@ test('typechecks a NodeNext consumer installed from the packed tarball', () => {
       readFileSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'package.json'), 'utf8'),
     );
     assert.equal(installedPackage.name, '@standhigher/polaris-data-table');
+    assert.equal(
+      existsSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'dist', 'experimental')),
+      false,
+      'installed consumers must not receive internal experiment modules',
+    );
   } finally {
     rmSync(packDirectory, {force: true, recursive: true});
     rmSync(consumerDirectory, {force: true, recursive: true});
