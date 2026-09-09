@@ -4,7 +4,7 @@ sidebar_position: 1
 title: API overview
 ---
 
-Generated signatures and TypeScript types are available in the [API reference](/api/reference). This page groups the public exports by purpose and records behavioral rules that signatures alone cannot express. See [API stability and support policy](/api/stability) for the 1.0 import and compatibility boundary.
+Generated signatures and TypeScript types are available in the [API reference](/api/reference). This page groups the public exports by purpose and records behavioral rules that signatures alone cannot express. See the [API stability and support policy](/api/stability) and [compatibility matrix](/api/compatibility) for the 1.0 import and runtime boundary.
 
 ## Table and query
 

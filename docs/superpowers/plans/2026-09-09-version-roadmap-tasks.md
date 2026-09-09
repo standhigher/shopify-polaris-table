@@ -154,10 +154,11 @@
 
 ### 1.0.1 API、兼容性与迁移冻结
 
-- [ ] 列出稳定、实验、内部和弃用 API，并定义弃用周期。
+- [x] 列出稳定、preview、内部和弃用 API，并定义弃用周期，见 [`API stability and support policy`](../../../website/docs/api/stability.md)。
 - [x] 固定仅支持包根路径导入，并以 npm 包消费者测试阻止 `src/experimental` 进入 tarball。
 - [ ] 为每个 breaking change 准备迁移前后示例和迁移文档。
-- [ ] 验证 React 18/19、Node.js 20+、Polaris 12/13/14 的兼容矩阵。
+- [x] 固定 Node.js `>=20`，并在 CI 中运行 Node.js 20、22、24 的核心验证矩阵。
+- [ ] 验证 React 18、Node.js 20+、Polaris 12/13 的兼容矩阵；Polaris React 当前最高为 13，且 12/13 均声明 React 18 peer dependency，因此不将不存在的 Polaris 14 或不兼容的 React 19 作为支持承诺。
 - [ ] 确认 Admin 与 Extension 不共享不必要的 UI 依赖。
 
 ### 1.0.2 产品矩阵接入证据

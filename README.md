@@ -30,7 +30,7 @@ It renders familiar Polaris table UI while your application retains control of f
 npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
 ```
 
-The table requires `@shopify/polaris >=12 <15`, React 18 or newer, and React DOM 18 or newer. Render it under Polaris `AppProvider`; see the [installation guide](https://standhigher.github.io/shopify-polaris-table/getting-started/installation).
+The table requires `@shopify/polaris >=12 <14`, React 18, and React DOM 18. Render it under Polaris `AppProvider`; see the [installation guide](https://standhigher.github.io/shopify-polaris-table/getting-started/installation).
 
 ## Basic usage
 

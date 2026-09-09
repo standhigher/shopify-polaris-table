@@ -28,6 +28,9 @@
   "license": "MIT",
   "private": false,
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -57,6 +60,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:compatibility": "node --test test/compatibility-policy.node.mjs",
     "test:package": "npm run build && node --test test/package-entry.node.mjs test/package-consumer.node.mjs",
     "lint": "eslint .",
     "npm:login": "npm login --auth-type=web --registry=https://registry.npmjs.org/",
@@ -66,12 +70,12 @@
     "docs:api": "typedoc --options website/typedoc.json",
     "docs:build": "npm run build-storybook && npm run build && npm run docs:api && npm --prefix website run build",
     "docs:start": "npm --prefix website run start",
-    "release:check": "npm run lint && npm test && npm run typecheck && npm run build && npm run build-storybook && npm run docs:build && npm pack --dry-run --registry=https://registry.npmjs.org/"
+    "release:check": "npm run lint && npm test && npm run test:compatibility && npm run typecheck && npm run build && npm run build-storybook && npm run docs:build && npm pack --dry-run --registry=https://registry.npmjs.org/"
   },
   "peerDependencies": {
-    "@shopify/polaris": ">=12 <15",
-    "react": ">=18",
-    "react-dom": ">=18"
+    "@shopify/polaris": ">=12 <14",
+    "react": ">=18 <19",
+    "react-dom": ">=18 <19"
   },
   "devDependencies": {
     "@shopify/polaris": "^13.9.5",

@@ -12,9 +12,8 @@ function run(command, args, cwd) {
   return execFileSync(command, args, {cwd, encoding: 'utf8'});
 }
 
-test('typechecks a NodeNext consumer installed from the packed tarball', () => {
+test('typechecks NodeNext consumers for each supported Polaris major', () => {
   const packDirectory = mkdtempSync(join(tmpdir(), 'polaris-data-table-pack-'));
-  const consumerDirectory = mkdtempSync(join(tmpdir(), 'polaris-data-table-consumer-'));
 
   try {
     const packOutput = run(
@@ -31,61 +30,71 @@ test('typechecks a NodeNext consumer installed from the packed tarball', () => {
       'internal experiments must not be shipped in the npm tarball',
     );
 
-    writeFileSync(
-      join(consumerDirectory, 'package.json'),
-      `${JSON.stringify({name: 'package-consumer', private: true, type: 'module'}, null, 2)}\n`,
-    );
-    writeFileSync(
-      join(consumerDirectory, 'index.ts'),
-      "import {Table, type TableQuery} from '@standhigher/polaris-data-table';\n\nconst query: TableQuery = {page: 1, pageSize: 25};\nconst table: typeof Table = Table;\n\nvoid query;\nvoid table;\n",
-    );
-    writeFileSync(
-      join(consumerDirectory, 'tsconfig.json'),
-      `${JSON.stringify(
-        {
-          compilerOptions: {
-            target: 'ES2022',
-            module: 'NodeNext',
-            moduleResolution: 'NodeNext',
-            strict: true,
-            noEmit: true,
-            skipLibCheck: true,
-          },
-        },
-        null,
-        2,
-      )}\n`,
-    );
+    for (const polarisVersion of ['12.27.0', '13.9.5']) {
+      const consumerDirectory = mkdtempSync(join(tmpdir(), `polaris-data-table-consumer-${polarisVersion}-`));
 
-    run(
-      npmCommand,
-      [
-        'install',
-        '--ignore-scripts',
-        '--no-package-lock',
-        tarballPath,
-        '@types/react@18',
-        '@types/react-dom@18',
-      ],
-      consumerDirectory,
-    );
-    run(
-      process.execPath,
-      [join(repositoryRoot, 'node_modules', 'typescript', 'lib', 'tsc.js'), '-p', 'tsconfig.json'],
-      consumerDirectory,
-    );
+      try {
+        writeFileSync(
+          join(consumerDirectory, 'package.json'),
+          `${JSON.stringify({name: 'package-consumer', private: true, type: 'module'}, null, 2)}\n`,
+        );
+        writeFileSync(
+          join(consumerDirectory, 'index.ts'),
+          "import {Table, type TableQuery} from '@standhigher/polaris-data-table';\n\nconst query: TableQuery = {page: 1, pageSize: 25};\nconst table: typeof Table = Table;\n\nvoid query;\nvoid table;\n",
+        );
+        writeFileSync(
+          join(consumerDirectory, 'tsconfig.json'),
+          `${JSON.stringify(
+            {
+              compilerOptions: {
+                target: 'ES2022',
+                module: 'NodeNext',
+                moduleResolution: 'NodeNext',
+                strict: true,
+                noEmit: true,
+                skipLibCheck: true,
+              },
+            },
+            null,
+            2,
+          )}\n`,
+        );
 
-    const installedPackage = JSON.parse(
-      readFileSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'package.json'), 'utf8'),
-    );
-    assert.equal(installedPackage.name, '@standhigher/polaris-data-table');
-    assert.equal(
-      existsSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'dist', 'experimental')),
-      false,
-      'installed consumers must not receive internal experiment modules',
-    );
+        run(
+          npmCommand,
+          [
+            'install',
+            '--ignore-scripts',
+            '--no-package-lock',
+            tarballPath,
+            `@shopify/polaris@${polarisVersion}`,
+            'react@18.3.1',
+            'react-dom@18.3.1',
+            '@types/react@18',
+            '@types/react-dom@18',
+          ],
+          consumerDirectory,
+        );
+        run(
+          process.execPath,
+          [join(repositoryRoot, 'node_modules', 'typescript', 'lib', 'tsc.js'), '-p', 'tsconfig.json'],
+          consumerDirectory,
+        );
+
+        const installedPackage = JSON.parse(
+          readFileSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'package.json'), 'utf8'),
+        );
+        assert.equal(installedPackage.name, '@standhigher/polaris-data-table');
+        assert.equal(
+          existsSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'dist', 'experimental')),
+          false,
+          'installed consumers must not receive internal experiment modules',
+        );
+      } finally {
+        rmSync(consumerDirectory, {force: true, recursive: true});
+      }
+    }
   } finally {
     rmSync(packDirectory, {force: true, recursive: true});
-    rmSync(consumerDirectory, {force: true, recursive: true});
   }
 });
