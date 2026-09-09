@@ -8,6 +8,19 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 No unreleased changes.
 
+## [1.0.0] - 2026-09-09
+
+### Added
+
+- Added the official `@standhigher/polaris-data-table/extension` entrypoint, so Extension-only consumers can use `ExtensionTable` without installing the Admin Polaris renderer.
+- Added a documented API stability/support policy, compatibility matrix, and Node.js 20/22/24 CI verification matrix.
+- Added packed-consumer verification for Polaris 12/13 Admin consumers and Polaris-free Extension consumers.
+
+### Changed
+
+- Formalized the public package boundary: only the root and `/extension` entrypoints are supported; internal experiments are excluded from the npm tarball.
+- Declared Node.js 20+, React 18, and Polaris 12/13 as the supported compatibility baseline. React 19 and Polaris 14 are excluded because the currently published Polaris React majors require React 18 and Polaris 14 is not published.
+
 ## [0.8.0] - 2026-09-09
 
 ### Added
@@ -96,7 +109,8 @@ No unreleased changes.
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.8.0...v1.0.0
 [0.8.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.0...v0.6.1

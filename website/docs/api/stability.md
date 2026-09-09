@@ -7,9 +7,9 @@ slug: /api/stability
 
 The package root (`@standhigher/polaris-data-table`) and the Extension-only entrypoint (`@standhigher/polaris-data-table/extension`) are the only supported import paths. The Extension entrypoint excludes the Admin renderer and does not require Shopify Polaris. This page records the 1.0 API-freeze boundary and the support level of each capability. The supported runtime and peer-dependency targets are recorded in the [compatibility matrix](/api/compatibility).
 
-## Stable API candidates
+## Stable API
 
-The following root exports are stable API candidates for 1.0. Their signatures and documented behavior need compatibility review before a 1.0 release.
+The following root exports are stable in the 1.0 line. Their signatures and documented behavior follow the compatibility and deprecation policy below.
 
 | Area | Root exports |
 | --- | --- |
@@ -24,7 +24,7 @@ Anything in this table must be imported from one of those two documented entrypo
 
 ## Preview-level public helpers
 
-The V3 cursor, virtual-window, column-layout, expandable-row, and inline-edit helpers are preview-level public pure-state helpers. They do not render UI, fetch data, or persist state. Until their host and accessibility contracts have production evidence, consumers should wrap them behind their own integration boundary and avoid treating them as complete table renderers. Their APIs can change in a minor release before 1.0; a post-1.0 promotion requires a documented migration path.
+The V3 cursor, virtual-window, column-layout, expandable-row, and inline-edit helpers are preview-level public pure-state helpers. They do not render UI, fetch data, or persist state. Until their host and accessibility contracts have production evidence, consumers should wrap them behind their own integration boundary and avoid treating them as complete table renderers. A promotion to stable API requires a documented migration path.
 
 ## Internal experiments
 
@@ -36,4 +36,4 @@ There are currently no deprecated root exports. After 1.0, a stable API is depre
 
 ## Compatibility commitment
 
-Before 1.0, every public root export must have a documented support level, a consumer-package test, and a migration note for any breaking change. Internal experiments and undocumented deep imports are not covered by this commitment.
+Every stable public export has a documented support level and consumer-package verification. Internal experiments and undocumented deep imports are not covered by this commitment.

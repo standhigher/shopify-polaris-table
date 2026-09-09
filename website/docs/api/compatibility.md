@@ -19,9 +19,9 @@ Shopify Polaris is an optional peer only for `@standhigher/polaris-data-table/ex
 
 The Node.js matrix runs unit, package-consumer, type, lint, build, Storybook-build, and package-content checks. It ensures a supported Node runtime cannot drift from the package's declared minimum unnoticed.
 
-## 1.0 release gate
+## 1.x compatibility gate
 
-Before releasing 1.0, run the public consumer and renderer tests for the supported React 18 and Polaris 12/13 combinations. Record the exact versions, command output, browser coverage, and any known limitation in the release evidence. A broad peer range is not itself proof of runtime compatibility.
+Before each 1.x release, run the public consumer and renderer tests for the supported React 18 and Polaris 12/13 combinations. Record the exact versions, command output, browser coverage, and any known limitation in the release evidence. A broad peer range is not itself proof of runtime compatibility.
 
 Polaris React 12 and 13 themselves declare React 18 peer dependencies. At the time this policy was written, Polaris React 13 is the latest published major, so React 19 and Polaris 14 are intentionally excluded rather than being unsupported promises.
 
