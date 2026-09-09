@@ -214,6 +214,8 @@ Extension 需要明确不包含的能力：
 
 目标：按真实业务需求逐项增强，不把所有复杂能力捆绑发布。
 
+当前已启动内部 Virtual scrolling POC：只验证 10,000 行的固定高度、非交互虚拟列表，不改变 `Table` 的默认渲染，也不作为公开 API 发布。验收指标、失败条件和回滚方案见 [`docs/superpowers/plans/2026-09-09-v0.8-virtual-scroll-poc.md`](superpowers/plans/2026-09-09-v0.8-virtual-scroll-poc.md)。
+
 候选能力：
 
 1. sticky header / sticky column

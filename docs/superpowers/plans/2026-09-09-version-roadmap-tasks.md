@@ -111,6 +111,13 @@
 - [ ] 为每个进入稳定 API 的能力提供独立 opt-in API、测试、Storybook 和文档。
 - [ ] 只发布完成性能及可访问性验证的能力；未达标 POC 保留为实验记录。
 
+**进行中：Virtual scrolling POC（不公开发布）**
+
+- [x] 建立固定行高、非交互列表的内部 POC，复用现有 virtual-window helper，且不改变 V1 `Table`。
+- [x] 记录验收指标、浏览器/目标容器待验证项、失败条件与回滚方案，见 [`2026-09-09-v0.8-virtual-scroll-poc.md`](2026-09-09-v0.8-virtual-scroll-poc.md)。
+- [x] 增加 10,000 行窗口渲染与滚动替换测试，以及明确标注为实验性的 Storybook 场景。
+- [ ] 在 Safari、Chrome 和真实嵌入容器记录性能、焦点与读屏结果；通过前不得将 POC 从公共入口导出。
+
 **版本退出条件：** 已发布能力均有真实场景证据，且不默认改变 V1 `Table` 行为。
 
 ## Version 1.0 — 产品矩阵级稳定 API
