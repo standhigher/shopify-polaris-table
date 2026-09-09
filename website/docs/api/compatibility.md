@@ -15,6 +15,8 @@ The package declares the following compatibility contract for the 1.0 line:
 | React / React DOM | `>=18 <19` | React 18 is the supported and checked-in development baseline. |
 | Shopify Polaris | `>=12 <14` | Polaris 12 and 13 are covered by packed-consumer type checks; Polaris 13 is the checked-in renderer-test baseline. |
 
+Shopify Polaris is an optional peer only for `@standhigher/polaris-data-table/extension`. The package root includes the Admin renderer and requires Polaris at runtime.
+
 The Node.js matrix runs unit, package-consumer, type, lint, build, Storybook-build, and package-content checks. It ensures a supported Node runtime cannot drift from the package's declared minimum unnoticed.
 
 ## 1.0 release gate

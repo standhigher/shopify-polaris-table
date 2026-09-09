@@ -38,6 +38,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./extension": {
+      "types": "./dist/extension.d.ts",
+      "import": "./dist/extension.js",
+      "default": "./dist/extension.js"
     }
   },
   "files": [
@@ -76,6 +81,11 @@
     "@shopify/polaris": ">=12 <14",
     "react": ">=18 <19",
     "react-dom": ">=18 <19"
+  },
+  "peerDependenciesMeta": {
+    "@shopify/polaris": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@shopify/polaris": "^13.9.5",

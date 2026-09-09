@@ -6,6 +6,8 @@ title: API overview
 
 Generated signatures and TypeScript types are available in the [API reference](/api/reference). This page groups the public exports by purpose and records behavioral rules that signatures alone cannot express. See the [API stability and support policy](/api/stability) and [compatibility matrix](/api/compatibility) for the 1.0 import and runtime boundary.
 
+Use the package root for Admin tables. Extension-only applications may import `ExtensionTable` and its types from `@standhigher/polaris-data-table/extension` without installing Shopify Polaris; all other deep imports are unsupported.
+
 ## Table and query
 
 Use `Table`, `TableProps`, `TableQuery`, `TableDataPage`, `TablePagination`, `useTableQuery`, and `cleanFilters` for the controlled V1 experience. `TableQuery.page` is one-based; the package does not fetch data, and criteria changes reset page 1.

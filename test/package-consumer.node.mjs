@@ -98,3 +98,74 @@ test('typechecks NodeNext consumers for each supported Polaris major', () => {
     rmSync(packDirectory, {force: true, recursive: true});
   }
 });
+
+test('installs the extension entrypoint without Shopify Polaris', () => {
+  const packDirectory = mkdtempSync(join(tmpdir(), 'polaris-data-table-extension-pack-'));
+  const consumerDirectory = mkdtempSync(join(tmpdir(), 'polaris-data-table-extension-consumer-'));
+
+  try {
+    const packOutput = run(
+      npmCommand,
+      ['pack', '--json', '--pack-destination', packDirectory, '--registry=https://registry.npmjs.org/'],
+      repositoryRoot,
+    );
+    const [{filename}] = JSON.parse(packOutput);
+    const tarballPath = join(packDirectory, filename);
+
+    writeFileSync(
+      join(consumerDirectory, 'package.json'),
+      `${JSON.stringify({name: 'extension-consumer', private: true, type: 'module'}, null, 2)}\n`,
+    );
+    writeFileSync(
+      join(consumerDirectory, 'index.ts'),
+      "import {ExtensionTable, type ExtensionTableHostContext} from '@standhigher/polaris-data-table/extension';\n\nconst host: ExtensionTableHostContext = {locale: 'en', timeZone: 'UTC'};\nconst table: typeof ExtensionTable = ExtensionTable;\n\nvoid host;\nvoid table;\n",
+    );
+    writeFileSync(
+      join(consumerDirectory, 'tsconfig.json'),
+      `${JSON.stringify(
+        {
+          compilerOptions: {
+            target: 'ES2022',
+            module: 'NodeNext',
+            moduleResolution: 'NodeNext',
+            strict: true,
+            noEmit: true,
+            skipLibCheck: true,
+          },
+        },
+        null,
+        2,
+      )}\n`,
+    );
+
+    run(
+      npmCommand,
+      [
+        'install',
+        '--ignore-scripts',
+        '--no-package-lock',
+        tarballPath,
+        'react@18.3.1',
+        'react-dom@18.3.1',
+        '@types/react@18',
+        '@types/react-dom@18',
+      ],
+      consumerDirectory,
+    );
+    run(
+      process.execPath,
+      [join(repositoryRoot, 'node_modules', 'typescript', 'lib', 'tsc.js'), '-p', 'tsconfig.json'],
+      consumerDirectory,
+    );
+
+    assert.equal(existsSync(join(consumerDirectory, 'node_modules', '@shopify', 'polaris')), false);
+    writeFileSync(
+      join(consumerDirectory, 'runtime-check.mjs'),
+      "import {ExtensionTable} from '@standhigher/polaris-data-table/extension';\n\nif (typeof ExtensionTable !== 'function') process.exit(1);\n",
+    );
+    run(process.execPath, ['runtime-check.mjs'], consumerDirectory);
+  } finally {
+    rmSync(packDirectory, {force: true, recursive: true});
+    rmSync(consumerDirectory, {force: true, recursive: true});
+  }
+});

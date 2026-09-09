@@ -5,7 +5,7 @@ title: API stability and support policy
 slug: /api/stability
 ---
 
-The package root (`@standhigher/polaris-data-table`) is the only supported import path. This page records the 1.0 API-freeze boundary and the support level of each capability. The supported runtime and peer-dependency targets are recorded in the [compatibility matrix](/api/compatibility).
+The package root (`@standhigher/polaris-data-table`) and the Extension-only entrypoint (`@standhigher/polaris-data-table/extension`) are the only supported import paths. The Extension entrypoint excludes the Admin renderer and does not require Shopify Polaris. This page records the 1.0 API-freeze boundary and the support level of each capability. The supported runtime and peer-dependency targets are recorded in the [compatibility matrix](/api/compatibility).
 
 ## Stable API candidates
 
@@ -13,13 +13,14 @@ The following root exports are stable API candidates for 1.0. Their signatures a
 
 | Area | Root exports |
 | --- | --- |
-| Controlled tables | `Table`, `ExtensionTable`, `TableColumnVisibility`, `TableFilterPresets`, `TableViews`, and their public props/types |
+| Controlled Admin tables | `Table`, `TableColumnVisibility`, `TableFilterPresets`, `TableViews`, and their public props/types from the root entrypoint |
+| Extension table | `ExtensionTable`, `EXTENSION_TABLE_MAX_COLUMNS`, and Extension types from `@standhigher/polaris-data-table/extension` |
 | Query and selection | `useTableQuery`, `cleanFilters`, the `Table*` query/selection/action types, `createIdempotencyKey`, `isSelectionExpired`, and `shouldClearSelection` |
 | Columns and formatting | `renderCell`, `getColumnValue`, formatter functions, `shopifyFormatterPreset`, and domain column factories |
 | Application-owned state | URL query codecs, visible-column helpers, filter presets, saved-view manager contracts, and their public types |
 | Renderer boundary | `CoreSchema`, `CoreQuery`, `CoreSelection`, their helpers, and the Polaris renderer adapter contract |
 
-Anything in this table must be imported from `@standhigher/polaris-data-table`; source paths and undocumented built-file paths are not public API.
+Anything in this table must be imported from one of those two documented entrypoints; source paths and undocumented built-file paths are not public API.
 
 ## Preview-level public helpers
 

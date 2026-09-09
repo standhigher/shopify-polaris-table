@@ -32,6 +32,8 @@ npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
 
 The table requires `@shopify/polaris >=12 <14`, React 18, and React DOM 18. Render it under Polaris `AppProvider`; see the [installation guide](https://standhigher.github.io/shopify-polaris-table/getting-started/installation).
 
+Extension-only consumers can omit Polaris and import the renderer from the official `@standhigher/polaris-data-table/extension` entrypoint. All other deep imports are unsupported.
+
 ## Basic usage
 
 `Table` is controlled. Keep the current query, page data, and selection in the screen that owns the table.
