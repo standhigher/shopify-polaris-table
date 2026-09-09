@@ -246,8 +246,8 @@ Extension 需要明确不包含的能力：
 - V1 公共类型和行为已稳定
 - 至少两个 Embedded Admin 产品真实接入
 - 至少一个 App Extension 场景验证
-- Polaris 12、13、14 兼容矩阵明确
-- React 18/19 验证完成
+- Polaris 12、13 兼容矩阵明确
+- React 18 验证完成（Polaris React 12/13 的 peer dependency 不支持 React 19）
 - Admin 与 Extension renderer 边界稳定
 - 重大 breaking change 有迁移文档
 - 关键交互具备视觉、可访问性和包入口测试

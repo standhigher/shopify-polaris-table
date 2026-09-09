@@ -10,7 +10,19 @@ Install the table library with its peer dependencies:
 npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
 ```
 
-The package supports `@shopify/polaris >=12 <15`, React 18 or newer, and React DOM 18 or newer. Keep the Polaris version aligned with the rest of your application.
+The Admin entrypoint supports `@shopify/polaris >=12 <14`, React 18, and React DOM 18. Keep the Polaris version aligned with the rest of your application.
+
+Extension-only applications can install only React and React DOM, then import from the official extension entrypoint:
+
+```bash
+npm install @standhigher/polaris-data-table react react-dom
+```
+
+```tsx
+import {ExtensionTable} from '@standhigher/polaris-data-table/extension';
+```
+
+No source or other deep import path is supported.
 
 Wrap application screens in the Polaris provider before rendering a table:
 

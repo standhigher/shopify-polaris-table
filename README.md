@@ -109,8 +109,8 @@ When `onQueryChange` receives a new query, load the corresponding page on the se
 | Dependency | Supported versions |
 | --- | --- |
 | Node.js | 20 or newer (development and CI) |
-| React / React DOM | 18 or newer |
-| `@shopify/polaris` | `>=12 <15` |
+| React / React DOM | `>=18 <19` |
+| `@shopify/polaris` | `>=12 <14` (Admin root entrypoint only) |
 
 This package is ESM-only and ships TypeScript declarations. Its peer dependencies are intentionally not bundled.
 
@@ -123,7 +123,7 @@ This package is ESM-only and ships TypeScript declarations. Its peer dependencie
 
 ## Package quality
 
-Every change is checked by CI with tests, type checking, linting, package-entry verification, a production build, a Storybook build, and `npm pack --dry-run`.
+Every change is checked by CI on Node.js 20, 22, and 24 with tests, type checking, linting, package-entry verification, a production build, a Storybook build, and `npm pack --dry-run`.
 
 Before opening a pull request, run:
 

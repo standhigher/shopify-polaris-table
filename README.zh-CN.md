@@ -30,7 +30,9 @@
 npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
 ```
 
-该表格需要 `@shopify/polaris >=12 <15`、React 18 或更高版本，以及 React DOM 18 或更高版本。请在 Polaris `AppProvider` 下渲染表格；详见[安装指南](https://standhigher.github.io/shopify-polaris-table/getting-started/installation)。
+该表格需要 `@shopify/polaris >=12 <14`、React 18 和 React DOM 18。请在 Polaris `AppProvider` 下渲染表格；详见[安装指南](https://standhigher.github.io/shopify-polaris-table/getting-started/installation)。
+
+仅使用 Extension 的应用可省略 Polaris，并从官方 `@standhigher/polaris-data-table/extension` 入口导入 renderer；其他深层导入不受支持。
 
 ## 基础用法
 
@@ -107,8 +109,8 @@ export function ProductsTable({page}: {page: TableDataPage<Product>}) {
 | 依赖 | 支持版本 |
 | --- | --- |
 | Node.js | 20 或更高（开发和 CI） |
-| React / React DOM | 18 或更高 |
-| `@shopify/polaris` | `>=12 <15` |
+| React / React DOM | `>=18 <19` |
+| `@shopify/polaris` | `>=12 <14`（仅 Admin 根入口） |
 
 本包仅支持 ESM，并发布 TypeScript 类型声明。peer dependencies 不会被打包进产物。
 
@@ -121,7 +123,7 @@ export function ProductsTable({page}: {page: TableDataPage<Product>}) {
 
 ## 包质量
 
-每次修改均由 CI 运行测试、类型检查、lint、包入口验证、生产构建、Storybook 构建和 `npm pack --dry-run`。
+每次修改均由 CI 在 Node.js 20、22 和 24 上运行测试、类型检查、lint、包入口验证、生产构建、Storybook 构建和 `npm pack --dry-run`。
 
 提交 Pull Request 前，请运行：
 

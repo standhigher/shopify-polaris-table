@@ -169,8 +169,8 @@
 
 ### 1.0.3 生产质量与发布
 
-- [ ] 完成 CI、发布流程、文档站、Storybook、包入口与 npm 包内容的一致性审查。
-- [ ] 明确稳定版、预发布版和 breaking change 的发布规则。
+- [x] 完成 CI、发布流程、文档站、Storybook、包入口与 npm 包内容的一致性审查；`npm run release:check` 统一执行这些门禁。
+- [x] 明确稳定版、预发布版和 breaking change 的发布规则，见 [`docs/release.md`](../../../docs/release.md)。
 - [ ] 仅在上述接入和兼容性证据齐备时，准备 `1.0.0` 发布。
 
 **版本退出条件：** 真实接入证据充分、公共 API 冻结、迁移路径清晰且完整发布门禁通过。

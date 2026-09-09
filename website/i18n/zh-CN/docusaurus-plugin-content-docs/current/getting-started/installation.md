@@ -10,7 +10,19 @@ title: 安装
 npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
 ```
 
-该包支持 `@shopify/polaris >=12 <15`、React 18 或更新版本，以及 React DOM 18 或更新版本。请让 Polaris 版本与应用其余部分保持一致。
+Admin 入口支持 `@shopify/polaris >=12 <14`、React 18 和 React DOM 18。请让 Polaris 版本与应用其余部分保持一致。
+
+仅使用 Extension 的应用可以只安装 React 和 React DOM，并从官方 Extension 入口导入：
+
+```bash
+npm install @standhigher/polaris-data-table react react-dom
+```
+
+```tsx
+import {ExtensionTable} from '@standhigher/polaris-data-table/extension';
+```
+
+不支持源码路径或其他深层导入。
 
 渲染表格前，请使用 Polaris provider 包裹应用页面：
 
