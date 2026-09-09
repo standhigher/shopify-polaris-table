@@ -77,7 +77,7 @@ export function Table<T extends object>(props: TableProps<T>) {
     id: String(column.key),
     title: <span>{column.title}</span>,
     alignment: column.align,
-  })), ...(rowActions.length > 0 ? [{id: 'actions', title: <span>Actions</span>, alignment: 'end' as const}] : [])] as unknown as [{id: string; title: ReactNode}, ...{id: string; title: ReactNode}[]];
+  })), ...(rowActions.length > 0 ? [{id: 'actions', title: <span>{labels.actions ?? 'Actions'}</span>, alignment: 'end' as const}] : [])] as unknown as [{id: string; title: ReactNode}, ...{id: string; title: ReactNode}[]];
   const sortable = visibleColumns.map((column) => Boolean(column.sortable));
   const sortColumnIndex = query.sort ? visibleColumns.findIndex((column) => String(column.key) === query.sort?.field) : -1;
   const sortDirection = query.sort?.direction === 'asc' ? 'ascending' : 'descending';
@@ -118,6 +118,8 @@ export function Table<T extends object>(props: TableProps<T>) {
       columns={columns}
       visibleColumnKeys={visibleColumnKeys}
       onVisibleColumnsChange={onVisibleColumnsChange}
+      label={labels.columns ?? 'Columns'}
+      resetLabel={labels.resetColumns ?? 'Reset columns'}
       {...(requiredColumnKeys ? {requiredColumnKeys} : {})}
     /> : null}
     {filters ? <TableFilters query={query} filters={filters} onQueryChange={onQueryChange} loading={loading ?? false} /> : null}

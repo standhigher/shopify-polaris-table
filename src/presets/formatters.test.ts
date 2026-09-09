@@ -9,5 +9,12 @@ describe('formatter presets', () => {
     expect(preset.status('missing')).toEqual({label: 'missing', tone: 'neutral'});
     expect(shopifyFormatterPreset({locale: 'de-DE', timeZone: 'UTC', defaultCurrencyCode: 'EUR'}).number(1000)).toBe('1.000');
     expect(createFormatterPreset({locale: 'en-US', timeZone: 'UTC', defaultCurrencyCode: 'USD', statusTone: {paid: 'success'}}).status('paid')).toEqual({label: 'paid', tone: 'success'});
+    const overridden = createFormatterPreset(
+      {locale: 'en-US', timeZone: 'UTC', defaultCurrencyCode: 'USD'},
+      {money: () => 'custom money', dateTime: () => 'custom date', status: () => ({label: 'custom status', tone: 'info'})},
+    );
+    expect(overridden.money(12)).toBe('custom money');
+    expect(overridden.dateTime('2026-01-01')).toBe('custom date');
+    expect(overridden.status('paid')).toEqual({label: 'custom status', tone: 'info'});
   });
 });

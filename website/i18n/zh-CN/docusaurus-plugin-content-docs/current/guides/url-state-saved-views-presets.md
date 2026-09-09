@@ -8,12 +8,13 @@ V2 将 routing 和 persistence 置于 table 之外，同时提供安全的 state
 
 ## URL state
 
-结合 allowlist 使用 `encodeTableQuery` 和 `decodeTableQuery`。adapter 会序列化带有从 1 开始的 `page`、`pageSize`、可选 search/sort 和 JSON filters 的 versioned query。
+结合显式 allowlist 使用 `encodeTableQuery` 和 `decodeTableQuery`。adapter 会序列化固定的 `v=1` contract，其中包含从 1 开始的 `page`、`pageSize`、可选的 `search` 和 `sort`，以及 JSON `filters`。
 
 ```ts
 const options = {
   filterKeys: ['status', 'createdAt'],
   sensitiveFilterKeys: ['customerEmail'],
+  sortKeys: ['createdAt', 'status'],
   pageSizeOptions: [25, 50, 100],
 };
 
@@ -21,7 +22,9 @@ const search = encodeTableQuery(query, options);
 const restoredQuery = decodeTableQuery(search, options);
 ```
 
-仅 allowlisted、non-sensitive filters 会被写入或恢复。格式错误的 filter JSON 会整体被拒绝。adapter 没有 router dependency；请使用应用的 routing layer 更新 browser state。
+仅 allowlisted、non-sensitive filters 和 allowlisted sort fields 会被写入或恢复。未知 URL 版本、格式错误的 filter JSON、非法页码和不支持的 page size 都会安全降级为基础 query；只要 filters 中有任一字段不安全，整组 filters 都会被拒绝。adapter 没有 router dependency，并且应用在发起服务端请求前仍必须 allowlist 每一个 decode 后的字段。
+
+可参考使用浏览器 History API 的 [`examples/url-state.tsx`](https://github.com/standhigher/shopify-polaris-table/blob/main/examples/url-state.tsx)：它会在首屏和 `popstate` 时恢复 query，因此刷新、后退和前进均使用同一个 decoder。接入 Router 时，只需要替换其中的 `pushState` 和 `popstate` 部分。
 
 ## 已保存视图与列显隐
 

@@ -10,6 +10,7 @@ export interface TableColumnVisibilityProps<T extends object> {
   requiredColumnKeys?: readonly string[];
   onVisibleColumnsChange: (visibleColumnKeys: readonly string[]) => void;
   label?: string;
+  resetLabel?: string;
 }
 
 /** An accessible, controlled popover for showing and hiding declared table columns. */
@@ -19,6 +20,7 @@ export function TableColumnVisibility<T extends object>({
   requiredColumnKeys = [],
   onVisibleColumnsChange,
   label = 'Columns',
+  resetLabel = 'Reset columns',
 }: TableColumnVisibilityProps<T>) {
   const [active, setActive] = useState(false);
   const popoverId = useId();
@@ -73,7 +75,7 @@ export function TableColumnVisibility<T extends object>({
               disabled={!canReset}
               onClick={() => updateVisibleColumns(allColumnKeys)}
             >
-              Reset columns
+              {resetLabel}
             </Button>
           </BlockStack>
         </Popover.Section>

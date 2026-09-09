@@ -64,6 +64,9 @@ export interface TableFormatWarning {
 }
 
 export interface TableLabels {
+  columns: string;
+  resetColumns: string;
+  actions: string;
   empty: ReactNode;
   loading: string;
   retry: string;

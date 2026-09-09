@@ -2,6 +2,10 @@ export * from './types';
 export {Table} from './components/Table/Table';
 export {TableColumnVisibility} from './components/TableColumnVisibility/TableColumnVisibility';
 export type {TableColumnVisibilityProps} from './components/TableColumnVisibility/TableColumnVisibility';
+export {TableFilterPresets} from './components/TableFilterPresets/TableFilterPresets';
+export type {TableFilterPresetsProps} from './components/TableFilterPresets/TableFilterPresets';
+export {TableViews} from './components/TableViews/TableViews';
+export type {TableViewLabels, TableViewsProps} from './components/TableViews/TableViews';
 export {renderCell, getColumnValue} from './columns/renderCell';
 export type {UseTableQueryOptions, UseTableQueryResult} from './hooks/useTableQuery';
 export {
@@ -27,7 +31,7 @@ export type {
   FormatMoneyOptions,
   FormatTextOptions,
 } from './utils/formatters';
-export {decodeTableQuery, encodeTableQuery} from './adapters/urlQuery';
+export {decodeTableQuery, encodeTableQuery, TABLE_QUERY_URL_VERSION} from './adapters/urlQuery';
 export type {TableQueryUrlOptions} from './adapters/urlQuery';
 export {applyFilterPreset} from './views/filterPresets';
 export type {TableFilterPreset} from './views/filterPresets';
@@ -42,7 +46,7 @@ export type {
   UpdateTableViewInput,
 } from './views/tableViews';
 export {createFormatterPreset, shopifyFormatterPreset} from './presets/formatters';
-export type {FormatterPresetOptions, TableFormatterPreset} from './presets/formatters';
+export type {FormatterPresetOptions, TableFormatterPreset, TableFormatterPresetOverrides} from './presets/formatters';
 export {createProductColumns} from './presets/product';
 export type {ProductColumnOverrides, ProductRow} from './presets/product';
 export {createOrderColumns} from './presets/order';

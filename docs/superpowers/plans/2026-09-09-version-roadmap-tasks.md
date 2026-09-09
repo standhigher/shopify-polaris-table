@@ -4,8 +4,8 @@
 
 ## 基线与执行原则
 
-- 当前发布基线为 `v0.5.0`；0.5 的 V1 稳定性工作已完成。
-- 后续开发按 `0.6 → 0.7 → 0.8 → 1.0` 推进；未经明确批准，不跨版本提前实现。
+- 当前发布基线为 `v0.6.0`；0.5 的 V1 稳定性工作与 0.6.x 的部分能力已完成。
+- 后续开发按 `0.6.x → 0.7.x → 0.8 → 1.0` 推进。`0.6.x` 与 `0.7.x` 是连续开发跟进，不将每项能力绑定到单独的小版本发布。
 - `Table` 保持受控：请求、鉴权、路由、数据库、持久化和业务错误处理仍由应用拥有。
 - 所有新增公共 API 都需同步类型测试、运行时测试、Storybook、文档和 CHANGELOG。
 - 所有服务端查询字段、排序、筛选 operator、selection token 和 bulk action 必须由服务端校验。
@@ -13,83 +13,75 @@
 | 版本 | 状态 | 目标 | 开始条件 |
 | --- | --- | --- | --- |
 | `0.5` | 已发布 | V1 Admin Table 稳定性 | 已于 `v0.5.0` 完成 |
-| `0.6` | 下一版本 | Admin Experience 产品化 | 确认至少两个目标 Admin 页面 |
-| `0.7` | 后续版本 | Extension-safe MVP | 评审通过 Extension 能力矩阵 |
+| `0.6.x` | 进行中（`v0.6.0` 已发布） | Admin Experience 产品化 | 确认至少两个目标 Admin 页面 |
+| `0.7.x` | 后续开发跟进 | Extension-safe MVP | 评审通过 Extension 能力矩阵 |
 | `0.8` | 按需立项 | 高级交互与大数据量 | 有真实场景与性能证据 |
 | `1.0` | 条件版本 | 产品矩阵级稳定 API | 完成多产品接入验证 |
 
-## Version 0.6 — Admin Experience 产品化
+## Development Track 0.6.x — Admin Experience 产品化
 
-**版本目标：** 让多个 Embedded Admin 页面可复用同一套列配置、查询状态、视图、Preset 和文案配置。
+**跟进目标：** 让多个 Embedded Admin 页面可复用同一套列配置、查询状态、视图、Preset 和文案配置。能力可在适当时机随任意 `0.6.x` 补丁版本发布，不以原来的 0.6.1、0.6.2 等任务编号拆分版本。
 
-### 0.6.1 受控列可见性与 schema migration（已完成，`v0.6.0`）
+### 开发清单
+
+**已完成并已发布于 `v0.6.0`：受控列显隐与 schema migration**
 
 - [x] 定义 `Table` 的受控列可见性 API（`visibleColumnKeys`、变更回调及必需列约束）。
 - [x] 实现列隐藏、恢复、重置与 schema 变更后的 key reconcile 规则。
 - [x] 确认隐藏列不会参与 heading、cell、排序索引和可访问性结构。
 - [x] 覆盖状态迁移、全部隐藏防护和键盘操作，并增加 Storybook 场景。
 
-**完成条件：** API 与已有 visible-columns helper 保持兼容；默认行为不改变；包含迁移和无障碍验证方案。
+**已完成、待随下一个 `0.6.x` 发布：URL Query State 集成边界**
 
-### 0.6.2 URL Query State 集成边界
+- [x] 固定 URL 参数版本，以及 page、pageSize、search、sort、filter 的编解码规则。
+- [x] 明确非法 JSON、非法页码/页大小、未 allowlist 字段和敏感筛选字段的降级行为。
+- [x] 编写与 Router 无关的接入示例，只描述应用路由层如何控制 `TableQuery`。
+- [x] 补充前进、后退、刷新和 schema 变化时的恢复验收场景。
 
-- [ ] 固定 URL 参数版本，以及 page、pageSize、search、sort、filter 的编解码规则。
-- [ ] 明确非法 JSON、非法页码/页大小、未 allowlist 字段和敏感筛选字段的降级行为。
-- [ ] 编写与 Router 无关的接入示例，只描述应用路由层如何控制 `TableQuery`。
-- [ ] 补充前进、后退、刷新和 schema 变化时的恢复验收场景。
-
-**完成条件：** URL helper 不引入 Router 依赖；所有解码结果在发请求前仍需要应用侧 allowlist 校验。
-
-### 0.6.3 Saved Views 与 Filter Presets 交互层
+**待跟进：Saved Views 与 Filter Presets 交互层**
 
 - [ ] 定义 Saved View 列表、切换、创建、重命名、删除及默认视图的受控交互契约。
 - [ ] 定义 pending、权限不足、冲突、stale write、删除当前视图和失效列 key 的状态处理。
 - [ ] 设计 Filter Preset 的展示和应用流程，并保证其仅修改 filters 且重置 page。
 - [ ] 明确 repository 负责持久化、授权、唯一性和冲突响应，组件不得隐含后端策略。
 
-**完成条件：** Saved View 与 Filter Preset 的边界清晰；有完整状态矩阵和两个典型页面的接入方案。
-
-### 0.6.4 国际化、formatter 与领域 presets
+**待跟进：国际化、formatter 与领域 presets**
 
 - [ ] 建立内置 UI 文案的覆盖边界，覆盖 table state、pagination、selection、views 和 presets。
 - [ ] 统一 status、money、datetime formatter 的覆盖优先级与 locale/timezone 传递规则。
 - [ ] 审核 Product、Order、Customer、Campaign、Offer presets，保证只承载最小行模型和可覆盖列定义。
 - [ ] 以至少两个真实页面存在重复列为前提，决定是否新增领域 preset。
 
-**完成条件：** 文案与 formatter 可由应用控制；preset 不包含请求、权限或私有业务流程。
-
-### 0.6.5 Admin 接入验证与发布门禁
+**待跟进：Admin 接入验证与发布门禁**
 
 - [ ] 选定并记录至少两个 Admin 页面，逐项验证查询、列状态、URL 恢复、视图和权限边界。
 - [ ] 为错误、并发写入、刷新、前进/后退及 schema 变化建立回归矩阵。
 - [ ] 完成 API 文档、Storybook、迁移说明和 CHANGELOG 草案。
-- [ ] 在实现完成后运行完整发布门禁，并准备 `0.6.0` 的包内容检查。
+- [ ] 在实现完成后运行完整发布门禁，并准备下一个 `0.6.x` 的包内容检查。
 
 **版本退出条件：** 两个页面使用同一基础 API，且没有因 views 或 presets 导致 `Table` 的既有行为回归。
 
-## Version 0.7 — Extension-safe MVP
+## Development Track 0.7.x — Extension-safe MVP
 
-**版本目标：** 以独立 renderer 为 App Extensions 提供紧凑、可靠并可安全降级的列表体验。
+**跟进目标：** 以独立 renderer 为 App Extensions 提供紧凑、可靠并可安全降级的列表体验。该系列也采用一个连续开发跟进，不将能力拆分为预设的小版本。
 
-### 0.7.1 Extension 场景与能力矩阵（实现前置）
+### 开发清单
+
+**实现前置：Extension 场景与能力矩阵**
 
 - [ ] 确认目标 Extension 类型、宿主容器尺寸、可用 Polaris/宿主组件、导航能力和交互限制。
 - [ ] 记录 read-only、选择、行操作、筛选、分页/Load More、错误与重试的能力矩阵。
 - [ ] 固定首期分页方案；若选择 Load More，明确 cursor 契约与 V1 offset query 的隔离。
 - [ ] 规定紧凑模式的最大列数、最小宽度、截断规则和只读降级路径。
 
-**完成条件：** 能力矩阵经评审通过，且明确不依赖 URL state、Saved Views、宽屏布局或复杂弹层。
-
-### 0.7.2 独立 Extension renderer 契约
+**待跟进：独立 Extension renderer 契约**
 
 - [ ] 设计独立 `ExtensionTable`（或等价入口）的 props、允许列类型和回调边界。
 - [ ] 定义 `readOnly`、`compact`、单行选择与简化 action 的可组合规则。
 - [ ] 设计 loading、empty、error、retry 插槽，避免耦合 Admin 页面布局。
 - [ ] 列出宿主不支持选择或操作时不渲染控件的降级测试。
 
-**完成条件：** 不向 Admin `Table` 添加 Extension 条件分支；Foundation 契约复用但 UI 依赖独立。
-
-### 0.7.3 查询、上下文与验证
+**待跟进：查询、上下文与验证**
 
 - [ ] 明确 host locale、timezone、shop context 和 capability flags 的显式传递方式。
 - [ ] 设计容器变化、请求失败、重试、无更多数据及 query 变化时的状态行为。

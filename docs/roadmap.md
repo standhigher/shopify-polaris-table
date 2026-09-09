@@ -150,17 +150,19 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 - 批量操作的所有返回分支都有明确 UI 或回调结果
 - 核心交互具备单测、集成测试和可访问性断言
 
-### Milestone 0.6：Admin Experience 产品化
+### Milestone 0.6.x：Admin Experience 产品化
 
 目标：支持多个 Shopify App 产品复用同一套 Admin 列表基础设施。
+
+0.6.x 作为一个连续开发跟进管理；每项能力不再预先对应独立的小版本，按完成度与兼容性决定补丁发布节奏。
 
 重点工作：
 
 - 已完成：将 `visibleColumnKeys` / `onVisibleColumnsChange` 接入 `Table`
 - 增加列显示/隐藏、列重置和 schema migration 体验
+- 已完成、待随下一个 `0.6.x` 发布：URL query 与路由层的接入示例
 - 提供 Saved Views 的默认视图、切换、创建、重命名和删除流程
 - 提供 Filter Presets 的展示和应用组件
-- 完善 URL query 与路由层的接入示例
 - 提供统一的国际化文案配置
 - 扩展 formatter preset 和领域 preset 的 override 约定
 - 明确业务动作的确认、审计、权限和异步 operation 接入规范
@@ -172,9 +174,11 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 - Saved View 在权限、冲突、删除当前视图和 schema 变化下行为明确
 - 通用 Table 不因 preset 或视图能力发生行为回归
 
-### Milestone 0.7：Extension-safe MVP
+### Milestone 0.7.x：Extension-safe MVP
 
 目标：为 App Extensions 提供受限但可靠的列表能力。
+
+0.7.x 同样作为一个连续开发跟进管理；先完成能力矩阵和独立 renderer 边界，再按验证结果安排发布。
 
 建议新增独立的 Extension renderer 或组件入口，避免在 Admin `Table` 中累积大量场景判断。
 
@@ -267,8 +271,8 @@ src/presets/
 
 - `0.x`：允许快速补齐行为，但每次变更必须记录公共 API 影响
 - `0.5`：已完成 V1 交互闭环（`v0.5.0`）
-- `0.6`：优先提升 Admin 产品复用效率
-- `0.7`：交付 Extension-safe 最小能力
+- `0.6.x`：连续提升 Admin 产品复用效率
+- `0.7.x`：连续交付 Extension-safe 最小能力
 - `0.8`：按业务证据推进性能和复杂交互
 - `1.0`：冻结稳定公共 API
 

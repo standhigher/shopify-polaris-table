@@ -8,12 +8,13 @@ V2 keeps routing and persistence outside the table while providing safe state he
 
 ## URL state
 
-Use `encodeTableQuery` and `decodeTableQuery` with an allowlist. The adapter serializes a versioned query with one-based `page`, `pageSize`, optional search/sort, and JSON filters.
+Use `encodeTableQuery` and `decodeTableQuery` with explicit allowlists. The adapter serializes the fixed `v=1` contract with one-based `page`, `pageSize`, optional `search` and `sort`, and JSON `filters`.
 
 ```ts
 const options = {
   filterKeys: ['status', 'createdAt'],
   sensitiveFilterKeys: ['customerEmail'],
+  sortKeys: ['createdAt', 'status'],
   pageSizeOptions: [25, 50, 100],
 };
 
@@ -21,7 +22,9 @@ const search = encodeTableQuery(query, options);
 const restoredQuery = decodeTableQuery(search, options);
 ```
 
-Only allowlisted, non-sensitive filters are written or restored. Malformed filter JSON is rejected as a whole. The adapter has no router dependency; update browser state using your application's routing layer.
+Only allowlisted, non-sensitive filters and allowlisted sort fields are written or restored. Unknown URL versions, malformed filter JSON, invalid page values, and unsupported page sizes safely fall back to the base query; filters are rejected as a whole if any field is unsafe. The adapter has no router dependency, and the application must still allowlist every decoded field before making a server request.
+
+For the browser History API pattern, see [`examples/url-state.tsx`](https://github.com/standhigher/shopify-polaris-table/blob/main/examples/url-state.tsx). It restores the query at first render and on `popstate`, so refresh, back, and forward navigation all use the same decoder. A Router can replace only the `pushState` and `popstate` wiring.
 
 ## Saved views and column visibility
 
