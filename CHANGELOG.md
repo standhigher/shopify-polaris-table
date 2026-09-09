@@ -8,6 +8,15 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 No unreleased changes.
 
+## [0.6.0] - 2026-09-09
+
+### Added
+
+- Added controlled column visibility to `Table` with `visibleColumnKeys`, `onVisibleColumnsChange`, and `requiredColumnKeys`.
+- Added the accessible `TableColumnVisibility` control for showing, hiding, and resetting declared columns.
+- Added schema reconciliation for stale visibility preferences, including invalid keys, required columns, and hidden sort/filter fields.
+- Added column-visibility Storybook coverage and English/Chinese usage documentation.
+
 ## [0.5.0] - 2026-09-04
 
 ### Changed
@@ -55,7 +64,8 @@ No unreleased changes.
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.2.1...v0.3.0

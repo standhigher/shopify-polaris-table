@@ -22,7 +22,7 @@
 
 **版本目标：** 让多个 Embedded Admin 页面可复用同一套列配置、查询状态、视图、Preset 和文案配置。
 
-### 0.6.1 受控列可见性与 schema migration（已完成，待随 0.6 发布）
+### 0.6.1 受控列可见性与 schema migration（已完成，`v0.6.0`）
 
 - [x] 定义 `Table` 的受控列可见性 API（`visibleColumnKeys`、变更回调及必需列约束）。
 - [x] 实现列隐藏、恢复、重置与 schema 变更后的 key reconcile 规则。
