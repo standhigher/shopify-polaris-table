@@ -18,6 +18,7 @@ const previewConfigPath = resolve(process.cwd(), '.storybook/preview.tsx');
 const storyFiles = [
   'src/stories/ComponentsOverview.stories.tsx',
   'src/stories/Table.stories.tsx',
+  'src/stories/ExtensionTable.stories.tsx',
   'src/stories/TableFeatures.stories.tsx',
   'src/stories/FeaturesOverview.stories.tsx',
   'src/stories/Presets.stories.tsx',

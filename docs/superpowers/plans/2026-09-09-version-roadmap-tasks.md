@@ -71,23 +71,23 @@
 **实现前置：Extension 场景与能力矩阵**
 
 - [ ] 确认目标 Extension 类型、宿主容器尺寸、可用 Polaris/宿主组件、导航能力和交互限制。
-- [ ] 记录 read-only、选择、行操作、筛选、分页/Load More、错误与重试的能力矩阵。
-- [ ] 固定首期分页方案；若选择 Load More，明确 cursor 契约与 V1 offset query 的隔离。
-- [ ] 规定紧凑模式的最大列数、最小宽度、截断规则和只读降级路径。
+- [x] 记录 read-only、选择、行操作、分页/Load More、错误与重试的基础能力矩阵；筛选暂不进入首期 renderer。
+- [x] 固定首期为 Load More；cursor 由宿主拥有，并与 V1 offset `TableQuery` 严格隔离。
+- [x] 规定紧凑模式最多三列，使用最小宽度与换行规则避免横向溢出，并提供只读降级路径。
 
 **待跟进：独立 Extension renderer 契约**
 
-- [ ] 设计独立 `ExtensionTable`（或等价入口）的 props、允许列类型和回调边界。
-- [ ] 定义 `readOnly`、`compact`、单行选择与简化 action 的可组合规则。
-- [ ] 设计 loading、empty、error、retry 插槽，避免耦合 Admin 页面布局。
-- [ ] 列出宿主不支持选择或操作时不渲染控件的降级测试。
+- [x] 设计独立 `ExtensionTable` 的 props、允许列类型和回调边界。
+- [x] 定义 `readOnly`、`compact`、单行选择与单个简化 action 的可组合规则。
+- [x] 设计 loading、empty、error、retry 插槽，避免耦合 Admin 页面布局。
+- [x] 覆盖宿主不支持选择、操作或 Load More 时不渲染控件的降级测试。
 
 **待跟进：查询、上下文与验证**
 
-- [ ] 明确 host locale、timezone、shop context 和 capability flags 的显式传递方式。
-- [ ] 设计容器变化、请求失败、重试、无更多数据及 query 变化时的状态行为。
+- [x] 明确 host locale、timezone、shop context 和 capability flags 的显式传递方式。
+- [x] 设计请求失败、重试、无更多数据与 action/Load More 失败时的状态行为；renderer 不接受 V1 query。
 - [ ] 定义目标容器的视觉验证、首屏/交互性能基线和可访问性检查方式。
-- [ ] 准备独立 Storybook 示例、能力差异文档和受限场景使用指南。
+- [x] 准备独立 Storybook 示例、能力差异文档和受限场景使用指南。
 
 **版本退出条件：** 目标容器中无横向溢出；只读、选择、操作失败和重试均有独立测试与降级方案。
 

@@ -1,5 +1,15 @@
 export * from './types';
 export {Table} from './components/Table/Table';
+export {ExtensionTable, EXTENSION_TABLE_MAX_COLUMNS} from './components/ExtensionTable/ExtensionTable';
+export type {
+  ExtensionTableCellContext,
+  ExtensionTableColumn,
+  ExtensionTableColumnType,
+  ExtensionTableHostCapabilities,
+  ExtensionTableHostContext,
+  ExtensionTableProps,
+  ExtensionTableRowAction,
+} from './components/ExtensionTable/ExtensionTable';
 export {TableColumnVisibility} from './components/TableColumnVisibility/TableColumnVisibility';
 export type {TableColumnVisibilityProps} from './components/TableColumnVisibility/TableColumnVisibility';
 export {TableFilterPresets} from './components/TableFilterPresets/TableFilterPresets';

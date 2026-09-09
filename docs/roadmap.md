@@ -179,6 +179,8 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 
 0.7.x 同样作为一个连续开发跟进管理；先完成能力矩阵和独立 renderer 边界，再按验证结果安排发布。
 
+已开始实现独立 `ExtensionTable`：它最多渲染三列，使用与 V1 offset query 隔离的 Load More 契约，并通过显式宿主 capabilities 对只读、单选、行操作和加载能力进行安全降级。真实 Extension 容器的视觉、性能与可访问性基线仍待验证。
+
 建议新增独立的 Extension renderer 或组件入口，避免在 Admin `Table` 中累积大量场景判断。
 
 首期范围：
