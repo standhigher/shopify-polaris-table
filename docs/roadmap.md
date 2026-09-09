@@ -235,6 +235,8 @@ Extension 需要明确不包含的能力：
 - 服务端协议与失败恢复
 - 性能基线和数据量上限
 
+当前已启动独立 Sticky header / column POC：只验证固定列宽下的横向滚动、顶部表头与两侧固定列堆叠，不接入 V1 `Table` 的选择、排序或浮层；详细风险与验收条件见 [`docs/superpowers/plans/2026-09-09-v0.8-sticky-columns-poc.md`](superpowers/plans/2026-09-09-v0.8-sticky-columns-poc.md)。
+
 ### Milestone 1.0：产品矩阵级稳定 API
 
 目标：成为多个 Shopify App 产品可依赖的公共基础层。
