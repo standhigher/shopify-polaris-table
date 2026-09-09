@@ -8,6 +8,14 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 No unreleased changes.
 
+## [0.7.0] - 2026-09-09
+
+### Added
+
+- Added `ExtensionTable`, a standalone narrow-host renderer with a three-column maximum and no dependency on Admin URL state, Saved Views, bulk selection, filters, or V1 offset pagination.
+- Added explicit Extension host locale, time zone, shop context, and capability flags for safe read-only, single-selection, row-action, and Load More degradation.
+- Added loading, empty, error, retry, action-failure, and Load More failure states; Storybook coverage; and English/Chinese Extension integration guidance.
+
 ## [0.6.1] - 2026-09-09
 
 ### Added
@@ -76,7 +84,8 @@ No unreleased changes.
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.4.0...v0.5.0
