@@ -30,6 +30,27 @@ For the browser History API pattern, see [`examples/url-state.tsx`](https://gith
 
 A `TableView` captures a `TableQuery`, visible column keys, owner, and update timestamp. Implement `TableViewRepository` in the application for storage, authorization, uniqueness, and conflict responses, then wrap it with `createTableViewManager` for local write state.
 
+`TableViews` is the controlled interaction layer. Keep the view list, selected view, query, and column preferences in the application; when a selected view changes, restore its query and visible columns there. The component surfaces repository errors but does not make authorization or conflict decisions.
+
+```tsx
+<TableViews
+  manager={manager}
+  views={views}
+  owner={shopId}
+  query={query}
+  visibleColumnKeys={visibleColumnKeys}
+  selectedViewId={selectedView?.id}
+  onSelectedViewChange={(view) => {
+    setSelectedView(view);
+    if (view) {
+      setQuery(view.query);
+      setVisibleColumnKeys([...view.visibleColumnKeys]);
+    }
+  }}
+  onViewsChange={(nextViews) => setViews([...nextViews])}
+/>
+```
+
 `Table` can own the visible-column UI while the application retains the preference. Pass `visibleColumnKeys` and `onVisibleColumnsChange`; omit `visibleColumnKeys` to render every declared column. Use `requiredColumnKeys` for identifiers that must never be hidden.
 
 ```tsx
@@ -48,5 +69,11 @@ The built-in **Columns** control supports show, hide, and reset. When a saved pr
 ## Filter presets
 
 `TableFilterPreset` is a curated shortcut containing only an ID, label, and filters. `applyFilterPreset(query, preset)` replaces filters and resets page 1; it intentionally cannot change sort, page size, or visible columns.
+
+Use `TableFilterPresets` when the application needs the standard control. It is also controlled: applying a button reports the next query through `onQueryChange`.
+
+```tsx
+<TableFilterPresets presets={presets} query={query} onQueryChange={setQuery} />
+```
 
 Domain helpers `createProductColumns`, `createOrderColumns`, and `createCustomerColumns` provide starting column sets. They do not make backend choices for your application.

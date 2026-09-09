@@ -4,7 +4,7 @@
 
 ## 基线与执行原则
 
-- 当前发布基线为 `v0.6.0`；0.5 的 V1 稳定性工作与 0.6.x 的部分能力已完成。
+- 当前发布基线为 `v0.6.1`；0.5 的 V1 稳定性工作与 0.6.x 的部分能力已完成。
 - 后续开发按 `0.6.x → 0.7.x → 0.8 → 1.0` 推进。`0.6.x` 与 `0.7.x` 是连续开发跟进，不将每项能力绑定到单独的小版本发布。
 - `Table` 保持受控：请求、鉴权、路由、数据库、持久化和业务错误处理仍由应用拥有。
 - 所有新增公共 API 都需同步类型测试、运行时测试、Storybook、文档和 CHANGELOG。
@@ -13,7 +13,7 @@
 | 版本 | 状态 | 目标 | 开始条件 |
 | --- | --- | --- | --- |
 | `0.5` | 已发布 | V1 Admin Table 稳定性 | 已于 `v0.5.0` 完成 |
-| `0.6.x` | 进行中（`v0.6.0` 已发布） | Admin Experience 产品化 | 确认至少两个目标 Admin 页面 |
+| `0.6.x` | 进行中（`v0.6.1` 已发布） | Admin Experience 产品化 | 确认至少两个目标 Admin 页面 |
 | `0.7.x` | 后续开发跟进 | Extension-safe MVP | 评审通过 Extension 能力矩阵 |
 | `0.8` | 按需立项 | 高级交互与大数据量 | 有真实场景与性能证据 |
 | `1.0` | 条件版本 | 产品矩阵级稳定 API | 完成多产品接入验证 |
@@ -31,24 +31,25 @@
 - [x] 确认隐藏列不会参与 heading、cell、排序索引和可访问性结构。
 - [x] 覆盖状态迁移、全部隐藏防护和键盘操作，并增加 Storybook 场景。
 
-**已完成、待随下一个 `0.6.x` 发布：URL Query State 集成边界**
+**已完成并已发布于 `v0.6.1`：URL Query State 集成边界**
 
 - [x] 固定 URL 参数版本，以及 page、pageSize、search、sort、filter 的编解码规则。
 - [x] 明确非法 JSON、非法页码/页大小、未 allowlist 字段和敏感筛选字段的降级行为。
 - [x] 编写与 Router 无关的接入示例，只描述应用路由层如何控制 `TableQuery`。
 - [x] 补充前进、后退、刷新和 schema 变化时的恢复验收场景。
 
-**待跟进：Saved Views 与 Filter Presets 交互层**
+**已完成基础组件，待完成真实页面验证：Saved Views 与 Filter Presets 交互层**
 
-- [ ] 定义 Saved View 列表、切换、创建、重命名、删除及默认视图的受控交互契约。
+- [x] 定义 Saved View 列表、切换、创建、重命名和删除的受控交互契约。
+- [ ] 定义默认视图的持久化契约与应用层恢复时机。
 - [ ] 定义 pending、权限不足、冲突、stale write、删除当前视图和失效列 key 的状态处理。
-- [ ] 设计 Filter Preset 的展示和应用流程，并保证其仅修改 filters 且重置 page。
-- [ ] 明确 repository 负责持久化、授权、唯一性和冲突响应，组件不得隐含后端策略。
+- [x] 设计 Filter Preset 的展示和应用流程，并保证其仅修改 filters 且重置 page。
+- [x] 明确 repository 负责持久化、授权、唯一性和冲突响应，组件不得隐含后端策略。
 
-**待跟进：国际化、formatter 与领域 presets**
+**已完成基础覆盖，待完成领域验证：国际化、formatter 与领域 presets**
 
-- [ ] 建立内置 UI 文案的覆盖边界，覆盖 table state、pagination、selection、views 和 presets。
-- [ ] 统一 status、money、datetime formatter 的覆盖优先级与 locale/timezone 传递规则。
+- [x] 建立内置 Table UI 文案的覆盖边界；views 和 presets 文案由各受控组件独立覆盖。
+- [x] 统一 status、money、datetime formatter 的覆盖优先级与 locale/timezone 传递规则。
 - [ ] 审核 Product、Order、Customer、Campaign、Offer presets，保证只承载最小行模型和可覆盖列定义。
 - [ ] 以至少两个真实页面存在重复列为前提，决定是否新增领域 preset。
 

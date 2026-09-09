@@ -8,6 +8,18 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 No unreleased changes.
 
+## [0.6.1] - 2026-09-09
+
+### Added
+
+- Added versioned, allowlisted URL query-state helpers and a router-independent History API example for restoring query state on refresh, back, and forward navigation.
+- Added controlled `TableViews` and `TableFilterPresets` components for saved-view workflows and filter-only shortcuts.
+- Added overridable table UI labels and formatter-preset overrides for money, date-time, and status formatting.
+
+### Changed
+
+- Consolidated the roadmap into continuous `0.6.x` and `0.7.x` development tracks rather than preassigning work to individual patch versions.
+
 ## [0.6.0] - 2026-09-09
 
 ### Added
@@ -64,7 +76,8 @@ No unreleased changes.
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.3.0...v0.4.0

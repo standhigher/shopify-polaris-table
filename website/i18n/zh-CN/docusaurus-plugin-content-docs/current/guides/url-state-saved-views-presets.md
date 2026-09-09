@@ -30,6 +30,27 @@ const restoredQuery = decodeTableQuery(search, options);
 
 `TableView` 会捕获 `TableQuery`、visible column keys、owner 和 update timestamp。在应用中实现 `TableViewRepository` 以处理 storage、authorization、uniqueness 和 conflict responses，然后用 `createTableViewManager` 包装它来获得 local write state。
 
+`TableViews` 是受控的交互层。应用应持有视图列表、当前视图、query 和列偏好；当前视图变化时，在应用层恢复其 query 与可见列。该组件会展示 repository 返回的错误，但不会自行决定授权或冲突策略。
+
+```tsx
+<TableViews
+  manager={manager}
+  views={views}
+  owner={shopId}
+  query={query}
+  visibleColumnKeys={visibleColumnKeys}
+  selectedViewId={selectedView?.id}
+  onSelectedViewChange={(view) => {
+    setSelectedView(view);
+    if (view) {
+      setQuery(view.query);
+      setVisibleColumnKeys([...view.visibleColumnKeys]);
+    }
+  }}
+  onViewsChange={(nextViews) => setViews([...nextViews])}
+/>
+```
+
 `Table` 可以提供列显隐 UI，而应用继续持有偏好状态。传入 `visibleColumnKeys` 和 `onVisibleColumnsChange`；省略 `visibleColumnKeys` 时，所有声明的列都会显示。使用 `requiredColumnKeys` 标记绝不能隐藏的标识列。
 
 ```tsx
@@ -48,5 +69,11 @@ const [visibleColumnKeys, setVisibleColumnKeys] = useState(['id', 'name', 'statu
 ## Filter presets
 
 `TableFilterPreset` 是一个 curated shortcut，只包含 ID、label 和 filters。`applyFilterPreset(query, preset)` 会替换 filters 并将 page 重置为 1；它刻意不能改变 sort、page size 或 visible columns。
+
+需要标准控件时可使用 `TableFilterPresets`。它同样是受控组件：点击预设后通过 `onQueryChange` 回传新的 query。
+
+```tsx
+<TableFilterPresets presets={presets} query={query} onQueryChange={setQuery} />
+```
 
 领域辅助函数 `createProductColumns`、`createOrderColumns` 和 `createCustomerColumns` 提供起始 column sets。它们不会替应用作出 backend choices。

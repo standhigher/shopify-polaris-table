@@ -2,7 +2,7 @@
 
 本文档描述 `@standhigher/polaris-data-table` 面向 Shopify App 产品矩阵的产品定位、当前能力、后续迭代和长期演进方向。
 
-当前仓库版本：`v0.6.0`
+当前仓库版本：`v0.6.1`
 
 > 本文档中的版本号是建议的里程碑，不代表已经承诺的发布日期。每个阶段都应以真实业务接入、兼容性验证和验收结果为准。
 
@@ -160,11 +160,10 @@ V3 和 V4 当前主要是纯函数状态原语与架构契约，不应视为已�
 
 - 已完成：将 `visibleColumnKeys` / `onVisibleColumnsChange` 接入 `Table`
 - 增加列显示/隐藏、列重置和 schema migration 体验
-- 已完成、待随下一个 `0.6.x` 发布：URL query 与路由层的接入示例
-- 提供 Saved Views 的默认视图、切换、创建、重命名和删除流程
-- 提供 Filter Presets 的展示和应用组件
-- 提供统一的国际化文案配置
-- 扩展 formatter preset 和领域 preset 的 override 约定
+- 已完成并发布于 `v0.6.1`：URL query 与路由层的接入示例
+- 已完成基础组件：Saved Views 的切换、创建、重命名、保存与删除流程
+- 已完成基础组件：Filter Presets 的展示和仅筛选条件应用流程
+- 已完成基础覆盖：内置 Table UI 文案和 formatter preset 的 override 约定
 - 明确业务动作的确认、审计、权限和异步 operation 接入规范
 
 验收标准：
