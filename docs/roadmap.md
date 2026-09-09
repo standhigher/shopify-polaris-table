@@ -214,7 +214,7 @@ Extension 需要明确不包含的能力：
 
 目标：按真实业务需求逐项增强，不把所有复杂能力捆绑发布。
 
-当前已启动内部 Virtual scrolling POC：只验证 10,000 行的固定高度、非交互虚拟列表，不改变 `Table` 的默认渲染，也不作为公开 API 发布。验收指标、失败条件和回滚方案见 [`docs/superpowers/plans/2026-09-09-v0.8-virtual-scroll-poc.md`](superpowers/plans/2026-09-09-v0.8-virtual-scroll-poc.md)。
+当前五项候选能力均已具备内部 POC（不从包入口导出，也不改变 `Table` 的默认渲染）。Virtual scrolling 和 Sticky 的本地 Chrome 冒烟检查已完成；Column layout、Expandable/inline edit、Cursor infinite 已完成受控实现、自动化测试和 Storybook，仍须通过目标浏览器、辅助技术和真实嵌入容器验收后才可评审公共 API。统一状态见 [`docs/superpowers/plans/2026-09-09-v0.8-poc-validation-matrix.md`](superpowers/plans/2026-09-09-v0.8-poc-validation-matrix.md)。
 
 候选能力：
 
@@ -235,7 +235,7 @@ Extension 需要明确不包含的能力：
 - 服务端协议与失败恢复
 - 性能基线和数据量上限
 
-当前已启动独立 Sticky header / column POC：只验证固定列宽下的横向滚动、顶部表头与两侧固定列堆叠，不接入 V1 `Table` 的选择、排序或浮层；详细风险与验收条件见 [`docs/superpowers/plans/2026-09-09-v0.8-sticky-columns-poc.md`](superpowers/plans/2026-09-09-v0.8-sticky-columns-poc.md)。
+各 POC 的独立范围、失败条件与回滚方案分别见 [`Virtual scrolling`](superpowers/plans/2026-09-09-v0.8-virtual-scroll-poc.md)、[`Sticky header / column`](superpowers/plans/2026-09-09-v0.8-sticky-columns-poc.md)、[`Column resize / reorder`](superpowers/plans/2026-09-09-v0.8-column-layout-poc.md)、[`Expandable row / inline edit`](superpowers/plans/2026-09-09-v0.8-expandable-inline-edit-poc.md) 和 [`Cursor infinite loading`](superpowers/plans/2026-09-09-v0.8-cursor-infinite-poc.md)。
 
 ### Milestone 1.0：产品矩阵级稳定 API
 

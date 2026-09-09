@@ -107,7 +107,7 @@
 | 0.8.4 Expandable row / inline edit | ARIA、焦点回收、校验、冲突与撤销 | 写入仍完全由应用控制 |
 | 0.8.5 Cursor infinite loading | cursor 协议、去重、终止、失败恢复 | 与 V1 offset 模型严格隔离 |
 
-- [ ] 为每个获批 POC 单独创建设计记录、验收指标和失败/回滚方案。
+- [x] 为当前五个获批 POC 单独创建设计记录、验收指标和失败/回滚方案。
 - [ ] 为每个进入稳定 API 的能力提供独立 opt-in API、测试、Storybook 和文档。
 - [ ] 只发布完成性能及可访问性验证的能力；未达标 POC 保留为实验记录。
 
@@ -124,6 +124,27 @@
 - [x] 记录堆叠层级、Safari/RTL/浮层风险、验收指标与回滚方案，见 [`2026-09-09-v0.8-sticky-columns-poc.md`](2026-09-09-v0.8-sticky-columns-poc.md)。
 - [x] 增加 start/end offset 和 header 堆叠的 React 测试，以及实验性 Storybook 场景。
 - [ ] 在 Chrome、Safari 和真实嵌入容器验证横向/纵向滚动、焦点、RTL、popover 裁剪和行选择/排序兼容性；通过前不得将 POC 从公共入口导出。
+
+**进行中：Column resize / reorder POC（不公开发布）**
+
+- [x] 建立受控布局 renderer，使用既有 column-layout helper 完成受限宽度调整与显式顺序调整，且不改变 V1 `Table`。
+- [x] 记录持久化/失效列的风险、验收指标与回滚方案，见 [`2026-09-09-v0.8-column-layout-poc.md`](2026-09-09-v0.8-column-layout-poc.md)。
+- [x] 增加受控宽度、键盘重排和边界属性的 React 测试，以及实验性 Storybook 场景。
+- [ ] 在 Chrome、Safari 和真实嵌入容器验证缩放、RTL、触控、焦点、持久化迁移以及与 sticky/virtual renderer 的组合；通过前不得将 POC 从公共入口导出。
+
+**进行中：Expandable row / inline edit POC（不公开发布）**
+
+- [x] 建立受控展开与版本化单字段编辑 renderer，且不在组件内写入 canonical rows 或改变 V1 `Table`。
+- [x] 记录写入边界、校验、冲突、取消、焦点与回滚方案，见 [`2026-09-09-v0.8-expandable-inline-edit-poc.md`](2026-09-09-v0.8-expandable-inline-edit-poc.md)。
+- [x] 增加受控展开、焦点、校验、取消、版本化保存和冲突的 React 测试，以及实验性 Storybook 场景。
+- [ ] 在 Chrome、Safari 和真实嵌入容器验证键盘、读屏、焦点恢复、授权/持久化、异步竞态与多字段组合；通过前不得将 POC 从公共入口导出。
+
+**进行中：Cursor infinite loading POC（不公开发布）**
+
+- [x] 建立独立的 V3 cursor “Load more” renderer，验证去重、终止与失败重试，且不混入 V1 offset `TableQuery`。
+- [x] 记录 cursor 排序、失败恢复、无障碍状态与回滚方案，见 [`2026-09-09-v0.8-cursor-infinite-poc.md`](2026-09-09-v0.8-cursor-infinite-poc.md)。
+- [x] 增加 cursor query 隔离、去重、终止、失败重试和状态宣告的 React 测试，以及实验性 Storybook 场景。
+- [ ] 在 Chrome、Safari 和真实嵌入容器验证慢网、取消、重复触发、读屏播报与服务端 cursor 稳定排序；通过前不得将 POC 从公共入口导出。
 
 **版本退出条件：** 已发布能力均有真实场景证据，且不默认改变 V1 `Table` 行为。
 
