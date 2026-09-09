@@ -8,6 +8,18 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 No unreleased changes.
 
+## [0.8.0] - 2026-09-09
+
+### Added
+
+- Added internal, non-exported POCs for virtual scrolling, sticky header/edge columns, controlled column resize/reorder, expandable rows with versioned inline editing, and cursor-based Load More.
+- Added focused React tests, Storybook scenarios, acceptance records, rollback guidance, and a cross-POC validation matrix for the 0.8 experiments.
+
+### Changed
+
+- Recorded local Chrome and Safari validation for the POCs, including bounded 10,000-row virtual-window scrolling and Safari sticky, layout, editing, and cursor interaction checks.
+- These experiments remain outside the package public entrypoint; real host, assistive-technology, performance-trace, and server-contract validation remain required before any stable API proposal.
+
 ## [0.7.0] - 2026-09-09
 
 ### Added
@@ -84,7 +96,8 @@ No unreleased changes.
 - Advanced V3 state primitives and V4 core-schema/Polaris-renderer adapter.
 - Public documentation, Storybook preview, API reference, and GitHub Pages deployment.
 
-[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/standhigher/shopify-polaris-table/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/standhigher/shopify-polaris-table/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/standhigher/shopify-polaris-table/compare/v0.5.0...v0.6.0

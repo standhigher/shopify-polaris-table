@@ -2,7 +2,7 @@
 
 本文档描述 `@standhigher/polaris-data-table` 面向 Shopify App 产品矩阵的产品定位、当前能力、后续迭代和长期演进方向。
 
-当前仓库版本：`v0.7.0`
+当前仓库版本：`v0.8.0`
 
 > 本文档中的版本号是建议的里程碑，不代表已经承诺的发布日期。每个阶段都应以真实业务接入、兼容性验证和验收结果为准。
 
@@ -214,7 +214,7 @@ Extension 需要明确不包含的能力：
 
 目标：按真实业务需求逐项增强，不把所有复杂能力捆绑发布。
 
-当前五项候选能力均已具备内部 POC（不从包入口导出，也不改变 `Table` 的默认渲染）。Virtual scrolling 和 Sticky 的本地 Chrome 冒烟检查已完成；Column layout、Expandable/inline edit、Cursor infinite 已完成受控实现、自动化测试和 Storybook，仍须通过目标浏览器、辅助技术和真实嵌入容器验收后才可评审公共 API。统一状态见 [`docs/superpowers/plans/2026-09-09-v0.8-poc-validation-matrix.md`](superpowers/plans/2026-09-09-v0.8-poc-validation-matrix.md)。
+五项候选能力已随 `v0.8.0` 以内部 POC 形式记录（不从包入口导出，也不改变 `Table` 的默认渲染）。Chrome 和 Safari 的本地 Storybook 核心交互已验证；辅助技术、真实嵌入容器、性能 trace 与服务端契约仍须通过后才可评审公共 API。统一状态见 [`docs/superpowers/plans/2026-09-09-v0.8-poc-validation-matrix.md`](superpowers/plans/2026-09-09-v0.8-poc-validation-matrix.md)。
 
 候选能力：
 
