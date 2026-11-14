@@ -1,4 +1,3 @@
-import {Banner, Button, InlineStack, Select, TextField} from '@shopify/polaris';
 import {useState} from 'react';
 
 import type {TableQuery} from '../../types';
@@ -40,7 +39,6 @@ export function TableViews({
     createView: labels.createView ?? 'Create view', renameView: labels.renameView ?? 'Rename view', saveView: labels.saveView ?? 'Save view',
     deleteView: labels.deleteView ?? 'Delete view', genericError: labels.genericError ?? 'Could not update saved views.',
   };
-  const options = [{label: text.noSavedView, value: ''}, ...views.map((view) => ({label: view.name, value: view.id}))];
 
   const run = async (operation: () => Promise<void>) => {
     setPending(true);
@@ -50,11 +48,17 @@ export function TableViews({
     finally { setPending(false); }
   };
 
-  return <>
-    <InlineStack gap="200" blockAlign="end">
-      <Select label={text.savedView} options={options} value={selectedViewId ?? ''} disabled={pending} onChange={(id) => onSelectedViewChange(views.find((view) => view.id === id))} />
-      <TextField label={text.viewName} value={name} autoComplete="off" disabled={pending} onChange={setName} />
-      <Button disabled={pending || name.trim().length === 0} onClick={() => void run(async () => {
+  return <s-stack gap="base">
+    <s-stack direction="inline" gap="base">
+      <s-select label={text.savedView} value={selectedViewId ?? ''} disabled={pending} onChange={(event) => {
+        const id = event.currentTarget.value;
+        onSelectedViewChange(views.find((view) => view.id === id));
+      }}>
+        <s-option value="" selected={!selectedViewId}>{text.noSavedView}</s-option>
+        {views.map((view) => <s-option key={view.id} value={view.id} selected={view.id === selectedViewId}>{view.name}</s-option>)}
+      </s-select>
+      <s-text-field label={text.viewName} value={name} autocomplete="off" disabled={pending} onInput={(event) => setName(event.currentTarget.value)} />
+      <s-button disabled={pending || name.trim().length === 0} onClick={() => void run(async () => {
         const next = selectedView
           ? await manager.rename(selectedView.id, name.trim(), selectedView.updatedAt)
           : await manager.create({name: name.trim(), owner, query, visibleColumnKeys});
@@ -62,20 +66,20 @@ export function TableViews({
         onViewsChange(nextViews);
         onSelectedViewChange(next);
         setName('');
-      })}>{selectedView ? text.renameView : text.createView}</Button>
-      <Button disabled={pending || !selectedView} onClick={() => void run(async () => {
+      })}>{selectedView ? text.renameView : text.createView}</s-button>
+      <s-button disabled={pending || !selectedView} onClick={() => void run(async () => {
         if (!selectedView) return;
         const next = await manager.update({id: selectedView.id, query, visibleColumnKeys, updatedAt: selectedView.updatedAt});
         onViewsChange(views.map((view) => view.id === next.id ? next : view));
         onSelectedViewChange(next);
-      })}>{text.saveView}</Button>
-      <Button tone="critical" disabled={pending || !selectedView} onClick={() => void run(async () => {
+      })}>{text.saveView}</s-button>
+      <s-button tone="critical" disabled={pending || !selectedView} onClick={() => void run(async () => {
         if (!selectedView) return;
         await manager.remove(selectedView.id);
         onViewsChange(views.filter((view) => view.id !== selectedView.id));
         onSelectedViewChange(undefined);
-      })}>{text.deleteView}</Button>
-    </InlineStack>
-    {error ? <Banner tone="critical">{error}</Banner> : null}
-  </>;
+      })}>{text.deleteView}</s-button>
+    </s-stack>
+    {error ? <s-banner tone="critical">{error}</s-banner> : null}
+  </s-stack>;
 }

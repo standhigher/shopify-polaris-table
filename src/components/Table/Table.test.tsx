@@ -1,5 +1,4 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { Text } from '@shopify/polaris';
 import { render } from '../../test/setup';
 import { describe, expect, it, vi } from 'vitest';
 import { Table } from './Table';
@@ -29,7 +28,7 @@ describe('Table', () => {
     expect(screen.getByRole('columnheader', { name: 'Name' })).toBeInTheDocument();
     expect(screen.getByText('Shoe')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
-    screen.getAllByRole('button', { name: 'Name' }).at(-1)?.click();
+    fireEvent.change(screen.getByRole('combobox', {name: 'Sort by'}), {target: {value: 'name'}});
     expect(onQueryChange).toHaveBeenCalledWith({ ...baseProps.query, sort: { field: 'name', direction: 'desc' } });
   });
 
@@ -37,7 +36,7 @@ describe('Table', () => {
     const { rerender } = render(<Table {...baseProps} error="Could not load" />);
     expect(screen.getByText('Could not load')).toBeInTheDocument();
     rerender(<Table {...baseProps} loading />);
-    expect(screen.getAllByText(/loading/i).length).toBeGreaterThan(0);
+    expect(document.querySelector('s-table')).toHaveProperty('loading', true);
     rerender(<Table {...baseProps} data={[]} pagination={{ total: 0 }} emptyState="Nothing here" />);
     expect(screen.getByText('Nothing here')).toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
@@ -95,7 +94,7 @@ describe('Table', () => {
     expect(onSelectionChange).toHaveBeenCalledWith({mode: 'explicit', ids: []});
   });
 
-  it('keeps row actions separate from row selection and renders an actions heading', () => {
+  it('keeps row actions separate from row selection and renders an actions heading', async () => {
     const onSelectionChange = vi.fn();
     const rowAction = vi.fn();
     render(
@@ -103,14 +102,14 @@ describe('Table', () => {
         {...baseProps}
         selection={{mode: 'explicit', ids: []}}
         onSelectionChange={onSelectionChange}
-        rowActions={[{id: 'view', content: <Text as="span">View</Text>, perform: rowAction}]}
+        rowActions={[{id: 'view', content: <span data-testid="rich-action">View</span>, perform: rowAction}]}
       />,
     );
 
     expect(screen.getByRole('columnheader', {name: 'Actions'})).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', {name: 'View'}));
 
-    expect(rowAction).toHaveBeenCalledWith({row: baseProps.data[0], rowId: '1'});
+    await waitFor(() => expect(rowAction).toHaveBeenCalledWith({row: baseProps.data[0], rowId: '1'}));
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
 
@@ -213,6 +212,27 @@ describe('Table', () => {
     expect(screen.getByRole('columnheader', {name: 'Name'})).toBeInTheDocument();
     expect(screen.getByRole('columnheader', {name: 'Amount'})).toBeInTheDocument();
     await waitFor(() => expect(onVisibleColumnsChange).toHaveBeenCalledWith(['amount', 'name']));
+  });
+
+  it('clears a controlled sort and resets the offset page', () => {
+    const onQueryChange = vi.fn();
+    render(<Table {...baseProps} query={{page: 3, pageSize: 10, sort: {field: 'name', direction: 'asc'}}} onQueryChange={onQueryChange} />);
+    fireEvent.change(screen.getByRole('combobox', {name: 'Sort by'}), {target: {value: ''}});
+    expect(onQueryChange).toHaveBeenCalledWith({page: 1, pageSize: 10});
+  });
+
+  it('uses the documented banner action slot for retry', () => {
+    const onRetry = vi.fn();
+    const {container} = render(<Table {...baseProps} error="Retry this request" onRetry={onRetry} />);
+    const retry = container.querySelector('s-banner s-button[slot="secondary-actions"]');
+    expect(retry).toBeInTheDocument();
+    fireEvent.click(retry!);
+    expect(onRetry).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not add an actions cell when no row actions are configured', () => {
+    const {container} = render(<Table {...baseProps} />);
+    expect(container.querySelectorAll('s-table-row s-table-cell')).toHaveLength(columns.length + 1);
   });
 
   it('reconciles stale visible-column preferences and removes hidden query fields', async () => {

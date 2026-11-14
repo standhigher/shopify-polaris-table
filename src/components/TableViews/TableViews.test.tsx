@@ -1,4 +1,4 @@
-import {fireEvent, screen, waitFor} from '@testing-library/react';
+import {fireEvent, waitFor} from '@testing-library/react';
 import {describe, expect, it, vi} from 'vitest';
 
 import {render} from '../../test/setup';
@@ -26,10 +26,14 @@ describe('TableViews', () => {
     const manager = createManager();
     const onViewsChange = vi.fn();
     const onSelectedViewChange = vi.fn();
-    render(<TableViews manager={manager} views={[]} owner="shop-1" query={{page: 2, pageSize: 25}} visibleColumnKeys={['title']} onViewsChange={onViewsChange} onSelectedViewChange={onSelectedViewChange} />);
+    const {container} = render(<TableViews manager={manager} views={[]} owner="shop-1" query={{page: 2, pageSize: 25}} visibleColumnKeys={['title']} onViewsChange={onViewsChange} onSelectedViewChange={onSelectedViewChange} />);
 
-    fireEvent.change(screen.getByRole('textbox', {name: 'View name'}), {target: {value: 'My view'}});
-    fireEvent.click(screen.getByRole('button', {name: 'Create view'}));
+    const nameField = container.querySelector('s-text-field');
+    expect(nameField).not.toBeNull();
+    fireEvent.input(nameField!, {target: {value: 'My view'}});
+    const createButton = Array.from(container.querySelectorAll('s-button')).find((button) => button.textContent === 'Create view');
+    expect(createButton).toBeDefined();
+    fireEvent.click(createButton!);
 
     await waitFor(() => expect(manager.create).toHaveBeenCalledWith({name: 'My view', owner: 'shop-1', query: {page: 2, pageSize: 25}, visibleColumnKeys: ['title']}));
     expect(onViewsChange).toHaveBeenCalledWith([view]);
@@ -40,10 +44,12 @@ describe('TableViews', () => {
     const error = new Error('Permission denied');
     const manager = createManager({remove: vi.fn().mockRejectedValue(error)});
     const onViewsChange = vi.fn();
-    render(<TableViews manager={manager} views={[view]} owner="shop-1" query={view.query} visibleColumnKeys={view.visibleColumnKeys} selectedViewId={view.id} onViewsChange={onViewsChange} onSelectedViewChange={() => undefined} />);
+    const {container} = render(<TableViews manager={manager} views={[view]} owner="shop-1" query={view.query} visibleColumnKeys={view.visibleColumnKeys} selectedViewId={view.id} onViewsChange={onViewsChange} onSelectedViewChange={() => undefined} />);
 
-    fireEvent.click(screen.getByRole('button', {name: 'Delete view'}));
-    await waitFor(() => expect(screen.getByText('Permission denied')).toBeInTheDocument());
+    const deleteButton = Array.from(container.querySelectorAll('s-button')).find((button) => button.textContent === 'Delete view');
+    expect(deleteButton).toBeDefined();
+    fireEvent.click(deleteButton!);
+    await waitFor(() => expect(container.querySelector('s-banner')).toHaveTextContent('Permission denied'));
     expect(onViewsChange).not.toHaveBeenCalled();
   });
 });

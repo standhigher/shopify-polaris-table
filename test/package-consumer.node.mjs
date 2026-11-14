@@ -12,7 +12,7 @@ function run(command, args, cwd) {
   return execFileSync(command, args, {cwd, encoding: 'utf8'});
 }
 
-test('typechecks NodeNext consumers for each supported Polaris major', () => {
+test('typechecks a React 19 NodeNext consumer without Polaris React', () => {
   const packDirectory = mkdtempSync(join(tmpdir(), 'polaris-data-table-pack-'));
 
   try {
@@ -30,8 +30,8 @@ test('typechecks NodeNext consumers for each supported Polaris major', () => {
       'internal experiments must not be shipped in the npm tarball',
     );
 
-    for (const polarisVersion of ['12.27.0', '13.9.5']) {
-      const consumerDirectory = mkdtempSync(join(tmpdir(), `polaris-data-table-consumer-${polarisVersion}-`));
+    {
+      const consumerDirectory = mkdtempSync(join(tmpdir(), 'polaris-data-table-react19-consumer-'));
 
       try {
         writeFileSync(
@@ -52,7 +52,7 @@ test('typechecks NodeNext consumers for each supported Polaris major', () => {
                 moduleResolution: 'NodeNext',
                 strict: true,
                 noEmit: true,
-                skipLibCheck: true,
+                skipLibCheck: false,
               },
             },
             null,
@@ -67,11 +67,10 @@ test('typechecks NodeNext consumers for each supported Polaris major', () => {
             '--ignore-scripts',
             '--no-package-lock',
             tarballPath,
-            `@shopify/polaris@${polarisVersion}`,
-            'react@18.3.1',
-            'react-dom@18.3.1',
-            '@types/react@18',
-            '@types/react-dom@18',
+            'react@19.3.1',
+            'react-dom@19.3.1',
+            '@types/react@19.3.0',
+            '@types/react-dom@19.3.0',
           ],
           consumerDirectory,
         );
@@ -80,6 +79,32 @@ test('typechecks NodeNext consumers for each supported Polaris major', () => {
           [join(repositoryRoot, 'node_modules', 'typescript', 'lib', 'tsc.js'), '-p', 'tsconfig.json'],
           consumerDirectory,
         );
+
+        writeFileSync(join(consumerDirectory, 'runtime-check.mjs'), `
+import assert from 'node:assert/strict';
+import {createElement} from 'react';
+import {renderToString} from 'react-dom/server';
+import {Table} from '@standhigher/polaris-data-table';
+assert.equal(typeof window, 'undefined');
+assert.equal(typeof document, 'undefined');
+const html = renderToString(createElement(Table, {
+  columns: [{key: 'name', title: 'Name', sortable: true}],
+  data: [{id: '1', name: 'Inventory item'}], rowId: 'id',
+  query: {page: 1, pageSize: 25}, pagination: {total: 1},
+  formatOptions: {locale: 'en-US', timeZone: 'UTC'},
+  selection: {mode: 'explicit', ids: []},
+  filters: [{key: 'name', label: 'Name', type: 'text', operators: ['contains']}],
+  onSelectionChange() {}, onQueryChange() {},
+}));
+assert.match(html, /<s-table /);
+assert.match(html, /Inventory item/);
+assert.doesNotMatch(html, /<script|polaris-types/);
+assert.equal(typeof window, 'undefined');
+assert.equal(typeof document, 'undefined');
+`);
+        run(process.execPath, ['runtime-check.mjs'], consumerDirectory);
+        assert.equal(existsSync(join(consumerDirectory, 'node_modules', '@shopify', 'polaris')), false);
+        assert.equal(existsSync(join(consumerDirectory, 'node_modules', '@shopify', 'polaris-types')), false);
 
         const installedPackage = JSON.parse(
           readFileSync(join(consumerDirectory, 'node_modules', '@standhigher', 'polaris-data-table', 'package.json'), 'utf8'),
@@ -130,7 +155,7 @@ test('installs the extension entrypoint without Shopify Polaris', () => {
             moduleResolution: 'NodeNext',
             strict: true,
             noEmit: true,
-            skipLibCheck: true,
+            skipLibCheck: false,
           },
         },
         null,
@@ -145,10 +170,10 @@ test('installs the extension entrypoint without Shopify Polaris', () => {
         '--ignore-scripts',
         '--no-package-lock',
         tarballPath,
-        'react@18.3.1',
-        'react-dom@18.3.1',
-        '@types/react@18',
-        '@types/react-dom@18',
+        'react@19.3.1',
+        'react-dom@19.3.1',
+        '@types/react@19.3.0',
+        '@types/react-dom@19.3.0',
       ],
       consumerDirectory,
     );

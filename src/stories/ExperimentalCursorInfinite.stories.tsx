@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import {CursorInfinitePOC} from '../experimental/CursorInfinitePOC';
@@ -22,8 +21,8 @@ type Story = StoryObj<typeof meta>;
 export const LoadMoreWithDeduplication: Story = {
   render: () => {
     const {text} = useStorybookCopy();
-    return <Card>
-      <Text as="p" variant="bodySm">{text('Internal experiment: load two cursor pages. The second intentionally repeats a row; host integrations should also verify failed requests.', '内部实验：加载两页游标数据。第二页故意重复一行；宿主集成还应验证请求失败。')}</Text>
+    return <s-section>
+      <s-paragraph fontSize="small">{text('Internal experiment: load two cursor pages. The second intentionally repeats a row; host integrations should also verify failed requests.', '内部实验：加载两页游标数据。第二页故意重复一行；宿主集成还应验证请求失败。')}</s-paragraph>
       <CursorInfinitePOC
       initialItems={[{id: '1', label: 'First row'}, {id: '2', label: 'Duplicate second row'}]}
       initialNextCursor="next"
@@ -36,6 +35,6 @@ export const LoadMoreWithDeduplication: Story = {
       }}
         ariaLabel={text('Experimental cursor rows', '实验性游标行')}
       />
-    </Card>;
+    </s-section>;
   },
 };

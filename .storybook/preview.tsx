@@ -1,16 +1,6 @@
-import '@shopify/polaris/build/esm/styles.css';
-
-import {AppProvider} from '@shopify/polaris';
-import en from '@shopify/polaris/locales/en.json';
-import zhCN from '@shopify/polaris/locales/zh-CN.json';
 import type {Preview} from '@storybook/react-vite';
-import type {ReactNode} from 'react';
 
 import {StorybookLocaleProvider} from '../src/stories/storybookI18n';
-
-function PolarisProvider({locale, children}: {locale: 'en' | 'zh-CN'; children: ReactNode}) {
-  return <AppProvider i18n={locale === 'zh-CN' ? zhCN : en}>{children}</AppProvider>;
-}
 
 const preview: Preview = {
   tags: ['autodocs'],
@@ -32,7 +22,7 @@ const preview: Preview = {
   decorators: [(Story, context) => {
     const locale = context.globals.locale === 'zh-CN' ? 'zh-CN' : 'en';
     return <StorybookLocaleProvider locale={locale}>
-      <PolarisProvider locale={locale}><Story /></PolarisProvider>
+      <div lang={locale}><Story /></div>
     </StorybookLocaleProvider>;
   }],
   parameters: {

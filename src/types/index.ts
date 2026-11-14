@@ -16,6 +16,7 @@ export type {
   TableFormatOptions,
   TableFormatWarning,
   TableLabels,
+  TableListSlot,
   TablePagination,
   TableProps,
   TableQuery,

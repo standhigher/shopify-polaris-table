@@ -1,16 +1,5 @@
-import {fireEvent, screen} from '@testing-library/react';
+import {fireEvent} from '@testing-library/react';
 import {describe, expect, it, vi} from 'vitest';
-import type {ReactElement, ReactNode} from 'react';
-
-vi.mock('@shopify/polaris', async () => {
-  const actual = await vi.importActual<typeof import('@shopify/polaris')>('@shopify/polaris');
-  const Popover = Object.assign(
-    ({active, activator, children}: {active: boolean; activator: ReactElement; children?: ReactNode}) => <>{activator}{active ? children : null}</>,
-    {Section: ({children}: {children?: ReactNode}) => <>{children}</>},
-  );
-
-  return {...actual, Popover};
-});
 
 import {render} from '../../test/setup';
 import {TableColumnVisibility} from './TableColumnVisibility';
@@ -22,9 +11,9 @@ const columns = [
 ] as const;
 
 describe('TableColumnVisibility', () => {
-  it('updates controlled visibility and prevents hiding required columns', async () => {
+  it('updates controlled visibility and prevents hiding required columns', () => {
     const onVisibleColumnsChange = vi.fn();
-    render(
+    const {container} = render(
       <TableColumnVisibility
         columns={columns}
         visibleColumnKeys={['id', 'name']}
@@ -33,19 +22,24 @@ describe('TableColumnVisibility', () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole('button', {name: 'Columns'}));
-    expect(await screen.findByRole('checkbox', {name: 'ID'})).toBeDisabled();
+    const popover = container.querySelector('s-popover');
+    expect(popover).not.toBeNull();
+    expect(container.querySelector('s-button')).toHaveProperty('commandFor', popover!.id);
+    const checkboxes = container.querySelectorAll('s-checkbox');
+    expect(checkboxes).toHaveLength(3);
+    expect(checkboxes[0]).toHaveProperty('disabled', true);
+    expect(checkboxes[0]).toHaveProperty('checked', true);
 
-    fireEvent.click(screen.getByRole('checkbox', {name: 'Status'}));
+    fireEvent.change(checkboxes[2]!, {target: {checked: true}});
     expect(onVisibleColumnsChange).toHaveBeenCalledWith(['id', 'name', 'status']);
 
-    fireEvent.click(screen.getByRole('checkbox', {name: 'Name'}));
+    fireEvent.change(checkboxes[1]!, {target: {checked: false}});
     expect(onVisibleColumnsChange).toHaveBeenLastCalledWith(['id']);
   });
 
-  it('resets the controlled visibility to the declared schema', async () => {
+  it('resets the controlled visibility to the declared schema', () => {
     const onVisibleColumnsChange = vi.fn();
-    render(
+    const {container} = render(
       <TableColumnVisibility
         columns={columns}
         visibleColumnKeys={['name']}
@@ -53,9 +47,9 @@ describe('TableColumnVisibility', () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole('button', {name: 'Columns'}));
-    fireEvent.click(await screen.findByRole('button', {name: 'Reset columns'}));
-
+    const resetButton = Array.from(container.querySelectorAll('s-button')).find((button) => button.textContent === 'Reset columns');
+    expect(resetButton).toBeDefined();
+    fireEvent.click(resetButton!);
     expect(onVisibleColumnsChange).toHaveBeenCalledWith(['id', 'name', 'status']);
   });
 });

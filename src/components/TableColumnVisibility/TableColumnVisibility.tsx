@@ -1,5 +1,4 @@
-import {BlockStack, Button, Checkbox, Popover} from '@shopify/polaris';
-import {useId, useMemo, useState} from 'react';
+import {useId, useMemo} from 'react';
 
 import type {TableColumn} from '../../types';
 import {sanitizeVisibleColumnKeys} from '../../features/visibleColumns';
@@ -22,7 +21,6 @@ export function TableColumnVisibility<T extends object>({
   label = 'Columns',
   resetLabel = 'Reset columns',
 }: TableColumnVisibilityProps<T>) {
-  const [active, setActive] = useState(false);
   const popoverId = useId();
   const allColumnKeys = useMemo(() => columns.map((column) => String(column.key)), [columns]);
   const visibleKeys = useMemo(
@@ -37,49 +35,31 @@ export function TableColumnVisibility<T extends object>({
     onVisibleColumnsChange(sanitizeVisibleColumnKeys(nextKeys, columns, requiredColumnKeys));
   };
 
-  const activator = (
-    <Button
-      ariaControls={popoverId}
-      ariaExpanded={active}
-      onClick={() => setActive((current) => !current)}
-    >
-      {label}
-    </Button>
-  );
-
-  return (
-    <Popover active={active} activator={activator} onClose={() => setActive(false)}>
-      <div id={popoverId}>
-        <Popover.Section>
-          <BlockStack gap="200">
-            {columns.map((column) => {
-              const key = String(column.key);
-              const checked = visibleKeySet.has(key);
-              const required = requiredKeySet.has(key);
-              const isLastVisibleColumn = checked && visibleKeys.length === 1;
-
-              return (
-                <Checkbox
-                  key={key}
-                  label={column.title}
-                  checked={checked}
-                  disabled={required || isLastVisibleColumn}
-                  onChange={(nextChecked) => {
-                    updateVisibleColumns(nextChecked ? [...visibleKeys, key] : visibleKeys.filter((visibleKey) => visibleKey !== key));
-                  }}
-                />
-              );
-            })}
-            <Button
-              variant="plain"
-              disabled={!canReset}
-              onClick={() => updateVisibleColumns(allColumnKeys)}
-            >
-              {resetLabel}
-            </Button>
-          </BlockStack>
-        </Popover.Section>
-      </div>
-    </Popover>
-  );
+  return <>
+    <s-button commandFor={popoverId}>{label}</s-button>
+    <s-popover id={popoverId} inlineSize="280px">
+      <s-box padding="base">
+        <s-stack gap="base">
+          {columns.map((column) => {
+            const key = String(column.key);
+            const checked = visibleKeySet.has(key);
+            const required = requiredKeySet.has(key);
+            const isLastVisibleColumn = checked && visibleKeys.length === 1;
+            const richTitle = typeof column.title !== 'string';
+            return <s-stack key={key} direction="inline" gap="small"><s-checkbox
+              label={richTitle ? key : column.title as string}
+              labelAccessibilityVisibility={richTitle ? 'exclusive' : 'visible'}
+              checked={checked}
+              disabled={required || isLastVisibleColumn}
+              onChange={(event) => {
+                const nextChecked = event.currentTarget.checked;
+                updateVisibleColumns(nextChecked ? [...visibleKeys, key] : visibleKeys.filter((visibleKey) => visibleKey !== key));
+              }}
+            />{richTitle ? <span>{column.title}</span> : null}</s-stack>;
+          })}
+          <s-button variant="secondary" disabled={!canReset} onClick={() => updateVisibleColumns(allColumnKeys)}>{resetLabel}</s-button>
+        </s-stack>
+      </s-box>
+    </s-popover>
+  </>;
 }

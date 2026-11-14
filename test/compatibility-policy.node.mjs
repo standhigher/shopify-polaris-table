@@ -12,7 +12,8 @@ test('declares the supported Node.js baseline', () => {
 });
 
 test('declares the intended React and Polaris peer ranges', () => {
-  assert.equal(packageJson.peerDependencies?.['@shopify/polaris'], '>=12 <14');
-  assert.equal(packageJson.peerDependencies?.react, '>=18 <19');
-  assert.equal(packageJson.peerDependencies?.['react-dom'], '>=18 <19');
+  assert.equal(packageJson.peerDependencies?.['@shopify/polaris'], undefined);
+  assert.equal(packageJson.peerDependencies?.react, '>=19 <20');
+  assert.equal(packageJson.peerDependencies?.['react-dom'], '>=19 <20');
+  assert.equal(packageJson.devDependencies?.['@shopify/polaris-types'], '2.0.0');
 });

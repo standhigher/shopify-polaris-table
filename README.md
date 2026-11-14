@@ -38,10 +38,12 @@ It renders familiar Polaris table UI while your application retains control of f
 ## Installation
 
 ```bash
-npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
+npm install @standhigher/polaris-data-table react react-dom
+# The host application must also load Polaris 2, for example:
+# https://cdn.shopify.com/shopifycloud/polaris-2.js
 ```
 
-The table requires `@shopify/polaris >=12 <14`, React 18, and React DOM 18. Render it under Polaris `AppProvider`; see the [installation guide](https://standhigher.github.io/shopify-polaris-table/getting-started/installation).
+This V2 development branch targets React 19, React DOM 19, and host-loaded Polaris 2 Web Components. Load the Runtime before mounting React; the package does not inject scripts or require Polaris React `AppProvider`. Published V1 users should remain on `@standhigher/polaris-data-table@^1` and the `maintenance/v1.x` branch. V2 is not yet released; see the [P1 validation record](docs/v2/validation.md).
 
 Extension-only consumers can omit Polaris and import the renderer from the official `@standhigher/polaris-data-table/extension` entrypoint. All other deep imports are unsupported.
 
@@ -120,8 +122,8 @@ When `onQueryChange` receives a new query, load the corresponding page on the se
 | Dependency | Supported versions |
 | --- | --- |
 | Node.js | 20 or newer (development and CI) |
-| React / React DOM | `>=18 <19` |
-| `@shopify/polaris` | `>=12 <14` (Admin root entrypoint only) |
+| React / React DOM | `>=19 <20` |
+| Polaris Web Components | Polaris 2.x Runtime loaded by the host application |
 
 This package is ESM-only and ships TypeScript declarations. Its peer dependencies are intentionally not bundled.
 

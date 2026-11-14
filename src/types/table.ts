@@ -12,6 +12,8 @@ export type TableColumnType =
 
 export type TableColumnAlignment = 'start' | 'center' | 'end';
 
+export type TableListSlot = 'primary' | 'secondary' | 'kicker' | 'inline' | 'labeled';
+
 export type TableStatusTone = 'success' | 'info' | 'warning' | 'critical';
 
 export type TableFilterScalar = string | number | boolean;
@@ -82,10 +84,14 @@ export interface TableColumnBase<T extends object> {
   key: string;
   title: ReactNode;
   sortable?: boolean;
+  /** Mobile list content designation used by Polaris s-table. */
+  listSlot?: TableListSlot;
   align?: TableColumnAlignment;
   currencyCode?: string | ((row: T) => string | undefined);
   timeZone?: string;
   statusTone?: Readonly<Record<string, TableStatusTone>>;
+  /** Optional accessible alternative text for image columns. */
+  imageAlt?: string | ((row: T) => string);
 }
 
 /** Renders a cell value when a built-in column presentation is insufficient. */
@@ -175,6 +181,8 @@ export interface TableProps<T extends object> {
   rowId: Extract<keyof T, string> | ((row: T) => string);
   query: TableQuery;
   pagination: TablePagination;
+  /** Allowed page-size options shown by the native pagination control. */
+  pageSizeOptions?: readonly number[];
   formatOptions: TableFormatOptions;
   filters?: readonly TableFilterDefinition[];
   selection: TableSelection;
