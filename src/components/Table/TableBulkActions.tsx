@@ -175,8 +175,9 @@ export function TableBulkActions(props: TableBulkActionsProps) {
       </> : null}
       <s-button variant="tertiary" disabled={loading || pending} onClick={onClear}>Clear selection</s-button>
     </s-stack> : null}
-    {resultFeedback}
+    {!confirmation ? resultFeedback : null}
     <s-modal ref={modalRef} id={id} heading="Confirm bulk action" onAfterHide={() => setConfirmation(null)}>
+      {confirmation ? resultFeedback : null}
       <s-paragraph>{`Apply this action to ${confirmation ? getSelectionCount(confirmation.context.selection) : 0} selected rows?`}</s-paragraph>
       <div>{confirmation?.action.content}</div>
       <s-button slot="secondary-actions" variant="secondary" commandFor={id} command="--hide" disabled={pending} onClick={() => setConfirmation(null)}>Cancel</s-button>

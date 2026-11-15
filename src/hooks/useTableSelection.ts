@@ -11,7 +11,7 @@ export interface TableSelectionContext {
 }
 
 export function copyTableSelection(selection: TableSelection): TableSelection {
-  return selection.mode === 'explicit' ? {...selection, ids: [...selection.ids]} : {...selection, excludedIds: [...selection.excludedIds]};
+  return selection.mode === 'explicit' ? {...selection, ids: [...new Set(selection.ids)]} : {...selection, excludedIds: [...new Set(selection.excludedIds)]};
 }
 
 function selectionKey(selection: TableSelection): string {
