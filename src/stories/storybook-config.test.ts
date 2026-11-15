@@ -67,11 +67,12 @@ describe('Storybook release integration', () => {
     expect(previewConfig).toContain("'Overview'");
   });
 
-  it('ships Docs, accessibility checks, responsive viewports, and an English-first language toggle', async () => {
+  it('ships Docs, accessibility checks, responsive viewports, direction, and an English-first language toggle', async () => {
     const [mainConfig, previewConfig] = await Promise.all([readFile(mainConfigPath, 'utf8'), readFile(previewConfigPath, 'utf8')]);
 
     expect(mainConfig).toContain("'@storybook/addon-docs'");
     expect(mainConfig).toContain("'@storybook/addon-a11y'");
+    expect(previewConfig).toContain("defaultValue: 'ltr'");
     expect(previewConfig).toContain("defaultValue: 'en'");
     expect(previewConfig).toContain("'zh-CN'");
     expect(previewConfig).toContain('mobile320');

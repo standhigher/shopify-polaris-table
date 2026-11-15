@@ -85,6 +85,18 @@ describe('ExtensionTable', () => {
     expect(await screen.findByText('No connection')).toBeInTheDocument();
   });
 
+  it('groups native radios per table without coupling separate table instances', () => {
+    render(<>
+      <ExtensionTable columns={columns} data={rows} rowId="id" host={{locale: 'en', timeZone: 'UTC'}} onSelectionChange={vi.fn()} />
+      <ExtensionTable columns={columns} data={rows} rowId="id" host={{locale: 'en', timeZone: 'UTC'}} onSelectionChange={vi.fn()} />
+    </>);
+    const radios = screen.getAllByRole('radio') as HTMLInputElement[];
+    expect(radios[0]!.name).toBeTruthy();
+    expect(radios[0]!.name).toBe(radios[1]!.name);
+    expect(radios[2]!.name).toBe(radios[3]!.name);
+    expect(radios[0]!.name).not.toBe(radios[2]!.name);
+  });
+
   it('accepts host-owned labels for its built-in UI', () => {
     render(<ExtensionTable
       columns={columns}

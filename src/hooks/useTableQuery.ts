@@ -43,9 +43,20 @@ export function cleanFilters(filters: TableFilters | undefined): TableFilters | 
   return cleanedEntries.length > 0 ? Object.fromEntries(cleanedEntries) : undefined;
 }
 
+function isPositiveSafeInteger(value: number): boolean {
+  return Number.isSafeInteger(value) && value > 0;
+}
+
+function normalizePage(page: number): number {
+  const normalized = Math.floor(page);
+  return isPositiveSafeInteger(normalized) ? normalized : 1;
+}
+
 export function useTableQuery({query, onQueryChange, pageSizeOptions}: UseTableQueryOptions): UseTableQueryResult {
   const allowedPageSizes = useMemo(
-    () => (pageSizeOptions && pageSizeOptions.length > 0 ? pageSizeOptions : undefined),
+    () => (pageSizeOptions && pageSizeOptions.length > 0
+      ? [...new Set(pageSizeOptions.filter(isPositiveSafeInteger))]
+      : undefined),
     [pageSizeOptions],
   );
 
@@ -53,7 +64,7 @@ export function useTableQuery({query, onQueryChange, pageSizeOptions}: UseTableQ
     (next: TableQuery) => {
       const normalized: TableQuery = {
         ...next,
-        page: Math.max(1, Math.floor(next.page)),
+        page: normalizePage(next.page),
       };
 
       if (normalized.search === '') {
@@ -87,9 +98,12 @@ export function useTableQuery({query, onQueryChange, pageSizeOptions}: UseTableQ
       },
       setPage: (page: number) => emit({...query, page}),
       setPageSize: (pageSize: number) => {
-        const nextPageSize = allowedPageSizes?.includes(pageSize)
-          ? pageSize
-          : (allowedPageSizes?.find((size) => size === query.pageSize) ?? allowedPageSizes?.[0] ?? query.pageSize);
+        const normalizedPageSize = isPositiveSafeInteger(pageSize) ? pageSize : undefined;
+        const nextPageSize = allowedPageSizes
+          ? (normalizedPageSize !== undefined && allowedPageSizes.includes(normalizedPageSize)
+            ? normalizedPageSize
+            : (allowedPageSizes.find((size) => size === query.pageSize) ?? allowedPageSizes[0] ?? query.pageSize))
+          : (normalizedPageSize ?? query.pageSize);
         emit({...query, page: 1, pageSize: nextPageSize});
       },
       clearFilters: () => {

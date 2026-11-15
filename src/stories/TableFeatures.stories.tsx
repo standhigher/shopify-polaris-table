@@ -1,4 +1,3 @@
-import {Button, ButtonGroup, Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useMemo, useState} from 'react';
 
@@ -84,10 +83,10 @@ export const SearchSortAndFilters: Story = {
   name: 'Search, Sort, and Filters',
   render: () => {
     const [selection, setSelection] = useState<TableSelection>(explicitSelection);
-    return <Card>
-      <Text as="p" variant="bodyMd">Filters are protocol-driven; the parent owns query state.</Text>
+    return <s-section>
+      <s-paragraph>Filters are protocol-driven; the parent owns query state.</s-paragraph>
       <ProductTableStory selection={selection} onSelectionChange={setSelection} />
-    </Card>;
+    </s-section>;
   },
 };
 
@@ -97,11 +96,11 @@ export const LoadingEmptyErrorAndRetry: Story = {
     const [mode, setMode] = useState<'loading' | 'empty' | 'error'>('loading');
     const [selection, setSelection] = useState<TableSelection>(explicitSelection);
     return <>
-      <ButtonGroup>
-        <Button pressed={mode === 'loading'} onClick={() => setMode('loading')}>Loading</Button>
-        <Button pressed={mode === 'empty'} onClick={() => setMode('empty')}>Empty</Button>
-        <Button pressed={mode === 'error'} onClick={() => setMode('error')}>Error</Button>
-      </ButtonGroup>
+      <s-button-group>
+        <s-button variant={mode === 'loading' ? 'primary' : 'secondary'} aria-pressed={mode === 'loading'} onClick={() => setMode('loading')}>Loading</s-button>
+        <s-button variant={mode === 'empty' ? 'primary' : 'secondary'} aria-pressed={mode === 'empty'} onClick={() => setMode('empty')}>Empty</s-button>
+        <s-button variant={mode === 'error' ? 'primary' : 'secondary'} aria-pressed={mode === 'error'} onClick={() => setMode('error')}>Error</s-button>
+      </s-button-group>
       <div style={{marginTop: '1rem'}}>
         <ProductTableStory
           selection={selection}
@@ -121,7 +120,7 @@ export const FormatWarnings: Story = {
     const [warnings, setWarnings] = useState<string[]>([]);
     const rows = useMemo(() => storyProducts.map((row, index) => index === 0 ? {...row, currencyCode: ''} : row), []);
     const columns: readonly TableColumn<(typeof rows)[number]>[] = createProductColumns();
-    return <Card>
+    return <s-section>
       <Table
         columns={columns}
         data={rows}
@@ -135,7 +134,7 @@ export const FormatWarnings: Story = {
         onFormatWarning={(warning) => setWarnings((current) => [...current, `${warning.columnKey}:${warning.reason}`])}
       />
       <pre>{JSON.stringify(warnings, null, 2)}</pre>
-    </Card>;
+    </s-section>;
   },
 };
 
@@ -159,7 +158,7 @@ export const RowActions: Story = {
           perform: async ({rowId}) => { setMessage(`Archived ${rowId}`); },
         }]}
       />
-      <div style={{marginTop: '1rem'}}><Text as="p" variant="bodySm">{message}</Text></div>
+      <div style={{marginTop: '1rem'}}><s-paragraph fontSize="small">{message}</s-paragraph></div>
     </>;
   },
 };

@@ -1,114 +1,116 @@
 # Release guide
 
-This guide applies only to releases from the merged `main` branch. Do not publish from a feature branch, an unmerged pull request, or a working tree with unrelated changes.
+## Current state: V2 published, 2.0.1 patch authorized
 
-## Preflight
+Local `main` contains the reviewed V2 development history. The target patch version is **2.0.1** on **latest**. The official registry was checked during P7 preparation: **latest is 2.0.0** and `2.0.1` is unclaimed at preparation time. No package, Git tag or push has been created by preparation or local merge.
 
-1. Confirm the checkout is on the latest merged `main` and is clean:
+P6 Chromium bulk-menu keyboard remains `partial` but is explicitly accepted as a non-blocking risk. VoiceOver/NVDA is intentionally out of scope and is no longer a release blocker. The user explicitly accepted the recorded workspace dependency audit risk for the 2.0.1 release. See [P7 readiness](<v2/p7-validation.md>) and [the readiness record](<v2/release-readiness.json>).
 
-   ```bash
-   git switch main
-   git pull --ff-only
-   git status --short
-   ```
+## Branch and channel policy
 
-2. Inspect the official npm registry before choosing a version. This avoids reusing an existing version:
+| Line | Release source | Version | Channel |
+|---|---|---|---|
+| V1 fixes | `maintenance/v1.x` | compatible 1.x | maintain the approved V1/stable policy; do not overwrite a future V2 latest |
+| V2 beta | merged `main` | `2.0.0-beta.N` | `next` only |
+| V2 stable | future reviewed merged `main` | `2.x.y` without prerelease | `latest`, only after separate approval |
 
-   ```bash
-   npm view @standhigher/polaris-data-table version --registry=https://registry.npmjs.org/
-   npm view @standhigher/polaris-data-table dist-tags --json --registry=https://registry.npmjs.org/
-   ```
+Prereleases must use a semantic prerelease version and the `next` dist-tag. Do not move `latest` to a prerelease. The legacy `npm:publish` entrypoint is deliberately disabled on this V2 beta line. The V1 maintenance branch retains its own release process.
 
-   A `404` means the scoped package has not been published yet. Do not treat a network or authentication error as proof that a version is free.
+## Preparation checks (safe, no publish)
 
-3. Update the version, changelog, and any version assertions in the same pull request. Use semantic versioning: patch for compatible fixes, minor for compatible features, and major for breaking changes.
+Use a supported build runtime: Vite 8 requires Node **20.19+**, **22.12+**, or a supported newer release such as Node 24. The package's `node >=20` runtime declaration is not a claim that every Node 20 minor can build the development workspace.
 
-4. Run the complete verification suite and inspect the publish payload:
-
-   ```bash
-   git diff --check
-   npm run release:check
-   npm pack --dry-run --registry=https://registry.npmjs.org/
-   ```
-
-   Confirm the tarball includes only the intended public files and never credentials or local build artifacts.
-
-## Authenticate with npmjs
-
-Use npm's browser-based authentication against the official registry:
-
-```bash
-npm login --auth-type=web --registry=https://registry.npmjs.org/
-npm whoami --registry=https://registry.npmjs.org/
+```sh
+npm ci
+npm run release:prepare:beta
+npm run release:preflight:beta
 ```
 
-The equivalent package scripts are:
+Preparation runs lint/unit/type/build/docs/pack checks, actual installed tarball NodeNext and SSR consumers, release-policy tests, and esbuild tree-shaking/contribution-graph verification. These checks can run on a working preparation branch and do not log in or publish.
 
-```bash
+**Preflight is expected to fail today.** It requires:
+
+- A merged `main` checkout for beta.
+- A clean working tree, including untracked files. Do not silently delete or stage unrelated files such as an existing pnpm lockfile.
+- Matching package/lock/readiness versions and `next` channel.
+- P6 automation passed, or only the explicitly excluded P6-01 menu/real-screen-reader cases remain. Other automation failures still block release.
+- VoiceOver/NVDA and P6-01 decisions are already recorded as accepted/out of scope; no further testing is required for these two items.
+- An accepted dependency audit risk decision.
+- A separate human authorization to publish.
+
+The readiness record includes explicit P6-01/screen-reader scope decisions, dependency-audit risk acceptance and authorization for 2.0.1. A clean checkout and the remaining source/package gates are still required. It is not a bypass switch: do not mark unrelated reports passed just to satisfy preflight.
+
+## Registry and authentication (only when publication is separately authorized)
+
+First inspect npmjs, not a mirror:
+
+```sh
+npm view @standhigher/polaris-data-table versions dist-tags --json --registry=https://registry.npmjs.org/
+```
+
+A network/authentication error is not evidence that a version is free. Versions are immutable; never reuse an existing version.
+
+After approval, authenticate interactively:
+
+```sh
 npm run npm:login
 npm run npm:whoami
 ```
 
-Complete the browser flow before continuing. Do not paste or commit auth tokens. Confirm that the authenticated account can publish to the `@standhigher` scope.
+Do not paste or commit tokens. Confirm the publisher has access to the `@standhigher` scope. Complete any npm browser/passkey challenge in an interactive terminal; do not bypass OTP or authentication requirements.
 
-## Verify GitHub Pages
+## Guarded stable publication (not executed in this session)
 
-Before expecting the public documentation site to appear, confirm the repository has GitHub Pages enabled with **Source: GitHub Actions** in repository settings. The documentation workflow builds and uploads `website/build`; GitHub Pages must be enabled for the deploy job to create `https://standhigher.github.io/shopify-polaris-table/`.
+After the separate P6/manual-readiness/dependency approvals and a clean final `main` commit, the manual command is:
 
-If `https://api.github.com/repos/standhigher/shopify-polaris-table/pages` returns `404`, the Pages site is not enabled yet. Enable Pages in GitHub, rerun the `Documentation` workflow from `main`, then verify:
-
-```bash
-curl -I https://standhigher.github.io/shopify-polaris-table/
-curl -I https://standhigher.github.io/shopify-polaris-table/storybook/
-```
-
-## Publish a stable release
-
-From the verified, merged `main` commit:
-
-```bash
+```sh
 npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/
-npm view @standhigher/polaris-data-table version dist-tags --json --registry=https://registry.npmjs.org/
 ```
 
-The guarded publish script runs the complete release check first:
+Before running it, execute:
 
-```bash
-npm run npm:publish
+```sh
+npm run release:check:stable
+npm run release:preflight:stable
+npm view @standhigher/polaris-data-table versions dist-tags --json --registry=https://registry.npmjs.org/
 ```
 
-Run `npm publish` in an interactive terminal. When npm prints `Authenticate your account at:` and `Press ENTER to open in the browser...`, press ENTER, complete the npmjs browser challenge with the local passkey, security key, or fingerprint prompt, then return to the terminal and wait for the publish confirmation. A non-interactive publish can fall back to an `EOTP` message even when the account uses web authentication instead of a six-digit authenticator code.
+`prepublishOnly` runs the same release policy again. It still blocks on unrelated automation failures, pending dependency audit, a dirty checkout or missing publish authorization. The explicitly accepted P6-01 partial result and excluded VoiceOver/NVDA test no longer trigger release-blocking reminders. Do not use `--ignore-scripts` to bypass it.
 
-`latest` is the default install channel and is reserved for stable releases. Publishing a scoped package publicly requires `--access public`. Use `--auth-type=web` by default for manual npmjs releases.
+## Guarded beta publication (not executed in P7 preparation)
 
-After npm confirms the publish, create and push an annotated tag for that exact commit:
+Only after all blockers and approvals are resolved:
 
-```bash
-git tag -a v0.2.0 -m "Release v0.2.0"
-git push origin main --follow-tags
+```sh
+npm run release:check:beta
+npm run npm:publish:beta
 ```
 
-Replace `0.2.0` with the released package version. Create the corresponding GitHub Release from the tag and link its notes to `CHANGELOG.md`.
+The guarded command uses `--tag next`. `publishConfig.tag` defaults to `next`, and `prepublishOnly` rechecks policy for a raw npm lifecycle. Do not use `--ignore-scripts` or direct tag overrides to bypass the gate.
 
-## Publish a prerelease
+After a separately authorized successful publish, verify the exact beta and registry tags, then create an annotated version tag for that exact clean release commit and push it only with explicit authorization. Preparation itself creates no release tag and performs no push.
 
-Prereleases must use a semantic prerelease version and the `next` dist-tag, for example:
+## Tarball review
 
-```bash
-npm publish --access public --tag next --registry=https://registry.npmjs.org/
-npm view @standhigher/polaris-data-table dist-tags --json --registry=https://registry.npmjs.org/
+```sh
+npm pack --dry-run --registry=https://registry.npmjs.org/
 ```
 
-`next` is for opt-in prerelease consumers. Do not move `latest` to a prerelease. Tag the exact merged commit with its matching annotated version tag after publishing.
+The payload should contain the package metadata, license, bilingual documentation, changelog and intended ESM/declaration files. Root and `/extension` are the only formal entrypoints. No experiments, test/browser tools, secrets, generated Storybook, Runtime loader or CSS injection belongs in the package. `sideEffects:false` is supported by the current no-CSS/no-runtime-injection design and real bundler tests; revisit it if CSS or module initialization is introduced.
+
+## Website / GitHub Pages
+
+The documentation workflow builds the static site separately from the library's published runtime dependencies. Its dependencies and security advisories need independent review. Enabling Pages or pushing a merge is not authorization to publish npm. Never equate a local docs build with a deployed site.
 
 ## Release checklist
 
-- [ ] The release pull request is merged into `main`.
-- [ ] `package.json`, `package-lock.json`, source version constants, tests, and `CHANGELOG.md` agree on the version.
-- [ ] `git diff --check` and `npm run release:check` pass.
-- [ ] `npm pack --dry-run` has been reviewed.
-- [ ] The official registry has been checked for the selected version.
-- [ ] npm web authentication is complete and `npm whoami` is the intended publisher.
-- [ ] The package was published with the intended `latest` or `next` dist-tag.
-- [ ] The published version and dist-tags were verified from the official registry.
-- [ ] An annotated `v<version>` tag and GitHub Release point at the published `main` commit.
+- [ ] Release source and channel are approved.
+- [ ] Package/lock/changelog/docs agree on the exact version.
+- [ ] Source, consumer, SSR, bundle and tarball checks pass on the final commit.
+- [x] P6-01 partial and VoiceOver/NVDA out-of-scope decisions are recorded by explicit user instruction.
+- [ ] Dependency audit findings are triaged/accepted or fixed.
+- [ ] Working tree is clean; unrelated user files were preserved.
+- [ ] Official registry confirms version availability and expected tags.
+- [ ] Separate publication authorization and npm authentication are complete.
+- [ ] Publication used next for beta; latest was not moved.
+- [ ] Published metadata and exact release commit are verified before tagging/pushing.

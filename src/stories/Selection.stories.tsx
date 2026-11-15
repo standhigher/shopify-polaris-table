@@ -1,4 +1,3 @@
-import {Button, Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useMemo, useState} from 'react';
 
@@ -111,10 +110,10 @@ export const BulkActionCompleted: Story = {
 
     return <>
       <SelectionTable selection={selection} onSelectionChange={setSelection} bulkActions={bulkActions} total={42} />
-      <div style={{marginTop: '1rem'}}><Text as="p" variant="bodySm">{message}</Text></div>
-      <Card>
-        <Button onClick={() => setSelection({mode: 'explicit', ids: ['o_1', 'o_2']})}>Reset selection</Button>
-      </Card>
+      <div style={{marginTop: '1rem'}}><s-paragraph fontSize="small">{message}</s-paragraph></div>
+      <s-section>
+        <s-button onClick={() => setSelection({mode: 'explicit', ids: ['o_1', 'o_2']})}>Reset selection</s-button>
+      </s-section>
     </>;
   },
 };

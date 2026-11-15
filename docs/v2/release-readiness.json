@@ -1,0 +1,15 @@
+{
+  "version": "2.0.1",
+  "channel": "latest",
+  "p6AutomationAccepted": true,
+  "p6Decision": "accepted-risk",
+  "screenReaderDecision": "accepted-risk",
+  "publishAuthorized": true,
+  "dependencyAuditAccepted": true,
+  "notes": [
+    "The user explicitly authorized publishing 2.0.1 to latest and accepted the recorded workspace dependency audit risk for this release.",
+    "P6-01 Chromium bulk-menu keyboard remains partial and is explicitly accepted as a non-blocking risk.",
+    "VoiceOver/NVDA is explicitly out of scope for this release decision and will not be added as a future release blocker.",
+    "No npm dist-tag was changed."
+  ]
+}

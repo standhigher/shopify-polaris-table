@@ -1,0 +1,465 @@
+{
+  "startedAt": "2026-11-15T04:28:02.008Z",
+  "runtime": "https://cdn.shopify.com/shopifycloud/polaris-2.0.js",
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+  "axe": [
+    {
+      "name": "columns-ltr-320",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "columns-ltr-375",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "columns-ltr-768",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 46,
+        "incomplete": 0,
+        "passes": 43,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "columns-ltr-1280",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 46,
+        "incomplete": 0,
+        "passes": 43,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "columns-rtl-320",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "columns-rtl-375",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "columns-rtl-768",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 46,
+        "incomplete": 0,
+        "passes": 43,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "columns-rtl-1280",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 46,
+        "incomplete": 0,
+        "passes": 43,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-ltr-320",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-ltr-375",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-ltr-768",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-ltr-1280",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-rtl-320",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-rtl-375",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-rtl-768",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "lifecycle-rtl-1280",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-ltr-320",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-ltr-375",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-ltr-768",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-ltr-1280",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-rtl-320",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-rtl-375",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-rtl-768",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "selection-rtl-1280",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 48,
+        "incomplete": 0,
+        "passes": 41,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "skeleton-desktop",
+      "version": "4.12.1",
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "visuals": [
+    {
+      "name": "columns-ltr-320",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        320,
+        648
+      ]
+    },
+    {
+      "name": "columns-ltr-375",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        375,
+        667
+      ]
+    },
+    {
+      "name": "columns-ltr-768",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "name": "columns-ltr-1280",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "columns-rtl-320",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        320,
+        648
+      ]
+    },
+    {
+      "name": "columns-rtl-375",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        375,
+        667
+      ]
+    },
+    {
+      "name": "columns-rtl-768",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "name": "columns-rtl-1280",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "skeleton-ltr-desktop",
+      "pass": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "threshold": 0.001,
+      "size": [
+        1280,
+        1619
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "step": "columns-tab",
+      "focus": [
+        {
+          "label": "Status",
+          "tag": "S-CHECKBOX"
+        },
+        {
+          "label": "",
+          "tag": "INPUT"
+        }
+      ]
+    },
+    {
+      "step": "columns-escape",
+      "focus": [
+        {
+          "label": "Columns",
+          "tag": "S-BUTTON"
+        },
+        {
+          "label": "",
+          "tag": "BUTTON"
+        }
+      ]
+    },
+    {
+      "step": "skeleton",
+      "hidden": true,
+      "rows": 3,
+      "status": "Loading inventory"
+    },
+    {
+      "step": "selection-checkbox-space",
+      "focus": [
+        {
+          "label": "Select all rows",
+          "tag": "S-CHECKBOX"
+        },
+        {
+          "label": "",
+          "tag": "INPUT"
+        }
+      ]
+    }
+  ],
+  "unavailable": [
+    "Real VoiceOver/NVDA speech: requires manual assistive-technology acceptance",
+    "Headless Chromium did not expose Polaris s-menu menuitems for keyboard harness: Accessible menuitem 'Delete selected' did not appear"
+  ],
+  "notCoveredByThisRun": [
+    "ExtensionTable formal matrix is maintained separately from the Admin s-table matrix"
+  ],
+  "failures": [],
+  "finishedAt": "2026-11-15T04:28:45.337Z",
+  "status": "partial"
+}

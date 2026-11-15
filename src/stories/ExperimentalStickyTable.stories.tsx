@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import {StickyTablePOC} from '../experimental/StickyTablePOC';
@@ -20,8 +19,8 @@ type Story = StoryObj<typeof meta>;
 export const StickyHeaderAndEdgeColumns: Story = {
   render: () => {
     const {text} = useStorybookCopy();
-    return <Card>
-      <Text as="p" variant="bodySm">{text('Internal experiment: scroll vertically and horizontally. Verify that header and edge stacking do not cover the wrong cell; actions, selection, sorting, popovers, and dynamic widths are out of scope.', '内部实验：纵向和横向滚动，验证表头与边缘堆叠不会遮挡错误单元格；操作、选择、排序、弹出层与动态宽度不在范围内。')}</Text>
+    return <s-section>
+      <s-paragraph fontSize="small">{text('Internal experiment: scroll vertically and horizontally. Verify that header and edge stacking do not cover the wrong cell; actions, selection, sorting, popovers, and dynamic widths are out of scope.', '内部实验：纵向和横向滚动，验证表头与边缘堆叠不会遮挡错误单元格；操作、选择、排序、弹出层与动态宽度不在范围内。')}</s-paragraph>
       <StickyTablePOC
       columns={[
         {id: 'name', heading: 'Customer', width: 180, sticky: 'start', render: (row) => row.name},
@@ -34,6 +33,6 @@ export const StickyHeaderAndEdgeColumns: Story = {
       viewportHeight={320}
         ariaLabel={text('Experimental sticky table', '实验性固定表格')}
       />
-    </Card>;
+    </s-section>;
   },
 };

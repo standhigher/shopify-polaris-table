@@ -6,8 +6,8 @@
     "sourceMap": true,
     "outDir": "dist",
     "rootDir": "src",
-    "types": [],
+    "types": ["@shopify/polaris-types"],
     "allowJs": false
   },
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/stories", "src/test", "test"]
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/stories", "src/test", "test", "examples"]
 }

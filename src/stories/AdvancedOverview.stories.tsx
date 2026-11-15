@@ -1,4 +1,3 @@
-import {Button, ButtonGroup, Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useMemo, useState} from 'react';
 
@@ -54,14 +53,14 @@ export const StateHelpersPreview: Story = {
       renderCell: ({value}) => String(value ?? ''),
     });
 
-    return <Card>
-      <Text as="p" variant="bodyMd">Advanced stories should reveal the moving pieces: layout, virtual windows, schemas, and adapters.</Text>
+    return <s-section>
+      <s-paragraph>Advanced stories should reveal the moving pieces: layout, virtual windows, schemas, and adapters.</s-paragraph>
       <pre>{JSON.stringify({schemaErrors: validateCoreSchema(schema), query, window, stickyOffsets: getStickyOffsets(layout), adapterRenderer: adapter.renderer}, null, 2)}</pre>
-      <ButtonGroup>
-        <Button onClick={() => setLayout((current) => resizeColumn(current, 'name', 200))}>Resize name</Button>
-        <Button onClick={() => setLayout((current) => reorderColumns(current, 'total', 0))}>Move total</Button>
-        <Button onClick={() => setLayout((current) => setColumnVisibility(current, 'status', false))}>Hide status</Button>
-      </ButtonGroup>
-    </Card>;
+      <s-button-group>
+        <s-button onClick={() => setLayout((current) => resizeColumn(current, 'name', 200))}>Resize name</s-button>
+        <s-button onClick={() => setLayout((current) => reorderColumns(current, 'total', 0))}>Move total</s-button>
+        <s-button onClick={() => setLayout((current) => setColumnVisibility(current, 'status', false))}>Hide status</s-button>
+      </s-button-group>
+    </s-section>;
   },
 };

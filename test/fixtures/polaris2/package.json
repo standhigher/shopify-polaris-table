@@ -1,0 +1,20 @@
+{
+  "name": "polaris2-react19-type-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test:ssr": "tsc && node ssr.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@shopify/polaris-types": "2.0.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "preact": "11.2.0",
+    "typescript": "5.9.2"
+  }
+}

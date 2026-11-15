@@ -26,5 +26,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
+      - run: npm run test:beta-policy
+      - run: npm run test:tree-shaking
       - run: npm run build-storybook
       - run: npm pack --dry-run --registry=https://registry.npmjs.org/

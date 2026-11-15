@@ -1,20 +1,15 @@
-import '@shopify/polaris/build/esm/styles.css';
-
-import {AppProvider} from '@shopify/polaris';
-import en from '@shopify/polaris/locales/en.json';
-import zhCN from '@shopify/polaris/locales/zh-CN.json';
 import type {Preview} from '@storybook/react-vite';
-import type {ReactNode} from 'react';
 
 import {StorybookLocaleProvider} from '../src/stories/storybookI18n';
-
-function PolarisProvider({locale, children}: {locale: 'en' | 'zh-CN'; children: ReactNode}) {
-  return <AppProvider i18n={locale === 'zh-CN' ? zhCN : en}>{children}</AppProvider>;
-}
 
 const preview: Preview = {
   tags: ['autodocs'],
   globalTypes: {
+    direction: {
+      name: 'Direction',
+      defaultValue: 'ltr',
+      toolbar: {icon: 'transfer', items: [{value: 'ltr', title: 'Left to right'}, {value: 'rtl', title: 'Right to left'}]},
+    },
     locale: {
       name: 'Language',
       description: 'Language used by the Storybook preview',
@@ -31,8 +26,9 @@ const preview: Preview = {
   },
   decorators: [(Story, context) => {
     const locale = context.globals.locale === 'zh-CN' ? 'zh-CN' : 'en';
+    const direction = context.globals.direction === 'rtl' ? 'rtl' : 'ltr';
     return <StorybookLocaleProvider locale={locale}>
-      <PolarisProvider locale={locale}><Story /></PolarisProvider>
+      <div lang={locale} dir={direction}>{context.viewMode === 'docs' ? <Story /> : <main><h1 style={{position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clipPath: 'inset(50%)'}}>{context.title ?? 'Polaris Data Table'}</h1><Story /></main>}</div>
     </StorybookLocaleProvider>;
   }],
   parameters: {

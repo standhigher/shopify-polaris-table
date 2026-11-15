@@ -40,13 +40,15 @@ export function renderCell<T extends object>(
         return label;
       }
       const tone = column.statusTone?.[String(value)];
-      return <span data-tone={tone ?? 'neutral'}>{label}</span>;
+      return <s-badge tone={tone ?? 'neutral'}>{label}</s-badge>;
     }
     case 'image': {
       if (typeof value !== 'string' || !/^https?:\/\//.test(value)) {
         return EMPTY_CELL_PLACEHOLDER;
       }
-      return <img src={value} alt="" onError={(event) => event.currentTarget.remove()} />;
+      const alt = typeof column.imageAlt === 'function' ? column.imageAlt(row) : column.imageAlt ?? '';
+      // Polaris owns loading/error placeholders; never remove React-managed nodes.
+      return <s-thumbnail src={value} alt={alt} size="small" />;
     }
     case 'actions':
       return null;
