@@ -4,6 +4,7 @@
   "p6AutomationAccepted": false,
   "screenReaderDecision": "pending",
   "publishAuthorized": false,
+  "dependencyAuditAccepted": false,
   "notes": [
     "P7 preparation is authorized; npm publishing is not authorized.",
     "P6-01 Chromium bulk-menu keyboard acceptance is still partial.",

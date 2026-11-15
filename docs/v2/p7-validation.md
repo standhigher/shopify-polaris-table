@@ -24,7 +24,7 @@
 
 ## 消费者和 tree-shaking
 
-新增 `test/tree-shaking.node.mjs`，使用直接声明的 esbuild 0.28.2 验证：
+新增 `test/tree-shaking.node.mjs` 与 `test/package-bundle.node.mjs`，使用直接声明的 esbuild 0.28.2 验证实际 tarball consumer、metafile contribution graph 和 `sideEffects:false`：
 
 - 纯 formatter consumer 不拉入 Table、Extension 或 experimental 代码，也不注入 Polaris Runtime。
 - Table consumer 不拉入 Extension/experimental。
@@ -37,6 +37,7 @@
 - VoiceOver/NVDA 实际读屏尚未完成。
 - `pnpm-lock.yaml` 仍是未跟踪文件，release clean-tree 不成立。
 - 尚未执行 `npm run release:check:beta` 的完整放行路径。
+- `npm audit --omit=dev` 在 npm workspace 中仍审计 website/Docusaurus production workspace，报告 30 项（3 low / 6 moderate / 6 high / 15 critical）；这不是包 tarball 的 runtime dependency 清单，P7 不在未审计网站依赖时宣称安全。
 - 不执行 `npm publish`、不创建 tag、不 push、不移动 latest。
 
 ## 复跑

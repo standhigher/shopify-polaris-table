@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {validateRelease} from '../scripts/release-preflight.mjs';
 
-const base = {version: '2.0.0-beta.1', channel: 'next', branch: 'main', status: '', readiness: {version: '2.0.0-beta.1', channel: 'next', p6AutomationAccepted: true, screenReaderDecision: 'passed', publishAuthorized: true}, p6: {status: 'passed', failures: [], unavailable: []}};
+const base = {version: '2.0.0-beta.1', channel: 'next', branch: 'main', status: '', readiness: {version: '2.0.0-beta.1', channel: 'next', p6AutomationAccepted: true, screenReaderDecision: 'passed', publishAuthorized: true, dependencyAuditAccepted: true}, p6: {status: 'passed', failures: [], unavailable: []}};
 
 test('accepts only an explicitly authorized clean beta readiness record', () => {
   assert.deepEqual(validateRelease(base), []);

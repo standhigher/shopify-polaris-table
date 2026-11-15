@@ -32,6 +32,7 @@ test('beta publish requires the guarded release check', () => {
   assert.match(packageJson.scripts?.['release:check:beta'] ?? '', /release:preflight:beta/);
   assert.match(packageJson.scripts?.prepublishOnly ?? '', /release-preflight/);
   assert.equal(packageJson.publishConfig?.tag, 'next');
+  assert.equal(packageJson.sideEffects, false);
   assert.match(packageJson.scripts?.['npm:publish'] ?? '', /publish-disabled/);
   assert.match(packageJson.scripts?.['npm:publish:beta'] ?? '', /release:check:beta/);
 });

@@ -22,6 +22,7 @@ export function validateRelease({version, channel, branch, status, readiness, p6
   if (readiness?.p6AutomationAccepted !== true || p6?.status !== 'passed' || p6?.failures?.length !== 0 || p6?.unavailable?.some((item) => item.startsWith('Headless Chromium'))) errors.push('P6 automation is not accepted; partial is not a release pass.');
   if (!['passed', 'explicitly-accepted-manual-follow-up'].includes(readiness?.screenReaderDecision)) errors.push('Screen-reader acceptance/risk decision is still pending.');
   if (readiness?.publishAuthorized !== true) errors.push('A separate explicit human publish authorization is required.');
+  if (readiness?.dependencyAuditAccepted !== true) errors.push('Dependency audit risk decision is still pending.');
   return errors;
 }
 
