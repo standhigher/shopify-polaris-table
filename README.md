@@ -40,7 +40,7 @@ It renders familiar Polaris table UI while your application retains control of f
 | Version | Use when | Install | Runtime/peer contract |
 |---|---|---|---|
 | `v1.x` | Existing Polaris React applications that still use the V1 renderer | `npm install @standhigher/polaris-data-table@^1` | React 18 + `@shopify/polaris` 12–13 for the Admin renderer; Extension-only consumers can omit Polaris; maintenance is on `maintenance/v1.x` |
-| `v2.x` | New or migrated applications using React 19 and Polaris 2 Web Components | `npm install @standhigher/polaris-data-table@^2` after the separate V2 release | React 19; host loads Polaris 2 Runtime before React; no Polaris React `AppProvider` |
+| `v2.x` | New or migrated applications using React 19 and Polaris 2 Web Components | `npm install @standhigher/polaris-data-table@^2`  | React 19; host loads Polaris 2 Runtime before React; no Polaris React `AppProvider` |
 
 These are separate compatibility lines, not a drop-in minor upgrade. Do not install `@^2` in a V1 Polaris React application without completing the V2 migration. Do not upgrade a V2 application back to `@^1` without restoring its V1 renderer and peer dependencies.
 
@@ -56,7 +56,7 @@ npm install @standhigher/polaris-data-table@2 react@19 react-dom@19
 # https://cdn.shopify.com/shopifycloud/polaris-2.0.js
 ```
 
-This V2 release-preparation line targets React 19, React DOM 19, and host-loaded Polaris 2 Web Components. Load the Runtime before mounting React; the package does not inject scripts or require Polaris React `AppProvider`. Published V1 users should remain on `@standhigher/polaris-data-table@^1` and the `maintenance/v1.x` branch. `2.0.0` metadata is prepared locally for `latest`, but V2 has not been published and release gates remain pending; see the [release guide](docs/release.md).
+This V2 release-preparation line targets React 19, React DOM 19, and host-loaded Polaris 2 Web Components. Load the Runtime before mounting React; the package does not inject scripts or require Polaris React `AppProvider`. Published V1 users should remain on `@standhigher/polaris-data-table@^1` and the `maintenance/v1.x` branch. V2 is published on npm; pin the intended major version and review the release policy; see the [release guide](docs/release.md).
 
 Extension-only consumers can omit Polaris and import the renderer from the official `@standhigher/polaris-data-table/extension` entrypoint. All other deep imports are unsupported.
 

@@ -6,15 +6,15 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
-P7 stable release preparation targets `2.0.1` on `latest`. This is release preparation only: P6 remains partial, no package has been published, and `latest` remains V1 `1.1.0`.
+The V2 line is published. The 2.0.1 patch contains the version-line guidance and explicitly accepted release-scope decisions; no new runtime API is introduced.
 
-## [2.0.1] - Unreleased
+## [2.0.1]
 
 ### Changed
 
-- Patch release metadata for the published V2 `2.0.0` line; no new API surface. Release remains blocked until the final clean-tree and release gate checks complete.
+- Clarified V1 React 18/Polaris React versus V2 React 19/Polaris 2 usage, and recorded the explicitly accepted P6-01/screen-reader scope decisions. Publishing still requires a clean checkout and passing source/package gates.
 
-## [2.0.0] - Unreleased
+## [2.0.0] - 2026-11-15
 
 ### Added
 

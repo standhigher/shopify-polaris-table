@@ -40,23 +40,23 @@
 | 版本 | 适用场景 | 安装方式 | Runtime / peer 契约 |
 |---|---|---|---|
 | `v1.x` | 已有 Polaris React 项目，继续使用 V1 renderer | `npm install @standhigher/polaris-data-table@^1` | React 18，Admin renderer 使用 `@shopify/polaris` 12–13；维护线为 `maintenance/v1.x` |
-| `v2.x` | 新项目或已迁移到 React 19 + Polaris 2 Web Components 的项目 | V2 另行发布后使用 `npm install @standhigher/polaris-data-table@^2` | React 19；宿主在挂载 React 前加载 Polaris 2 Runtime；不再使用 Polaris React `AppProvider` |
+| `v2.x` | 新项目或已迁移到 React 19 + Polaris 2 Web Components 的项目 | `npm install @standhigher/polaris-data-table@^2` | React 19；宿主在挂载 React 前加载 Polaris 2 Runtime；不再使用 Polaris React `AppProvider` |
 
 **v1 和 v2 是两条兼容性不同的版本线，v2 不是无改造的替换升级。** 现有 V1 项目不要直接切到 `@^2`；必须先完成 renderer、peer 依赖和 Runtime 加载方式的迁移。需要继续运行旧 Polaris React 技术栈时请固定使用 `@^1`。
 
-`latest` 在 V2 获批发布前仍指向 V1。本地 `2.0.0` 只是发布准备元数据，目前尚未发布，不能把准备完成理解为已经上线。
+`latest` 现已指向 V2。请明确固定使用 `@^1` 或 `@^2`，不要依靠未指定版本的安装命令自动选择技术栈。
 
 ## 安装
 
 ```bash
-# 以下命令仅在另行批准并发布 V2 后可用（目前尚未发布）：
+# V2：React 19 + Polaris 2 Web Components
 npm install @standhigher/polaris-data-table@2 react@19 react-dom@19
 # 当前 V1 稳定版用户请使用 @standhigher/polaris-data-table@^1。
 # 宿主应用必须在挂载 React 前加载 Polaris 2 Runtime：
 # https://cdn.shopify.com/shopifycloud/polaris-2.0.js
 ```
 
-当前 V2 发布准备线面向 React 19、React DOM 19 和由宿主加载的 Polaris 2 Web Components。请在挂载 React 前加载 Runtime；库不注入脚本，也不再要求 Polaris React `AppProvider`。已发布 V1 用户请继续使用 `@standhigher/polaris-data-table@^1` 与 `maintenance/v1.x` 分支。`2.0.0` 元数据已准备为 `latest`，但 V2 尚未发布且发布门禁仍待完成，详见 [发布指南](docs/release.md)。
+当前 V2 发布准备线面向 React 19、React DOM 19 和由宿主加载的 Polaris 2 Web Components。请在挂载 React 前加载 Runtime；库不注入脚本，也不再要求 Polaris React `AppProvider`。已发布 V1 用户请继续使用 `@standhigher/polaris-data-table@^1` 与 `maintenance/v1.x` 分支。V2 已在 npm 发布，后续补丁仍须通过发布门禁，详见 [发布指南](docs/release.md)。
 
 仅使用 Extension 的应用可省略 Polaris，并从官方 `@standhigher/polaris-data-table/extension` 入口导入 renderer；其他深层导入不受支持。
 

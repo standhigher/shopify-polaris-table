@@ -19,13 +19,13 @@ V1 consumers should keep their existing AppProvider, CSS and React 18 setup:
 npm install @standhigher/polaris-data-table@^1
 ```
 
-V2 is locally prepared as `2.0.0` but is not published yet. **Only after V2 has been published**, use:
+V2 is published on npm. For React 19 / Polaris 2 projects, use:
 
 ```bash
 npm install @standhigher/polaris-data-table@^2 react@19 react-dom@19
 ```
 
-Do not switch a V1 app to `@^2` without migrating its renderer, React peers and Runtime loading. The current registry `latest` remains V1 until a separately authorized V2 publication.
+Do not switch a V1 app to `@^2` without migrating its renderer, React peers and Runtime loading. The registry latest channel now points to V2. Existing V1 projects should explicitly pin `@^1`.
 
 The host application must load the Polaris 2 Runtime before mounting the table. Pin an exact release during validation, or use the stable 2.x channel in production:
 
@@ -49,4 +49,4 @@ No source or other deep import path is supported. The table package does not ins
 
 For a local documentation preview, run `npm run docs:build` and then `npm run docs:start` from the repository root. The public site is designed for GitHub Pages.
 
-> V2 is currently under development and has not been published. Existing V1 consumers should remain on the React 18 / Polaris React release line until a V2 release and migration guide are published.
+> V1 and V2 are distinct compatibility lines. Keep React 18 / Polaris React applications on `@^1` until the explicit V2 migration is complete.

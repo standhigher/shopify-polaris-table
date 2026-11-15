@@ -1,10 +1,10 @@
 # Release guide
 
-## Current state: V2 stable preparation, not published
+## Current state: V2 published, 2.0.1 patch authorized
 
-Local `main` contains the reviewed V2 development history. The target version is **2.0.0**, with the future stable channel **latest**. The official registry was checked during P7 preparation: **latest remains 1.1.0** and `2.0.0` is unclaimed. No package, Git tag or push has been created by preparation or local merge.
+Local `main` contains the reviewed V2 development history. The target patch version is **2.0.1** on **latest**. The official registry was checked during P7 preparation: **latest is 2.0.0** and `2.0.1` is unclaimed at preparation time. No package, Git tag or push has been created by preparation or local merge.
 
-P6 Chromium bulk-menu keyboard remains `partial` but is explicitly accepted as a non-blocking risk. VoiceOver/NVDA is intentionally out of scope and is no longer a release blocker. Dependency audit review is still pending. See [P7 readiness](<v2/p7-validation.md>) and [the readiness record](<v2/release-readiness.json>).
+P6 Chromium bulk-menu keyboard remains `partial` but is explicitly accepted as a non-blocking risk. VoiceOver/NVDA is intentionally out of scope and is no longer a release blocker. The user explicitly accepted the recorded workspace dependency audit risk for the 2.0.1 release. See [P7 readiness](<v2/p7-validation.md>) and [the readiness record](<v2/release-readiness.json>).
 
 ## Branch and channel policy
 
@@ -38,7 +38,7 @@ Preparation runs lint/unit/type/build/docs/pack checks, actual installed tarball
 - An accepted dependency audit risk decision.
 - A separate human authorization to publish.
 
-The readiness record explicitly records the P6-01 and screen-reader risk decisions, but still requires dependency-audit acceptance and publish authorization. It is not a bypass switch: do not mark unrelated reports passed just to satisfy preflight.
+The readiness record includes explicit P6-01/screen-reader scope decisions, dependency-audit risk acceptance and authorization for 2.0.1. A clean checkout and the remaining source/package gates are still required. It is not a bypass switch: do not mark unrelated reports passed just to satisfy preflight.
 
 ## Registry and authentication (only when publication is separately authorized)
 
