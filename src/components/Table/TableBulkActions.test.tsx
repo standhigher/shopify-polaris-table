@@ -105,6 +105,37 @@ describe('TableBulkActions', () => {
     expect(perform).not.toHaveBeenCalled();
   });
 
+  it('keeps destructive errors inside the modal and retries the same intent', async () => {
+    const perform = vi.fn().mockRejectedValueOnce(new Error('Delete unavailable')).mockResolvedValueOnce(completed);
+    const setup = fixture([{id: 'delete', content: 'Delete', destructive: true, perform}]);
+    const {container} = render(<TableBulkActions {...setup.props} />);
+    fireEvent.click(screen.getByRole('button', {name: 'Delete'}));
+    fireEvent.click(screen.getByRole('button', {name: 'Confirm'}));
+    await screen.findByText('Delete unavailable');
+    expect(container.querySelector('s-modal s-banner')).toHaveTextContent('Delete unavailable');
+    fireEvent.click(screen.getByRole('button', {name: 'Retry same operation'}));
+    await screen.findByText('2 succeeded, 0 failed');
+    expect(perform.mock.calls[0]![0].idempotencyKey).toBe(perform.mock.calls[1]![0].idempotencyKey);
+  });
+
+  it('checks token expiry again immediately before calling perform', async () => {
+    vi.useFakeTimers();
+    try {
+      const now = Date.parse('2026-01-01T00:00:00.000Z');
+      vi.setSystemTime(now);
+      const perform = vi.fn().mockResolvedValue(completed);
+      const setup = fixture([{id: 'archive', content: 'Archive', perform}]);
+      setup.change({selection: {mode: 'allMatching', selectionToken: 'token', selectedCount: 2, expiresAt: new Date(now + 1).toISOString(), excludedIds: []}});
+      render(<TableBulkActions {...setup.props} />);
+      fireEvent.click(screen.getByRole('button', {name: 'Archive'}));
+      vi.setSystemTime(now + 2);
+      await act(async () => { await Promise.resolve(); });
+      expect(perform).not.toHaveBeenCalled();
+      expect(setup.clear).toHaveBeenCalledTimes(1);
+      expect(screen.getByText('Selection has expired. Select the rows again.')).toBeInTheDocument();
+    } finally { vi.useRealTimers(); }
+  });
+
   it('treats explicit backend selection expiry as terminal for retry', async () => {
     const perform = vi.fn().mockRejectedValue({code: 'SELECTION_EXPIRED'});
     const setup = fixture([{id: 'archive', content: 'Archive', perform}]);

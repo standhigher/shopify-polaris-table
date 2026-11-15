@@ -8,7 +8,7 @@
 
 P0–P3 已分批提交：`8cf80de`（审计）、`e9191c3`（React19/Polaris2）、`745ef86`（URL hardening）、`5fb9971`（P2/P3 evidence）。
 
-P4 当前工作树代码待提交；未跟踪的 `pnpm-lock.yaml` 始终不纳入提交。
+P4 主实现已提交为 `0e9692e`，快照规范化及 Modal 内错误反馈为 `e9e6fc3`；最终回归测试与文档另批提交。原有未跟踪锁文件始终不纳入提交。
 
 ## 实现
 
@@ -21,8 +21,8 @@ P4 当前工作树代码待提交；未跟踪的 `pnpm-lock.yaml` 始终不纳�
 
 - selection/core helpers：14 tests。
 - `useTableSelection`：8 tests。
-- `TableBulkActions`：7 tests。
-- 完整最终 suite：**38 files / 198 tests 通过**。
+- `TableBulkActions`：9 tests。
+- 完整最终 suite：**38 files / 200 tests 通过**。
 - TypeScript、ESLint、Build、compatibility、React19 package consumer、Extension consumer、Storybook build、pack dry-run 均通过。
 
 ## Runtime 验证
