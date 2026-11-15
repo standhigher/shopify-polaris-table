@@ -1,4 +1,4 @@
-// V2 is a prerelease. Keep the legacy entrypoint fail-closed instead of sending
-// a prerelease to latest. The V1 maintenance branch retains its own release flow.
-console.error('BLOCKED: stable/latest publishing is disabled during V2 beta preparation. Use the guarded npm:publish:beta flow only after separate release approval.');
+// Keep the ambiguous legacy entrypoint disabled. Publication must name its
+// intended stable or beta channel and still pass the shared release preflight.
+console.error('BLOCKED: use npm:publish:stable for an approved stable release or npm:publish:beta for an approved prerelease. Both require the release preflight.');
 process.exitCode = 1;

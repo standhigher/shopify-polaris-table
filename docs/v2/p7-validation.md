@@ -1,4 +1,6 @@
-# P7 V2 beta 发布准备验收
+# P7 V2 发布准备验收
+
+当前用户已选择正式版 `2.0.0` / `latest`，而不是原 beta 目标；以下 beta 准备记录保留作历史说明，稳定版命令见 [发布指南](<../release.md>)。版本选择不等于接受尚未完成的发布闸门。
 
 状态：P7 beta 准备正在验收；**尚未发布 npm、尚未创建/推送版本 tag、尚未移动 latest**。
 
@@ -7,9 +9,9 @@
 ## 当前 metadata
 
 - 本地合并后的 `main` 已包含 V2 P0–P6 提交。
-- package / package-lock root version：`2.0.0-beta.1`。
-- 目标 dist-tag：`next`。
-- npm registry 现状已核对：`latest` 仍是 `1.1.0`，beta 版本尚不存在。
+- package / package-lock root version：`2.0.0`。
+- 目标 dist-tag：`latest`（仅在所有稳定发布阻塞项解决并明确授权后）。
+- npm registry 现状已核对：`latest` 仍是 `1.1.0`，`2.0.0` 尚不存在。
 - 原有未跟踪 `pnpm-lock.yaml` 不属于发布提交，必须在 release preflight 前由维护者处理；本阶段不自动删除或纳入。
 
 ## 发布保护

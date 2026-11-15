@@ -1,8 +1,8 @@
 # Release guide
 
-## Current state: V2 beta preparation, not published
+## Current state: V2 stable preparation, not published
 
-Local `main` contains the reviewed V2 development history. The target version is **2.0.0-beta.1**, with opt-in **next**. The official registry was checked during P7 preparation: **latest remains 1.1.0**. No beta, Git tag, push or publish is implied by preparing metadata or merging to local main.
+Local `main` contains the reviewed V2 development history. The target version is **2.0.0**, with the future stable channel **latest**. The official registry was checked during P7 preparation: **latest remains 1.1.0** and `2.0.0` is unclaimed. No package, Git tag or push has been created by preparation or local merge.
 
 P6 still has an outstanding Chromium bulk-menu keyboard acceptance case. Actual screen-reader delivery was left manual by the user; this does not authorize accepting that risk for publication. Dependency audit review is also pending. See [P7 readiness](<v2/p7-validation.md>) and [the readiness record](<v2/release-readiness.json>).
 
@@ -58,6 +58,24 @@ npm run npm:whoami
 ```
 
 Do not paste or commit tokens. Confirm the publisher has access to the `@standhigher` scope. Complete any npm browser/passkey challenge in an interactive terminal; do not bypass OTP or authentication requirements.
+
+## Guarded stable publication (not executed in this session)
+
+After the separate P6/manual-readiness/dependency approvals and a clean final `main` commit, the manual command is:
+
+```sh
+npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/
+```
+
+Before running it, execute:
+
+```sh
+npm run release:check:stable
+npm run release:preflight:stable
+npm view @standhigher/polaris-data-table versions dist-tags --json --registry=https://registry.npmjs.org/
+```
+
+`prepublishOnly` runs the same release policy again. It is expected to block while P6 remains partial, screen-reader review is pending, dependency audit is pending, the checkout contains unrelated files, or publish authorization is false. Do not use `--ignore-scripts` to bypass it.
 
 ## Guarded beta publication (not executed in P7 preparation)
 

@@ -6,9 +6,9 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
-P7 beta preparation targets `2.0.0-beta.1` on the opt-in `next` dist-tag. This is release preparation only: P6 remains partial, no package has been published, and `latest` remains V1 `1.1.0`.
+P7 stable release preparation targets `2.0.0` on `latest`. This is release preparation only: P6 remains partial, no package has been published, and `latest` remains V1 `1.1.0`.
 
-## [2.0.0-beta.1] - Unreleased
+## [2.0.0] - Unreleased
 
 ### Added
 

@@ -1,6 +1,6 @@
 {
   "name": "@standhigher/polaris-data-table",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "description": "Controlled, server-driven data tables for Shopify Polaris applications.",
   "keywords": [
     "typescript",
@@ -57,7 +57,7 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
-    "tag": "next"
+    "tag": "latest"
   },
   "workspaces": [
     "website"
@@ -83,6 +83,10 @@
     "release:prepare:beta": "npm run release:check && npm run test:package && npm run test:beta-policy && npm run test:tree-shaking",
     "release:check:beta": "npm run release:prepare:beta && npm run release:preflight:beta",
     "release:preflight:beta": "node scripts/release-preflight.mjs --channel next",
+    "release:preflight:stable": "node scripts/release-preflight.mjs --channel latest",
+    "release:prepare:stable": "npm run release:check && npm run test:package && npm run test:beta-policy && npm run test:tree-shaking",
+    "release:check:stable": "npm run release:prepare:stable && npm run release:preflight:stable",
+    "npm:publish:stable": "npm run release:check:stable && npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/",
     "npm:publish:beta": "npm run release:check:beta && npm run release:preflight:beta && npm publish --access public --tag next --auth-type=web --registry=https://registry.npmjs.org/",
     "build-storybook": "storybook build --output-dir website/static/storybook",
     "docs:api": "typedoc --options website/typedoc.json",

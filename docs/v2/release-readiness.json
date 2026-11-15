@@ -1,12 +1,12 @@
 {
-  "version": "2.0.0-beta.1",
-  "channel": "next",
+  "version": "2.0.0",
+  "channel": "latest",
   "p6AutomationAccepted": false,
   "screenReaderDecision": "pending",
   "publishAuthorized": false,
   "dependencyAuditAccepted": false,
   "notes": [
-    "P7 preparation is authorized; npm publishing is not authorized.",
+    "P7 stable-release preparation is authorized; npm publishing is not authorized.",
     "P6-01 Chromium bulk-menu keyboard acceptance is still partial.",
     "Real VoiceOver/NVDA remains a manual follow-up; delivery acceptance is not publish-risk acceptance.",
     "No npm dist-tag was changed."

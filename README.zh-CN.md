@@ -38,14 +38,14 @@
 ## 安装
 
 ```bash
-# 以下命令仅在另行批准并发布 beta 后可用（目前尚未发布）：
-npm install @standhigher/polaris-data-table@next react@19 react-dom@19
+# 以下命令仅在另行批准并发布 V2 后可用（目前尚未发布）：
+npm install @standhigher/polaris-data-table@2 react@19 react-dom@19
 # 当前 V1 稳定版用户请使用 @standhigher/polaris-data-table@^1。
 # 宿主应用必须在挂载 React 前加载 Polaris 2 Runtime：
 # https://cdn.shopify.com/shopifycloud/polaris-2.0.js
 ```
 
-当前 V2 beta 准备线面向 React 19、React DOM 19 和由宿主加载的 Polaris 2 Web Components。请在挂载 React 前加载 Runtime；库不注入脚本，也不再要求 Polaris React `AppProvider`。已发布 V1 用户请继续使用 `@standhigher/polaris-data-table@^1` 与 `maintenance/v1.x` 分支。`2.0.0-beta.1` 元数据已准备为 opt-in 的 `next` channel，但 V2 尚未发布，详见 [P7 beta 准备记录](docs/v2/p7-validation.md)。
+当前 V2 发布准备线面向 React 19、React DOM 19 和由宿主加载的 Polaris 2 Web Components。请在挂载 React 前加载 Runtime；库不注入脚本，也不再要求 Polaris React `AppProvider`。已发布 V1 用户请继续使用 `@standhigher/polaris-data-table@^1` 与 `maintenance/v1.x` 分支。`2.0.0` 元数据已准备为 `latest`，但 V2 尚未发布且发布门禁仍待完成，详见 [发布指南](docs/release.md)。
 
 仅使用 Extension 的应用可省略 Polaris，并从官方 `@standhigher/polaris-data-table/extension` 入口导入 renderer；其他深层导入不受支持。
 
