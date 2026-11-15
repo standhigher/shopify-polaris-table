@@ -43,7 +43,7 @@
 - permission/conflict repository errors
 - query search/filter/sort/page slice
 
-真实 Runtime 需要验证 fixed Polaris2 iframe 的 skeleton、empty-state、error retry、Popover focus/Escape、Saved Views stale/reload 和窄屏显示；本阶段已完成 P5 结构与门禁，完整跨浏览器/axe/BestSourcing 属于 P6。
+真实 Runtime 已在 fixed Polaris2 iframe 验证 skeleton、empty-state、error retry、Popover focus/Escape、Saved Views create/rename/delete/permission Retry/conflict Reload、Preset filter application 和 schema visibility；完整跨浏览器/axe/BestSourcing 属于 P6。
 
 ## 约束
 
