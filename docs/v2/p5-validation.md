@@ -17,11 +17,12 @@
 ## 自动化验证
 
 - Table page state / skeleton / error / empty：新增 TablePageState 与 TableState tests。
-- Column Visibility / visible columns：focused 15 tests。
-- Filter Presets：3 tests。
-- Saved Views manager：10 tests；TableViews UI：8 tests。
-- P5 focused：38 tests通过。
-- 最终完整 suite：41 files / 238 tests 通过。
+- Column Visibility / visible columns：12 tests。
+- Filter Presets UI / snapshot helper：4 tests。
+- Saved Views manager：11 tests；TableViews UI：11 tests。
+- Table page states / standalone state：11 tests。
+- P5 focused：49 tests 通过。
+- 最终完整 suite：41 files / 239 tests 通过。
 - TypeScript、ESLint、Build、compatibility、React19 package consumer、Extension consumer、Storybook build、pack dry-run 全部通过。
 - package consumer 增加 TableSkeleton strict type 与 SSR markup 检查。
 

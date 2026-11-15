@@ -82,6 +82,19 @@ type TableColumn<T extends object> = ExistingTableColumn<T> & {
 
 完整证据见 [P4 验收记录](<p4-validation.md>)。
 
+## P5 已落地的高级能力与页面状态契约
+
+- 新增根入口 `TableSkeleton` / `TableSkeletonProps<T>`，使用原生 Polaris `s-table` / `s-box` 组合；rowCount 默认 3、限制 1–20，静态无动画，视觉骨架 aria-hidden/inert，外层提供 loading status。不要求或注入额外 CSS/Runtime。
+- `loading` 且当前无 data 时显示 Skeleton；有 data 时保留行并使用 `s-table.loading`。库不会缓存旧数据，宿主刷新期间应继续传入可展示的旧 data。
+- error 与旧 data 可同时展示：Banner/Retry 不再卸载已有行；无 data 的 error 不混合 Empty。无 data 且非 loading/error 时只显示原生 `s-empty-state` 或 custom ReactNode，不再同时渲染空表。
+- 列显隐不把 fallback 首列误当 required；重复 required keys 去重，handler 同时保护 required/至少一列及受控 checked。
+- Preset 仍只改 filters/page=1；返回的 filter records、arrays、ranges 使用独立快照，避免别名修改 preset。
+- `TableViewManager.subscribe?` 为向后兼容可选扩展；factory 提供订阅，UI 以 pending boolean snapshot 监听。旧 custom manager 若不提供订阅，外部操作状态仍需宿主发布 props 更新。
+- Repository/public model 保留。write 仍使用全局 supersession，list 计入 pending 但不 supersede write；旧响应不污染新 error/state。observer 异常不把已提交写伪装成可重试写失败。
+- Views UI 保留 owner/query/columns/selected/views/manager revision，旧 success/error 不覆盖新受控状态；Retry 只重试当前 intent，Reload 显式替换列表，不自动合并。`updatedAt` 冲突、权限、唯一性、删除并发和持久化仍由 Repository 负责。
+
+完整证据见 [P5 验收记录](<p5-validation.md>)。
+
 ## 兼容性限制
 
 - ReactNode `title`, `content`, `empty` 和 custom render 签名保持。P2 通过 React 管理的真实 light-DOM children / 明确 named slot 容器呈现，不将业务类型替换为 Preact `ComponentChildren`，不字符串化。若某个 WC 只支持字符串，则选择支持 children 的呈现组合；不能未经额外 breaking-change 决议缩窄上述字段。
