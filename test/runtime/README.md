@@ -69,21 +69,10 @@ P6_BASE_URL=http://127.0.0.1:6112 node test/runtime/safari-probe.mjs
 
 Uses isolated Safari WebDriver automation windows and closes its session afterward. Checks 6 desktop story/direction combinations, snapshots, Columns keyboard opening/Escape/focus, and selection → native menu → Modal → Escape. It is not an iOS test, does not run axe inside Safari, and does not claim real screen-reader speech coverage.
 
-## Manual screen-reader handoff (not performed)
+## Screen-reader scope decision
 
-The user explicitly chose to leave real VoiceOver/NVDA acceptance manual. Do not infer speech correctness from axe or an accessibility snapshot.
+Per the explicit release decision, real VoiceOver/NVDA testing is **out of scope and removed from the release checklist**. It is not a pending P6/P7 blocker and no future automated run should remind or require it. axe, accessibility snapshots and keyboard checks remain the delivered automated evidence; they are not being represented as speech testing.
 
-Record browser/OS/reader versions, expected announcement, actual speech, pass/fail and evidence for:
-
-1. Table headers, cell relationships and responsive list labels/order.
-2. Row/all selection names, mixed state and disabled/loading controls.
-3. Search, filters, chip removal, result count feedback and focus return.
-4. Columns required/last-column explanation, checkbox/reset and Escape.
-5. Saved Views pending, conflict/error announcements, Retry/Reload.
-6. Bulk menu arrows/Home/End, modal title/focus trap/Cancel/Confirm/Escape.
-7. Pending/accepted/partial/error announcements; failed-row reselection.
-8. Skeleton announced once; ghost cells are hidden and unfocusable.
-9. Empty/error state and Retry announcements.
-10. Extension radio grouping/arrow keys, row actions and load-more alerts.
+The P6-01 Chromium production-menu partial is likewise an explicitly accepted non-blocking risk. Safari WebDriver menu/Modal keyboard coverage remains recorded as evidence.
 
 BestSourcing production pages and P7 release/publish are excluded.

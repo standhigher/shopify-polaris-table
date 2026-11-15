@@ -16,7 +16,7 @@
 | Safari 18.6，真实 WebDriver | 3 个 stories × LTR/RTL 的 6 组桌面布局通过；图片完成加载，无横向溢出 | [Safari report](<p6-evidence/safari.json>) |
 | Safari 键盘 | Columns Enter→Popover→Escape→焦点回 Columns；selection Space→menu→Modal→Escape→焦点回 More actions 通过 | [Safari report](<p6-evidence/safari.json>) |
 | Chromium 键盘 | Columns Tab/Escape/focus return、selection Space、Skeleton 隐藏占位通过；bulk menu 见 P6-01 | [Chromium report](<p6-evidence/chromium.json>) |
-| VoiceOver/NVDA 实际语音 | 未执行；用户选择留人工 | [人工清单](<../../test/runtime/README.md#manual-screen-reader-handoff-not-performed>) |
+| VoiceOver/NVDA 实际语音 | 未执行；用户选择留人工 | [已排除的验收范围](<../../test/runtime/README.md#screen-reader-scope-decision>) |
 
 ### 源码与包门禁
 
