@@ -23,10 +23,13 @@ export function createIdempotencyKey(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
 }
 
-export function isSelectionExpired(selection: CoreSelection, now: Date | number = new Date()): boolean {
+export function isSelectionExpired(selection: CoreSelection, now: Date | number = Date.now()): boolean {
   if (selection.mode !== 'allMatching') return false;
+  if (!selection.selectionToken.trim() || !Number.isSafeInteger(selection.selectedCount) || selection.selectedCount < 0) return true;
+  const expiresAt = Date.parse(selection.expiresAt);
   const timestamp = now instanceof Date ? now.getTime() : now;
-  return Date.parse(selection.expiresAt) <= timestamp;
+  if (!Number.isFinite(expiresAt) || !Number.isFinite(timestamp)) return true;
+  return expiresAt <= timestamp;
 }
 
 export function shouldClearSelection(result: CoreBulkActionResult): boolean {

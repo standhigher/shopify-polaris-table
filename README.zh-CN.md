@@ -38,10 +38,12 @@
 ## 安装
 
 ```bash
-npm install @standhigher/polaris-data-table @shopify/polaris react react-dom
+npm install @standhigher/polaris-data-table react react-dom
+# 宿主应用还必须加载 Polaris 2 Runtime，例如：
+# https://cdn.shopify.com/shopifycloud/polaris-2.js
 ```
 
-该表格需要 `@shopify/polaris >=12 <14`、React 18 和 React DOM 18。请在 Polaris `AppProvider` 下渲染表格；详见[安装指南](https://standhigher.github.io/shopify-polaris-table/getting-started/installation)。
+当前 V2 开发分支面向 React 19、React DOM 19 和由宿主加载的 Polaris 2 Web Components。请在挂载 React 前加载 Runtime；库不注入脚本，也不再要求 Polaris React `AppProvider`。已发布 V1 用户请继续使用 `@standhigher/polaris-data-table@^1` 与 `maintenance/v1.x` 分支。V2 尚未发布，详见 [P1 验证记录](docs/v2/validation.md)。
 
 仅使用 Extension 的应用可省略 Polaris，并从官方 `@standhigher/polaris-data-table/extension` 入口导入 renderer；其他深层导入不受支持。
 
@@ -120,8 +122,8 @@ export function ProductsTable({page}: {page: TableDataPage<Product>}) {
 | 依赖 | 支持版本 |
 | --- | --- |
 | Node.js | 20 或更高（开发和 CI） |
-| React / React DOM | `>=18 <19` |
-| `@shopify/polaris` | `>=12 <14`（仅 Admin 根入口） |
+| React / React DOM | `>=19 <20` |
+| Polaris Web Components | 由宿主加载的 Polaris 2.x Runtime |
 
 本包仅支持 ESM，并发布 TypeScript 类型声明。peer dependencies 不会被打包进产物。
 

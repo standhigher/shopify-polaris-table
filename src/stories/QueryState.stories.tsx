@@ -1,4 +1,3 @@
-import {Button, ButtonGroup, Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useMemo, useState} from 'react';
 
@@ -43,15 +42,15 @@ export const UrlState: Story = {
     const encoded = useMemo(() => encodeTableQuery(query, {filterKeys: ['status']}), [query]);
     const decoded = useMemo(() => decodeTableQuery(encoded, {filterKeys: ['status'], pageSizeOptions: [25, 50, 100]}), [encoded]);
 
-    return <Card>
-      <Text as="p" variant="bodyMd">Encode and decode query state with an allowlist.</Text>
+    return <s-section>
+      <s-paragraph>Encode and decode query state with an allowlist.</s-paragraph>
       <pre>{encoded.toString()}</pre>
       <pre>{JSON.stringify(decoded, null, 2)}</pre>
-      <ButtonGroup>
-        <Button onClick={() => setQuery((current) => applyFilterPreset(current, {id: 'active', label: 'Active', filters: {status: {operator: 'equals', value: 'Active'}}}))}>Apply filter preset</Button>
-        <Button onClick={() => setQuery({page: 1, pageSize: 50, search: 'cap'})}>Reset query</Button>
-      </ButtonGroup>
-    </Card>;
+      <s-button-group>
+        <s-button onClick={() => setQuery((current) => applyFilterPreset(current, {id: 'active', label: 'Active', filters: {status: {operator: 'equals', value: 'Active'}}}))}>Apply filter preset</s-button>
+        <s-button onClick={() => setQuery({page: 1, pageSize: 50, search: 'cap'})}>Reset query</s-button>
+      </s-button-group>
+    </s-section>;
   },
 };
 
@@ -74,16 +73,16 @@ export const SavedViews: Story = {
       query: baseQuery,
     });
 
-    return <Card>
-      <Text as="p" variant="bodyMd">Saved views stay outside the table; the manager just tracks repository state.</Text>
+    return <s-section>
+      <s-paragraph>Saved views stay outside the table; the manager just tracks repository state.</s-paragraph>
       <pre>{state}</pre>
       <pre>{JSON.stringify(sanitizeVisibleColumnKeys(visibleColumnKeys, schemaColumns), null, 2)}</pre>
-      <ButtonGroup>
-        <Button onClick={async () => { await manager.create({name: 'Active products', query: baseQuery, visibleColumnKeys, owner: 'u_1'}); setState('View created'); }}>Create view</Button>
-        <Button onClick={() => setVisibleColumnKeys(['title', 'price'])}>Remove hidden columns</Button>
-      </ButtonGroup>
+      <s-button-group>
+        <s-button onClick={async () => { await manager.create({name: 'Active products', query: baseQuery, visibleColumnKeys, owner: 'u_1'}); setState('View created'); }}>Create view</s-button>
+        <s-button onClick={() => setVisibleColumnKeys(['title', 'price'])}>Remove hidden columns</s-button>
+      </s-button-group>
       <pre>{JSON.stringify(reconciled, null, 2)}</pre>
-    </Card>;
+    </s-section>;
   },
 };
 
@@ -92,10 +91,10 @@ export const VisibleColumns: Story = {
   render: () => {
     const columns = createProductColumns();
     const keys = columns.map((column) => column.key);
-    return <Card>
-      <Text as="p" variant="bodyMd">Column visibility is reconciled against the current schema.</Text>
+    return <s-section>
+      <s-paragraph>Column visibility is reconciled against the current schema.</s-paragraph>
       <pre>{JSON.stringify(keys, null, 2)}</pre>
       <pre>{JSON.stringify(sanitizeVisibleColumnKeys(['title', 'status', 'unknown'], columns), null, 2)}</pre>
-    </Card>;
+    </s-section>;
   },
 };

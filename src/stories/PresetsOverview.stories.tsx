@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import {Table, createOrderColumns} from '../index';
@@ -25,8 +24,8 @@ export const OrderPresetPreview: Story = {
   render: () => {
     const {query, setQuery, selection, setSelection, visiblePage} = useStoryTable(storyOrders, 5);
 
-    return <Card>
-      <Text as="p" variant="bodyMd">Presets are the quickest way to see a complete domain table with the right columns and tones already wired.</Text>
+    return <s-section>
+      <s-paragraph>Presets are the quickest way to see a complete domain table with the right columns and tones already wired.</s-paragraph>
       <Table
         columns={createOrderColumns({
           financialStatus: {statusTone: {Paid: 'success', Pending: 'warning', Refunded: 'critical'}},
@@ -41,6 +40,6 @@ export const OrderPresetPreview: Story = {
         onSelectionChange={setSelection}
         onQueryChange={setQuery}
       />
-    </Card>;
+    </s-section>;
   },
 };

@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
 
@@ -30,8 +29,8 @@ export const ControlledResizeAndReorder: Story = {
   render: function Render() {
     const [layout, setLayout] = useState(initialLayout);
     const {text} = useStorybookCopy();
-    return <Card>
-      <Text as="p" variant="bodySm">{text('Internal experiment: use header arrows or Alt+ArrowLeft / Alt+ArrowRight to reorder. Range controls resize columns. Persistence, drag-and-drop, sticky columns, and V1 Table integration remain out of scope.', '内部实验：使用表头箭头或 Alt+方向键调整顺序，范围控件调整列宽。持久化、拖放、固定列与 V1 Table 集成均不在范围内。')}</Text>
+    return <s-section>
+      <s-paragraph fontSize="small">{text('Internal experiment: use header arrows or Alt+ArrowLeft / Alt+ArrowRight to reorder. Range controls resize columns. Persistence, drag-and-drop, sticky columns, and V1 Table integration remain out of scope.', '内部实验：使用表头箭头或 Alt+方向键调整顺序，范围控件调整列宽。持久化、拖放、固定列与 V1 Table 集成均不在范围内。')}</s-paragraph>
       <ColumnLayoutPOC
         columns={[
           {id: 'customer', heading: 'Customer', minWidth: 120, maxWidth: 300, render: (row) => row.customer},
@@ -44,6 +43,6 @@ export const ControlledResizeAndReorder: Story = {
         rowId={(row) => row.id}
         ariaLabel={text('Experimental controlled column layout', '实验性受控列布局')}
       />
-    </Card>;
+    </s-section>;
   },
 };

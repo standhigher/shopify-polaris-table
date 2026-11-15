@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
 
@@ -41,9 +40,9 @@ type Story = StoryObj<typeof meta>;
 export const ControlledWritesAndVersionConflicts: Story = {
   render: () => {
     const {text} = useStorybookCopy();
-    return <Card>
-      <Text as="p" variant="bodySm">{text('Internal experiment: expand a row and edit its name. The host owns persistence and accepts the versioned draft before replacing the canonical row. Test focus and cancel behavior before considering a public API.', '内部实验：展开一行并编辑名称。宿主拥有持久化权，并在接受带版本草稿后才替换规范行。公开 API 前须验证焦点与取消行为。')}</Text>
+    return <s-section>
+      <s-paragraph fontSize="small">{text('Internal experiment: expand a row and edit its name. The host owns persistence and accepts the versioned draft before replacing the canonical row. Test focus and cancel behavior before considering a public API.', '内部实验：展开一行并编辑名称。宿主拥有持久化权，并在接受带版本草稿后才替换规范行。公开 API 前须验证焦点与取消行为。')}</s-paragraph>
       <ControlledExample />
-    </Card>;
+    </s-section>;
   },
 };

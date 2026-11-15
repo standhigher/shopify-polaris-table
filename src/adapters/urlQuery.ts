@@ -60,8 +60,8 @@ function isFilterValue(value: unknown): value is TableFilterValue {
     const hasFrom = range.from !== undefined;
     const hasTo = range.to !== undefined;
     return (hasFrom || hasTo) &&
-      (!hasFrom || typeof range.from === 'string' || typeof range.from === 'number') &&
-      (!hasTo || typeof range.to === 'string' || typeof range.to === 'number');
+      (!hasFrom || typeof range.from === 'string' || (typeof range.from === 'number' && Number.isFinite(range.from))) &&
+      (!hasTo || typeof range.to === 'string' || (typeof range.to === 'number' && Number.isFinite(range.to)));
   }
   return candidate.value === undefined;
 }
@@ -76,7 +76,7 @@ function canExposeSort(key: string, options: TableQueryUrlOptions): boolean {
 }
 
 function isSortField(value: string): boolean {
-  return /^[^:\s][^:]*$/.test(value);
+  return !/[:\s\u0000-\u001f\u007f-\u009f]/u.test(value) && value.length > 0;
 }
 
 function safeFilters(filters: TableFilters, options: TableQueryUrlOptions): TableFilters | undefined {
@@ -94,7 +94,7 @@ export function encodeTableQuery(query: TableQuery, options: TableQueryUrlOption
     pageSize: String(getPageSize(query.pageSize, options)),
   });
   if (query.search) params.set('search', query.search);
-  if (query.sort && isSortField(query.sort.field) && canExposeSort(query.sort.field, options)) {
+  if (query.sort && (query.sort.direction === 'asc' || query.sort.direction === 'desc') && isSortField(query.sort.field) && canExposeSort(query.sort.field, options)) {
     params.set('sort', `${query.sort.direction}:${query.sort.field}`);
   }
   if (query.filters) {
@@ -110,7 +110,8 @@ export function encodeTableQuery(query: TableQuery, options: TableQueryUrlOption
  */
 export function decodeTableQuery(searchParams: URLSearchParams, options: TableQueryUrlOptions = {}): TableQuery {
   const defaultQuery: TableQuery = {page: 1, pageSize: getPageSize(1, options)};
-  if (searchParams.get('v') !== TABLE_QUERY_URL_VERSION) return defaultQuery;
+  const versions = searchParams.getAll('v');
+  if (versions.length !== 1 || versions[0] !== TABLE_QUERY_URL_VERSION) return defaultQuery;
 
   const page = searchParams.get('page');
   const requestedPageSize = searchParams.get('pageSize');
@@ -122,8 +123,8 @@ export function decodeTableQuery(searchParams: URLSearchParams, options: TableQu
   if (search) query.search = search;
 
   const sort = searchParams.get('sort');
-  const sortMatch = sort?.match(/^(asc|desc):([^:\s][^:]*)$/);
-  if (sortMatch?.[1] && sortMatch[2] && canExposeSort(sortMatch[2], options)) {
+  const sortMatch = sort?.match(/^(asc|desc):([^:\s][^:\s]*)$/u);
+  if (sortMatch?.[1] && sortMatch[2] && isSortField(sortMatch[2]) && canExposeSort(sortMatch[2], options)) {
     query.sort = {direction: sortMatch[1] as 'asc' | 'desc', field: sortMatch[2]};
   }
 

@@ -11,7 +11,7 @@ export function sanitizeVisibleColumnKeys<T extends object>(
 ): string[] {
   const knownKeys = new Set(columns.map((column) => String(column.key)));
   const seen = new Set<string>();
-  const sanitizedRequiredKeys = requiredColumnKeys.filter((key) => knownKeys.has(key));
+  const sanitizedRequiredKeys = [...new Set(requiredColumnKeys.filter((key) => knownKeys.has(key)))];
 
   const sanitizedKeys = visibleColumnKeys.filter((key) => {
     if (!knownKeys.has(key) || seen.has(key)) return false;
@@ -20,7 +20,10 @@ export function sanitizeVisibleColumnKeys<T extends object>(
   });
 
   for (const key of sanitizedRequiredKeys) {
-    if (!seen.has(key)) sanitizedKeys.push(key);
+    if (!seen.has(key)) {
+      sanitizedKeys.push(key);
+      seen.add(key);
+    }
   }
 
   if (sanitizedKeys.length === 0 && columns[0]) {

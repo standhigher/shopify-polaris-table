@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useMemo, useState} from 'react';
 
@@ -30,8 +29,8 @@ function TableViewsExample() {
   const query: TableQuery = {page: 1, pageSize: 25, filters: {status: {operator: 'equals', value: 'Active'}}};
   const {text} = useStorybookCopy();
 
-  return <Card>
-    <Text as="p" variant="bodyMd">{text('Create a view, select it, then save or delete it. The mock repository is deliberately local to this story.', '创建视图并选中它，然后保存或删除。此模拟仓库仅限本故事使用。')}</Text>
+  return <s-section>
+    <s-paragraph>{text('Create a view, select it, then save or delete it. The mock repository is deliberately local to this story.', '创建视图并选中它，然后保存或删除。此模拟仓库仅限本故事使用。')}</s-paragraph>
     <div style={{marginTop: '1rem'}}>
       <TableViews
         manager={manager}
@@ -46,7 +45,7 @@ function TableViewsExample() {
       />
     </div>
     <pre>{JSON.stringify(views, null, 2)}</pre>
-  </Card>;
+  </s-section>;
 }
 
 export const ControlledSavedViews: Story = {render: () => <TableViewsExample />};

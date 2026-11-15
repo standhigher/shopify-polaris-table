@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
 
@@ -28,8 +27,8 @@ function ColumnVisibilityExample() {
   const [visibleColumnKeys, setVisibleColumnKeys] = useState(['title', 'status', 'inventory', 'price']);
   const {text} = useStorybookCopy();
 
-  return <Card>
-    <Text as="p" variant="bodyMd">{text('Open the chooser, then hide or restore optional columns. Product is intentionally required.', '打开列选择器，隐藏或恢复可选列。商品列被刻意设为必选。')}</Text>
+  return <s-section>
+    <s-paragraph>{text('Open the chooser, then hide or restore optional columns. Product is intentionally required.', '打开列选择器，隐藏或恢复可选列。商品列被刻意设为必选。')}</s-paragraph>
     <div style={{marginTop: '1rem'}}>
       <TableColumnVisibility
         columns={columns}
@@ -41,7 +40,7 @@ function ColumnVisibilityExample() {
       />
     </div>
     <pre>{JSON.stringify(visibleColumnKeys, null, 2)}</pre>
-  </Card>;
+  </s-section>;
 }
 
 export const ControlledChooser: Story = {render: () => <ColumnVisibilityExample />};

@@ -7,8 +7,10 @@ import type {
   ExtensionTableProps,
   ReconciledVisibleColumnState,
   ReconcileVisibleColumnStateOptions,
+  TableColumn,
   TableColumnBase,
   TableColumnRenderer,
+  TableListSlot,
   TableColumnVisibilityProps,
   TableFilterPresetsProps,
   TableLabels,
@@ -30,6 +32,8 @@ export type PublicSignatureTypes = [
   ReconciledVisibleColumnState,
   ReconcileVisibleColumnStateOptions<{id: string}>,
   TableColumnBase<{id: string}>,
+  TableListSlot,
+  TableColumn<{id: string}>,
   TableColumnRenderer<{id: string}>,
   TableColumnVisibilityProps<{id: string}>,
   TableFilterPresetsProps,
@@ -40,4 +44,12 @@ export type PublicSignatureTypes = [
   TableViewLabels,
   UseTableQueryOptions,
   UseTableQueryResult,
+];
+
+type Expect<T extends true> = T;
+export type P2ColumnContracts = [
+  Expect<'primary' extends TableListSlot ? true : false>,
+  Expect<'unsupported' extends TableListSlot ? false : true>,
+  Expect<{key: string; title: string; type: 'custom'} extends TableColumn<{id: string}> ? false : true>,
+  Expect<{key: string; title: string; type: 'text'; imageAlt: (row: {id: string}) => string} extends TableColumn<{id: string}> ? true : false>,
 ];

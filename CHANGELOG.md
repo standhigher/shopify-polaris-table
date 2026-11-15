@@ -6,7 +6,26 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
-No unreleased changes.
+### Added
+
+- Added the V2 architecture proposal, V1 feature/API migration inventory, compatibility checklist, and validation evidence under `docs/v2`. V2 development is isolated from the V1 maintenance branch; the full V2 migration is not yet complete.
+- Added the P2 presentation-only `s-table` renderer with stable column keys, five `listSlot` designations, explicit alignment, badge/thumbnail cells, optional `imageAlt`, declared Actions-column binding, and an interactive all-column Storybook fixture.
+- Added P2 unit/renderer regressions and Chromium Table/List evidence for 320px, 375px, 768px, and desktop widths.
+
+### Fixed
+
+- Declared the Node.js development types explicitly and enabled them for development type checking, fixing unresolved Node built-ins and `process` in Storybook configuration tests.
+- Began the V2 renderer migration on the isolated development branch: React 19 peers, Polaris 2 Web Components types, host-owned Runtime loading, native `s-*` table/filter/selection/pagination/view controls, and React 19 consumer/SSR fixtures. V2 is not published; V1 remains on its maintenance branch.
+- Prevented stateful custom cells from changing identity when columns are inserted, removed, or reordered; cells now use stable column keys instead of index keys.
+- Preserved all responsive data when primary/secondary/kicker slots repeat by rendering additional columns as labeled fields; the selection column no longer consumes the business kicker slot.
+- Added the P3 controlled query pipeline: debounced search, typed filters and applied chips, native sort/pagination/page-size controls, URL v=1 History synchronization, and query race/allowlist regressions.
+- Fixed unrestricted `useTableQuery.setPageSize`, invalid pagination values, and stale search drafts (including A → B → A navigation); search submissions now trim surrounding whitespace and external query/loading boundaries permanently cancel old drafts.
+- Hardened URL v=1 parsing to reject duplicate version parameters, non-finite numeric filter values, and whitespace/control/colon-containing sort fields; History examples preserve unrelated parameters, hash, and host history state.
+- Added P5 lifecycle/status infrastructure: TableSkeleton, native Empty State, refresh/error row retention, robust Column Visibility reconciliation, filter preset snapshot cloning, and stale/pending Saved View manager/UI guards.
+- Added P4 controlled selection and bulk actions: cross-page tokens, excluded IDs, expiry/revision guards, native action menus/modals, idempotent retry, partial failure diagnostics, and stale-result protection.
+- Changed V2 destructive bulk actions to require native confirmation. Pagination no longer clears all-matching tokens; search/filter/sort criteria changes do. Invalid or expired token metadata fails closed, and mismatched server-normalized criteria require reselection.
+- Retained bulk idempotency keys for retries of the same intent; partial failures can be reselected as a new intent. Settled results for changed selection contexts are explicitly labeled as historical and cannot clear or retry the new selection.
+- Recorded the V2 pagination migration: Polaris 2 `s-table` owns Previous/Next labels, so `TableLabels.previousPage` and `nextPage` remain type-compatible but do not override native Runtime copy; use a future custom pagination renderer if host-controlled labels are required.
 
 ## [1.1.0] - 2026-09-09
 

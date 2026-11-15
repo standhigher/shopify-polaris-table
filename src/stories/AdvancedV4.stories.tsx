@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import {
@@ -31,9 +30,9 @@ export const CoreSchemaAndAdapter: Story = {
       renderHeader: ({columns}) => columns.map((column) => column.title).join(', '),
       renderCell: ({value}) => String(value ?? ''),
     });
-    return <Card>
-      <Text as="p" variant="bodyMd">Core schema and renderer adapters stay UI-framework neutral until the boundary.</Text>
+    return <s-section>
+      <s-paragraph>Core schema and renderer adapters stay UI-framework neutral until the boundary.</s-paragraph>
       <pre>{JSON.stringify({schema, validation: validateCoreSchema(schema), query, updated, adapterOk: assertPolarisRendererAdapter(adapter)}, null, 2)}</pre>
-    </Card>;
+    </s-section>;
   },
 };

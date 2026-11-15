@@ -1,0 +1,113 @@
+{
+  "startedAt": "2026-11-15T04:27:00.541Z",
+  "status": "passed",
+  "capabilities": {
+    "safari:platformVersion": "15.6",
+    "safari:automaticInspection": false,
+    "webkit:WebRTC": {
+      "DisableICECandidateFiltering": false,
+      "DisableInsecureMediaCapture": false
+    },
+    "browserVersion": "18.6",
+    "strictFileInteractability": false,
+    "browserName": "Safari",
+    "safari:useSimulator": false,
+    "safari:automaticProfiling": false,
+    "safari:platformBuildVersion": "24G84",
+    "acceptInsecureCerts": false,
+    "setWindowRect": true,
+    "platformName": "macOS",
+    "safari:diagnose": false
+  },
+  "cases": [
+    {
+      "name": "columns",
+      "dir": "ltr",
+      "direction": "ltr",
+      "rows": 2,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/static/images/polaris/thumbnail-wc_src.jpg",
+          "naturalWidth": 4758,
+          "complete": true
+        }
+      ],
+      "screenshot": "safari-columns-ltr.png"
+    },
+    {
+      "name": "columns",
+      "dir": "rtl",
+      "direction": "rtl",
+      "rows": 2,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/static/images/polaris/thumbnail-wc_src.jpg",
+          "naturalWidth": 4758,
+          "complete": true
+        }
+      ],
+      "screenshot": "safari-columns-rtl.png"
+    },
+    {
+      "name": "lifecycle",
+      "dir": "ltr",
+      "direction": "ltr",
+      "rows": 2,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "images": [],
+      "screenshot": "safari-lifecycle-ltr.png"
+    },
+    {
+      "name": "lifecycle",
+      "dir": "rtl",
+      "direction": "rtl",
+      "rows": 2,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "images": [],
+      "screenshot": "safari-lifecycle-rtl.png"
+    },
+    {
+      "name": "selection",
+      "dir": "ltr",
+      "direction": "ltr",
+      "rows": 10,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "images": [],
+      "screenshot": "safari-selection-ltr.png"
+    },
+    {
+      "name": "selection",
+      "dir": "rtl",
+      "direction": "rtl",
+      "rows": 10,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "images": [],
+      "screenshot": "safari-selection-rtl.png"
+    }
+  ],
+  "limitation": "Safari desktop only; not an iOS simulator or real screen-reader speech test.",
+  "keyboard": [
+    {
+      "step": "columns-enter-escape",
+      "host": "S-BUTTON",
+      "text": "Columns"
+    },
+    {
+      "step": "bulk-checkbox-space-menu-enter-modal-escape",
+      "pass": true,
+      "focus": {
+        "host": "S-BUTTON",
+        "text": "More actions"
+      }
+    }
+  ],
+  "finishedAt": "2026-11-15T04:27:04.761Z"
+}

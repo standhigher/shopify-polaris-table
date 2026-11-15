@@ -1,4 +1,3 @@
-import {Button, ButtonGroup, Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useMemo, useState} from 'react';
 
@@ -31,6 +30,64 @@ const columns: readonly TableColumn<Order>[] = [
 ];
 
 const initialQuery: TableQuery = {page: 1, pageSize: 3};
+
+type ColumnShowcaseRow = {
+  id: string;
+  title: string | null;
+  quantity: number | null;
+  amount: number | null;
+  currencyCode?: string;
+  status: 'Active' | 'Warning' | 'Missing';
+  createdAt: string | null;
+  imageUrl: string | null;
+  imageAlt: string;
+  customLabel: string;
+};
+
+const columnShowcaseRows: readonly ColumnShowcaseRow[] = [
+  {id: 'showcase-1', title: 'Everyday tote', quantity: 24, amount: 39.95, currencyCode: 'USD', status: 'Active', createdAt: '2026-08-12T14:30:00.000Z', imageUrl: 'https://cdn.shopify.com/static/images/polaris/thumbnail-wc_src.jpg', imageAlt: 'White sneakers', customLabel: 'Featured'},
+  {id: 'showcase-2', title: null, quantity: null, amount: null, status: 'Missing', createdAt: 'not-a-date', imageUrl: 'not-a-valid-image-url', imageAlt: 'Unavailable product image', customLabel: 'Needs review'},
+];
+
+const columnShowcaseColumns: readonly TableColumn<ColumnShowcaseRow>[] = [
+  {key: 'title', title: 'Text', type: 'text', listSlot: 'primary'},
+  {key: 'quantity', title: 'Number', type: 'number', listSlot: 'secondary', align: 'end'},
+  {key: 'amount', title: 'Money', type: 'money', listSlot: 'labeled', align: 'end', currencyCode: (row) => row.currencyCode},
+  {key: 'status', title: 'Status', type: 'status', listSlot: 'inline', statusTone: {Active: 'success', Warning: 'warning', Missing: 'critical'}},
+  {key: 'createdAt', title: 'Datetime', type: 'datetime', listSlot: 'secondary'},
+  {key: 'imageUrl', title: 'Image', type: 'image', listSlot: 'kicker', imageAlt: (row) => row.imageAlt},
+  {key: 'id', title: 'Actions', type: 'actions', listSlot: 'inline', render: (_value, row) => <s-link href={`#${row.id}`}>Inspect item</s-link>},
+  {key: 'customLabel', title: 'Custom', type: 'custom', listSlot: 'labeled', render: (value) => <s-badge tone="info">{String(value ?? 'No label')}</s-badge>},
+];
+
+function ColumnsAndResponsiveTypesExample() {
+  const [query, setQuery] = useState<TableQuery>({page: 1, pageSize: 10});
+  const [selection, setSelection] = useState<TableSelection>(emptySelection);
+  const [showQuantity, setShowQuantity] = useState(true);
+  const [reversed, setReversed] = useState(false);
+  const [lastAction, setLastAction] = useState('No action yet');
+  const activeColumns = columnShowcaseColumns.filter((column) => showQuantity || column.key !== 'quantity');
+  if (reversed) activeColumns.reverse();
+  return <>
+    <s-stack direction="inline" gap="small">
+      <s-button onClick={() => setShowQuantity((current) => !current)}>Toggle number column</s-button>
+      <s-button onClick={() => setReversed((current) => !current)}>Reverse column order</s-button>
+    </s-stack>
+    <p role="status">{lastAction}</p>
+    <Table
+    columns={activeColumns}
+    data={columnShowcaseRows}
+    rowId="id"
+    query={query}
+    pagination={{total: columnShowcaseRows.length}}
+    formatOptions={{locale: 'en-US', timeZone: 'America/New_York', defaultCurrencyCode: 'USD'}}
+    selection={selection}
+    onSelectionChange={setSelection}
+    onQueryChange={setQuery}
+    rowActions={[{id: 'inspect', content: <s-text>Inspect</s-text>, perform: async ({row}) => { setLastAction(`Inspected ${row.id}`); }}]}
+    />
+  </>;
+}
 const emptySelection: TableSelection = {mode: 'explicit', ids: []};
 const formatOptions = {locale: 'en-US', timeZone: 'America/New_York', defaultCurrencyCode: 'USD'};
 
@@ -79,10 +136,10 @@ function LoadingAndEmptyStateExample() {
   const [selection, setSelection] = useState<TableSelection>(emptySelection);
 
   return <>
-    <ButtonGroup>
-      <Button pressed={state === 'loading'} onClick={() => setState('loading')}>Loading state</Button>
-      <Button pressed={state === 'empty'} onClick={() => setState('empty')}>Empty state</Button>
-    </ButtonGroup>
+    <s-button-group>
+      <s-button variant={state === 'loading' ? 'primary' : 'secondary'} aria-pressed={state === 'loading'} onClick={() => setState('loading')}>Loading state</s-button>
+      <s-button variant={state === 'empty' ? 'primary' : 'secondary'} aria-pressed={state === 'empty'} onClick={() => setState('empty')}>Empty state</s-button>
+    </s-button-group>
     <div style={{marginTop: '1rem'}}>
       <Table
         columns={columns}
@@ -95,7 +152,7 @@ function LoadingAndEmptyStateExample() {
         onSelectionChange={setSelection}
         onQueryChange={setQuery}
         loading={state === 'loading'}
-        emptyState={<Card><Text as="p" variant="bodyMd">No orders match this query.</Text></Card>}
+        emptyState={<s-section><s-paragraph>No orders match this query.</s-paragraph></s-section>}
       />
     </div>
   </>;
@@ -151,7 +208,7 @@ function SelectionAndBulkActionExample() {
       })}
       bulkActions={bulkActions}
     />
-    <div style={{marginTop: '1rem'}}><Text as="p" variant="bodySm">{result}</Text></div>
+    <div style={{marginTop: '1rem'}}><s-paragraph fontSize="small">{result}</s-paragraph></div>
   </>;
 }
 
@@ -222,5 +279,7 @@ export const Playground: Story = {
 export const LoadingAndEmptyState: Story = {render: () => <LoadingAndEmptyStateExample />};
 
 export const Formatting: Story = {render: () => <FormattingExample />};
+
+export const ColumnsAndResponsiveTypes: Story = {render: () => <ColumnsAndResponsiveTypesExample />};
 
 export const SelectionAndBulkAction: Story = {render: () => <SelectionAndBulkActionExample />};

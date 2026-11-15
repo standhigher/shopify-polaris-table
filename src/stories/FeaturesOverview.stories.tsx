@@ -1,4 +1,3 @@
-import {Card, Text} from '@shopify/polaris';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import {Table, createOrderColumns} from '../index';
@@ -29,8 +28,8 @@ export const SelectionAndQueryPreview: Story = {
     const {query, setQuery, selection, setSelection, visiblePage} = useStoryTable(storyOrders, 5);
     const previewSelection: TableSelection = selection.mode === 'explicit' ? selection : explicitSelection;
 
-    return <Card>
-      <Text as="p" variant="bodyMd">{text('Feature stories should show how state changes around the table, not just the contract.', '功能故事应展示表格周边状态如何变化，而不只是接口契约。')}</Text>
+    return <s-section>
+      <s-paragraph>{text('Feature stories should show how state changes around the table, not just the contract.', '功能故事应展示表格周边状态如何变化，而不只是接口契约。')}</s-paragraph>
       <Table
         columns={createOrderColumns({
           financialStatus: {statusTone: {Paid: 'success', Pending: 'warning', Refunded: 'critical'}},
@@ -51,6 +50,6 @@ export const SelectionAndQueryPreview: Story = {
           expiresAt: '2026-12-31T23:59:59.000Z',
         })}
       />
-    </Card>;
+    </s-section>;
   },
 };
