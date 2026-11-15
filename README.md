@@ -39,7 +39,7 @@ It renders familiar Polaris table UI while your application retains control of f
 
 | Version | Use when | Install | Runtime/peer contract |
 |---|---|---|---|
-| `v1.x` | Existing Polaris React applications that still use the V1 renderer | `npm install @standhigher/polaris-data-table@^1` | React 18, optional `@shopify/polaris` 12–13; continue using `maintenance/v1.x` |
+| `v1.x` | Existing Polaris React applications that still use the V1 renderer | `npm install @standhigher/polaris-data-table@^1` | React 18 + `@shopify/polaris` 12–13 for the Admin renderer; Extension-only consumers can omit Polaris; maintenance is on `maintenance/v1.x` |
 | `v2.x` | New or migrated applications using React 19 and Polaris 2 Web Components | `npm install @standhigher/polaris-data-table@^2` after the separate V2 release | React 19; host loads Polaris 2 Runtime before React; no Polaris React `AppProvider` |
 
 These are separate compatibility lines, not a drop-in minor upgrade. Do not install `@^2` in a V1 Polaris React application without completing the V2 migration. Do not upgrade a V2 application back to `@^1` without restoring its V1 renderer and peer dependencies.
