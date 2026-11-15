@@ -38,9 +38,11 @@ It renders familiar Polaris table UI while your application retains control of f
 ## Installation
 
 ```bash
-npm install @standhigher/polaris-data-table react react-dom
-# The host application must also load Polaris 2, for example:
-# https://cdn.shopify.com/shopifycloud/polaris-2.js
+# After the separately approved beta is published (not available yet):
+npm install @standhigher/polaris-data-table@next react@19 react-dom@19
+# Current stable V1 consumers should use @standhigher/polaris-data-table@^1.
+# The host application must load the Polaris 2 Runtime before mounting React:
+# https://cdn.shopify.com/shopifycloud/polaris-2.0.js
 ```
 
 This V2 beta-preparation line targets React 19, React DOM 19, and host-loaded Polaris 2 Web Components. Load the Runtime before mounting React; the package does not inject scripts or require Polaris React `AppProvider`. Published V1 users should remain on `@standhigher/polaris-data-table@^1` and the `maintenance/v1.x` branch. `2.0.0-beta.1` metadata is prepared locally for the opt-in `next` channel, but V2 has not been published; see the [P7 readiness record](docs/v2/p7-validation.md).
