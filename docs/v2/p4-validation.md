@@ -20,9 +20,9 @@ P4 主实现已提交为 `0e9692e`，快照规范化及 Modal 内错误反馈为
 ## 自动化结果
 
 - selection/core helpers：14 tests。
-- `useTableSelection`：8 tests。
+- `useTableSelection`：9 tests。
 - `TableBulkActions`：9 tests。
-- 完整最终 suite：**38 files / 200 tests 通过**。
+- 完整最终 suite：**38 files / 201 tests 通过**。
 - TypeScript、ESLint、Build、compatibility、React19 package consumer、Extension consumer、Storybook build、pack dry-run 均通过。
 
 ## Runtime 验证
@@ -36,7 +36,10 @@ P4 主实现已提交为 `0e9692e`，快照规范化及 Modal 内错误反馈为
 5. Archive completed 结果清除 selection。
 6. Partial 结果显示失败信息并保留选择；Story fixture 支持失败项选择。
 7. Destructive action 由 native modal confirmation 触发。
-8. Story fixture 支持 accepted、reject-once（同 key retry）、typed expired 模式。
+8. Runtime reject-once 后 Retry 调用两次，日志确认 idempotency key 完全相同，成功后清除选择。
+9. Runtime accepted 显示 operationId 与“Processing is not yet complete”，相同 intent 的 Export 按钮禁用，不重复启动。
+10. Runtime 原生 More actions 菜单打开 Delete，Modal 冻结选择并经 Confirm 执行；取消/变更 context 的防护由集成测试覆盖。
+11. Runtime 自然过期后 selection 变为 explicit 空集，expiry notice 保留，Archive 不再出现，API 调用日志为 0。typed `SELECTION_EXPIRED` 则由单元测试确认清理且不提供原 token 重试。
 
 点击原生 Web Component 时，自动化需要命中 shadowRoot 内的真实 button；`s-button` host 为 `display: contents`，host 坐标为 0，不能用 host 坐标判断事件丢失。
 

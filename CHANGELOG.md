@@ -21,6 +21,7 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 - Added the P3 controlled query pipeline: debounced search, typed filters and applied chips, native sort/pagination/page-size controls, URL v=1 History synchronization, and query race/allowlist regressions.
 - Fixed unrestricted `useTableQuery.setPageSize`, invalid pagination values, and stale search drafts (including A → B → A navigation); search submissions now trim surrounding whitespace and external query/loading boundaries permanently cancel old drafts.
 - Hardened URL v=1 parsing to reject duplicate version parameters, non-finite numeric filter values, and whitespace/control/colon-containing sort fields; History examples preserve unrelated parameters, hash, and host history state.
+- Added P4 controlled selection and bulk actions: cross-page tokens, excluded IDs, expiry/revision guards, native action menus/modals, idempotent retry, partial failure diagnostics, and stale-result protection.
 - Recorded the V2 pagination migration: Polaris 2 `s-table` owns Previous/Next labels, so `TableLabels.previousPage` and `nextPage` remain type-compatible but do not override native Runtime copy; use a future custom pagination renderer if host-controlled labels are required.
 
 ## [1.1.0] - 2026-09-09
