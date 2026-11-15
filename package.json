@@ -80,7 +80,7 @@
     "npm:publish": "node scripts/publish-disabled.mjs",
     "test:beta-policy": "node --test test/beta-release-policy.node.mjs test/release-preflight.node.mjs",
     "test:tree-shaking": "npm run build && node --test test/tree-shaking.node.mjs test/package-bundle.node.mjs",
-    "release:prepare:beta": "npm run release:check && npm run test:beta-policy && npm run test:tree-shaking",
+    "release:prepare:beta": "npm run release:check && npm run test:package && npm run test:beta-policy && npm run test:tree-shaking",
     "release:check:beta": "npm run release:prepare:beta && npm run release:preflight:beta",
     "release:preflight:beta": "node scripts/release-preflight.mjs --channel next",
     "npm:publish:beta": "npm run release:check:beta && npm run release:preflight:beta && npm publish --access public --tag next --auth-type=web --registry=https://registry.npmjs.org/",
