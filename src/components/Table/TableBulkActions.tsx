@@ -86,6 +86,8 @@ export function TableBulkActions(props: TableBulkActionsProps) {
       const result = await Promise.resolve().then(() => {
         if (!mounted.current) throw new Error('Operation cancelled before submission.');
         if (isSelectionExpired(intent.context.selection)) throw Object.assign(new Error('Selection has expired. Select the rows again.'), {code: 'SELECTION_EXPIRED'});
+        const current = latest.current;
+        if (current.loading || !current.isCurrent(intent.context) || !intent.context.usable || !current.capture().usable) throw new Error('Selection changed before submission. Run the action again.');
         return intent.action.perform({
           actionId: intent.action.id,
           selection: copyTableSelection(intent.context.selection),
@@ -165,6 +167,8 @@ export function TableBulkActions(props: TableBulkActionsProps) {
     else if (pending) resultFeedback = <div role="status">Bulk action in progress…</div>;
   }
 
+  const historical = Boolean(feedback?.intent && !isCurrent(feedback.intent.context) && (feedback.result || feedback.error));
+  const feedbackContent = <>{historical ? <s-text>Result for previous selection.</s-text> : null}{resultFeedback}</>;
   return <>
     {selectedCount > 0 && actions.length > 0 ? <s-stack direction="inline" gap="small">
       <s-text>{`${selectedCount} selected`}</s-text>
@@ -175,9 +179,9 @@ export function TableBulkActions(props: TableBulkActionsProps) {
       </> : null}
       <s-button variant="tertiary" disabled={loading || pending} onClick={onClear}>Clear selection</s-button>
     </s-stack> : null}
-    {!confirmation ? resultFeedback : null}
+    {!confirmation ? feedbackContent : null}
     <s-modal ref={modalRef} id={id} heading="Confirm bulk action" onAfterHide={() => setConfirmation(null)}>
-      {confirmation ? resultFeedback : null}
+      {confirmation ? feedbackContent : null}
       <s-paragraph>{`Apply this action to ${confirmation ? getSelectionCount(confirmation.context.selection) : 0} selected rows?`}</s-paragraph>
       <div>{confirmation?.action.content}</div>
       <s-button slot="secondary-actions" variant="secondary" commandFor={id} command="--hide" disabled={pending} onClick={() => setConfirmation(null)}>Cancel</s-button>

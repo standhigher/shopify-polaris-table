@@ -1,6 +1,6 @@
 # V2 API 兼容性清单（P0）
 
-状态：P0 设计已确认，P1/P2/P3 已完成对应阶段验收；P4–P7 尚未完成。根包名称保持 `@standhigher/polaris-data-table`；V1 与 V2 通过 major version 和分支维护隔离。
+状态：P0 设计已确认，P1/P2/P3/P4 已完成对应阶段验收；P5–P7 尚未完成。根包名称保持 `@standhigher/polaris-data-table`；V1 与 V2 通过 major version 和分支维护隔离。
 
 ## 保持不变
 
@@ -69,6 +69,18 @@ type TableColumn<T extends object> = ExistingTableColumn<T> & {
 - Sort field 必须来自 visible sortable columns，direction 仅 `asc/desc`；Sort/Page Size/filters/search criteria 变化重置 page=1。
 - Native pagination flags 对非有限/负 total、非法 page/pageSize 安全归一化；loading 时属性和 handler 都不发出分页变更。
 - URL codec 保留 v=1 和 public API；重复 version、控制字符/空白/冒号 sort、非 finite JSON numeric filters、敏感/未 allowlist 字段均安全拒绝。History 示例保留无关参数、重复参数、hash、history.state，并清理 popstate listener。
+
+## P4 已落地的选择与批量操作契约
+
+- `TableSelection`、`TableBulkAction.perform`、completed/accepted 返回模型保持不变。`selectedCount` 始终是服务端 token 的基础匹配数，显示有效计数时减去唯一 excluded IDs。
+- allMatching 在 page/pageSize 变化时保留；search/filters/sort 的稳定身份变化会清理 token 并永久失效旧签发请求。explicit IDs 保持跨页，宿主必须在租户/资源切换时重置 selection 或重新挂载。
+- `normalizedQuery` 若仅分页不同可接受；匹配条件不同则不安装 token，宿主应先应用规范化 query 再重新选择。
+- `destructive: true` 的 bulk action 现在先显示原生 Modal 确认；取消不执行 perform、不生成请求 key。网络失败时可在确认框中重试同一 intent/key。
+- 同 intent 的 Retry 复用 selection snapshot 和 idempotency key；completed/partial/accepted 不重复发起。选择失败项表示新 intent，即使所有原选择都失败也会产生新 revision。
+- 后端可通过 rejection 对象的显式 `code: 'SELECTION_EXPIRED'` 标识过期/撤销；不匹配错误文案，也不重试原失效 token。其它 rejection 作为未知结果保留同 key 重试，服务端仍须实际去重。
+- 操作结果仅在 revision 仍匹配时清 selection；旧结果可作为标记了“Result for previous selection”的历史反馈保留，但不能操作新 selection。提交微任务前还会再次校验 context/loading/expiry。
+
+完整证据见 [P4 验收记录](<p4-validation.md>)。
 
 ## 兼容性限制
 

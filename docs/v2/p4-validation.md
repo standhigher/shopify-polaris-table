@@ -21,8 +21,8 @@ P4 主实现已提交为 `0e9692e`，快照规范化及 Modal 内错误反馈为
 
 - selection/core helpers：14 tests。
 - `useTableSelection`：9 tests。
-- `TableBulkActions`：9 tests。
-- 完整最终 suite：**38 files / 201 tests 通过**。
+- `TableBulkActions`：10 tests。
+- 完整最终 suite：**38 files / 202 tests 通过**（P4 focused rerun after TOCTOU guard）。
 - TypeScript、ESLint、Build、compatibility、React19 package consumer、Extension consumer、Storybook build、pack dry-run 均通过。
 
 ## Runtime 验证

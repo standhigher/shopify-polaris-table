@@ -58,13 +58,16 @@ describe('TableBulkActions', () => {
 
   it('never clears a new selection when an old operation resolves', async () => {
     const request = deferred<TableBulkActionResult>();
-    const setup = fixture([{id: 'archive', content: 'Archive', perform: () => request.promise}]);
+    const perform = vi.fn(() => request.promise);
+    const setup = fixture([{id: 'archive', content: 'Archive', perform}]);
     const {rerender} = render(<TableBulkActions {...setup.props} />);
     fireEvent.click(screen.getByRole('button', {name: 'Archive'}));
+    await waitFor(() => expect(perform).toHaveBeenCalledOnce());
     setup.change({selection: {mode: 'explicit', ids: ['new']}, selectionRevision: 1});
     rerender(<TableBulkActions {...setup.props} selectedCount={1} />);
     await act(async () => request.resolve({...completed, clearSelection: true}));
     expect(setup.clear).not.toHaveBeenCalled();
+    expect(screen.getByText('Result for previous selection.')).toBeInTheDocument();
   });
 
   it('shows partial failure IDs/reasons and selects failed rows without rerunning successes', async () => {
@@ -103,6 +106,17 @@ describe('TableBulkActions', () => {
     expect(perform).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole('button', {name: 'Cancel'}));
     expect(perform).not.toHaveBeenCalled();
+  });
+
+  it('does not submit a stale intent when context changes before the microtask', async () => {
+    const perform = vi.fn().mockResolvedValue(completed);
+    const setup = fixture([{id: 'archive', content: 'Archive', perform}]);
+    render(<TableBulkActions {...setup.props} />);
+    fireEvent.click(screen.getByRole('button', {name: 'Archive'}));
+    setup.change({selectionRevision: 1, selection: {mode: 'explicit', ids: ['new']}});
+    await act(async () => { await Promise.resolve(); });
+    expect(perform).not.toHaveBeenCalled();
+    expect(screen.getByText(/Selection changed before submission/)).toBeInTheDocument();
   });
 
   it('keeps destructive errors inside the modal and retries the same intent', async () => {
