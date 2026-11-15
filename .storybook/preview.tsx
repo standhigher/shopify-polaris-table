@@ -5,6 +5,11 @@ import {StorybookLocaleProvider} from '../src/stories/storybookI18n';
 const preview: Preview = {
   tags: ['autodocs'],
   globalTypes: {
+    direction: {
+      name: 'Direction',
+      defaultValue: 'ltr',
+      toolbar: {icon: 'transfer', items: [{value: 'ltr', title: 'Left to right'}, {value: 'rtl', title: 'Right to left'}]},
+    },
     locale: {
       name: 'Language',
       description: 'Language used by the Storybook preview',
@@ -21,8 +26,9 @@ const preview: Preview = {
   },
   decorators: [(Story, context) => {
     const locale = context.globals.locale === 'zh-CN' ? 'zh-CN' : 'en';
+    const direction = context.globals.direction === 'rtl' ? 'rtl' : 'ltr';
     return <StorybookLocaleProvider locale={locale}>
-      <div lang={locale}><Story /></div>
+      <div lang={locale} dir={direction}>{context.viewMode === 'docs' ? <Story /> : <main><h1 style={{position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clipPath: 'inset(50%)'}}>{context.title ?? 'Polaris Data Table'}</h1><Story /></main>}</div>
     </StorybookLocaleProvider>;
   }],
   parameters: {

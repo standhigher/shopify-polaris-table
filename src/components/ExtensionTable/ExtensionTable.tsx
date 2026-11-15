@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useId, useState} from 'react';
 import type {ReactNode} from 'react';
 
 /** Extension tables never render more than this many columns, preventing narrow hosts from overflowing horizontally. */
@@ -95,6 +95,7 @@ export function ExtensionTable<T extends object>({
   const [actionError, setActionError] = useState<ReactNode>();
   const [pendingRowId, setPendingRowId] = useState<string>();
   const [loadMoreError, setLoadMoreError] = useState<ReactNode>();
+  const selectionGroupName = useId();
   const visibleColumns = columns.slice(0, EXTENSION_TABLE_MAX_COLUMNS);
   const selectionEnabled = !readOnly && host.capabilities?.selection !== false && onSelectionChange !== undefined;
   const actionEnabled = !readOnly && host.capabilities?.rowActions !== false && rowAction !== undefined;
@@ -121,7 +122,7 @@ export function ExtensionTable<T extends object>({
       {data.map((row) => {
         const id = getRowId(row, rowId);
         return <div key={id} role="row" style={{display: 'grid', gridTemplateColumns: gridColumns, alignItems: 'center', borderTop: '1px solid var(--p-color-border-secondary, #d2d5d8)'}}>
-          {selectionEnabled ? <div role="cell" style={cellStyle}><input type="radio" aria-label={text.selectRow(id)} checked={selectedRowId === id} onChange={() => onSelectionChange(selectedRowId === id ? undefined : id)} /></div> : null}
+          {selectionEnabled ? <div role="cell" style={cellStyle}><input type="radio" aria-label={text.selectRow(id)} checked={selectedRowId === id} name={selectionGroupName} onChange={() => onSelectionChange(selectedRowId === id ? undefined : id)} /></div> : null}
           {visibleColumns.map((column) => <div key={column.key} role="cell" style={cellStyle}>{column.render({row, columnKey: column.key, host})}</div>)}
           {actionEnabled && rowAction ? <div role="cell" style={cellStyle}><button type="button" disabled={pendingRowId === id} onClick={() => {
             setActionError(undefined);

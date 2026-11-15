@@ -101,7 +101,7 @@ function SelectionWorkflowExample() {
     />
     <s-section>
       <s-heading>Selection workflow diagnostics</s-heading>
-      <s-text>Selected: {selectionCount}; matching: {matchingRows.length}; token expiry: {tokenExpiresAt ?? 'none'}</s-text>
+      <s-paragraph>Selected: {selectionCount}; matching: {matchingRows.length}; token expiry: {tokenExpiresAt ?? 'none'}</s-paragraph>
       <pre data-testid="selection-workflow-log" style={{whiteSpace: 'pre-wrap', overflowWrap: 'anywhere'}}>{JSON.stringify({query, selection, log, resultMode}, null, 2)}</pre>
     </s-section>
   </>;

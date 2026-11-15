@@ -1,0 +1,109 @@
+{
+  "startedAt": "2026-11-15T04:26:52.371Z",
+  "cases": [
+    {
+      "dir": "ltr",
+      "width": 320,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "dir": "ltr",
+      "width": 375,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "dir": "ltr",
+      "width": 768,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "dir": "ltr",
+      "width": 1280,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "dir": "rtl",
+      "width": 320,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "dir": "rtl",
+      "width": 375,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "dir": "rtl",
+      "width": 768,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "dir": "rtl",
+      "width": 1280,
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 36,
+        "violations": 0
+      },
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "keyboard": [
+    {
+      "step": "native-radio-space-arrowdown",
+      "pass": true
+    }
+  ],
+  "failures": [],
+  "finishedAt": "2026-11-15T04:26:55.762Z"
+}
