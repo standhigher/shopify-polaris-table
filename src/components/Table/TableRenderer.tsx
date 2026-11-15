@@ -25,6 +25,7 @@ interface TableRendererProps<T extends object> {
   onNextPage: () => void;
   allPageSelected: boolean;
   somePageSelected: boolean;
+  interactionDisabled: boolean;
   onSelectPage: (selected: boolean) => void;
   onSelectRow: (id: string, selected: boolean) => void;
   showActions: boolean;
@@ -34,7 +35,7 @@ interface TableRendererProps<T extends object> {
 /** Presentation only: the host Table owns querying, selection and action execution. */
 export function TableRenderer<T extends object>({
   columns, rows, loading, hasPreviousPage, hasNextPage, onPreviousPage, onNextPage,
-  allPageSelected, somePageSelected, onSelectPage, onSelectRow, showActions, actionsLabel,
+  allPageSelected, somePageSelected, interactionDisabled, onSelectPage, onSelectRow, showActions, actionsLabel,
 }: TableRendererProps<T>) {
   if (new Set(columns.map((column) => column.key)).size !== columns.length) throw new Error('Table columns must have unique keys.');
   if (new Set(rows.map((row) => row.id)).size !== rows.length) throw new Error('Table rows must have unique IDs.');
@@ -59,7 +60,7 @@ export function TableRenderer<T extends object>({
   >
     <s-table-header-row>
       <s-table-header listSlot="inline">
-        <s-checkbox label="Select all rows" labelAccessibilityVisibility="exclusive" checked={allPageSelected} indeterminate={somePageSelected && !allPageSelected} onChange={() => onSelectPage(!allPageSelected)} />
+        <s-checkbox label="Select all rows" labelAccessibilityVisibility="exclusive" checked={allPageSelected} indeterminate={somePageSelected && !allPageSelected} disabled={interactionDisabled} onChange={(event) => { if (!interactionDisabled) onSelectPage(event.currentTarget.checked); }} />
       </s-table-header>
       {columns.map((column, index) => <s-table-header
         key={column.key}
@@ -71,7 +72,7 @@ export function TableRenderer<T extends object>({
       {showActions ? <s-table-header listSlot="inline">{actionsLabel}</s-table-header> : null}
     </s-table-header-row>
     <s-table-body>
-      {rows.map((row) => <TableRow key={row.id} id={row.id} selected={row.selected} onSelectionChange={(selected) => onSelectRow(row.id, selected)} cells={row.cells} actions={showActions ? row.actions : null} />)}
+      {rows.map((row) => <TableRow key={row.id} id={row.id} selected={row.selected} disabled={interactionDisabled} onSelectionChange={(selected) => onSelectRow(row.id, selected)} cells={row.cells} actions={showActions ? row.actions : null} />)}
     </s-table-body>
   </s-table>;
 }
