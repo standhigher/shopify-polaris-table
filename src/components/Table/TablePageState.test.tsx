@@ -84,6 +84,13 @@ describe('Table page states', () => {
     expect(screen.getByRole('button', {name: 'Counter 1'})).toBeInTheDocument();
   });
 
+  it('does not duplicate a declared actions column in the skeleton', () => {
+    const actionColumns: readonly TableColumn<Row>[] = [{key: 'name', title: 'Name'}, {key: 'actions', title: 'Operations', type: 'actions'}];
+    const {container} = render(<Table {...props} columns={actionColumns} data={[]} loading rowActions={[{id: 'open', content: 'Open', perform: vi.fn()}]} />);
+    expect(container.querySelectorAll('s-table-header')).toHaveLength(3);
+    expect(container.querySelectorAll('s-table-row s-table-cell')).toHaveLength(9);
+  });
+
   it('bounds standalone skeleton row counts without invoking custom cell renderers', () => {
     const custom = vi.fn();
     const customColumns: readonly TableColumn<Row>[] = [{key: 'name', title: <strong>Name</strong>, type: 'custom', render: custom}];

@@ -79,7 +79,7 @@ export function Table<T extends object>(props: TableProps<T>) {
     {selectionExpired ? <s-banner tone="warning">{labels.selectionExpired ?? 'Selection has expired. Please select the rows again.'}</s-banner> : null}
     {actions}
     {actionFeedback}
-    {initialLoading ? <TableSkeleton columns={visibleColumns} label={labels.loading ?? 'Loading'} showActions={rowActions.length > 0} actionsLabel={labels.actions ?? 'Actions'} /> : null}
+    {initialLoading ? <TableSkeleton columns={visibleColumns} label={labels.loading ?? 'Loading'} showActions={rowActions.length > 0 && !visibleColumns.some((column) => column.type === 'actions')} actionsLabel={labels.actions ?? 'Actions'} /> : null}
     {showState ? state : null}
     {showTable ? <TableRenderer
       columns={visibleColumns}
