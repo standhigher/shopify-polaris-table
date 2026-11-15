@@ -4,7 +4,7 @@
 
 Local `main` contains the reviewed V2 development history. The target version is **2.0.0**, with the future stable channel **latest**. The official registry was checked during P7 preparation: **latest remains 1.1.0** and `2.0.0` is unclaimed. No package, Git tag or push has been created by preparation or local merge.
 
-P6 still has an outstanding Chromium bulk-menu keyboard acceptance case. Actual screen-reader delivery was left manual by the user; this does not authorize accepting that risk for publication. Dependency audit review is also pending. See [P7 readiness](<v2/p7-validation.md>) and [the readiness record](<v2/release-readiness.json>).
+P6 Chromium bulk-menu keyboard remains `partial` but is explicitly accepted as a non-blocking risk. VoiceOver/NVDA is intentionally out of scope and is no longer a release blocker. Dependency audit review is still pending. See [P7 readiness](<v2/p7-validation.md>) and [the readiness record](<v2/release-readiness.json>).
 
 ## Branch and channel policy
 
@@ -33,12 +33,12 @@ Preparation runs lint/unit/type/build/docs/pack checks, actual installed tarball
 - A merged `main` checkout for beta.
 - A clean working tree, including untracked files. Do not silently delete or stage unrelated files such as an existing pnpm lockfile.
 - Matching package/lock/readiness versions and `next` channel.
-- P6 automation accepted with an actual passed report, never `partial`.
-- An explicit screen-reader acceptance/risk decision.
+- P6 automation passed, or only the explicitly excluded P6-01 menu/real-screen-reader cases remain. Other automation failures still block release.
+- VoiceOver/NVDA and P6-01 decisions are already recorded as accepted/out of scope; no further testing is required for these two items.
 - An accepted dependency audit risk decision.
 - A separate human authorization to publish.
 
-The readiness record currently keeps all approvals false/pending. It is not a bypass switch: complete/review the referenced evidence and obtain authorization before changing it. Do not mark a report passed just to satisfy preflight.
+The readiness record explicitly records the P6-01 and screen-reader risk decisions, but still requires dependency-audit acceptance and publish authorization. It is not a bypass switch: do not mark unrelated reports passed just to satisfy preflight.
 
 ## Registry and authentication (only when publication is separately authorized)
 
@@ -75,7 +75,7 @@ npm run release:preflight:stable
 npm view @standhigher/polaris-data-table versions dist-tags --json --registry=https://registry.npmjs.org/
 ```
 
-`prepublishOnly` runs the same release policy again. It is expected to block while P6 remains partial, screen-reader review is pending, dependency audit is pending, the checkout contains unrelated files, or publish authorization is false. Do not use `--ignore-scripts` to bypass it.
+`prepublishOnly` runs the same release policy again. It still blocks on unrelated automation failures, pending dependency audit, a dirty checkout or missing publish authorization. The explicitly accepted P6-01 partial result and excluded VoiceOver/NVDA test no longer trigger release-blocking reminders. Do not use `--ignore-scripts` to bypass it.
 
 ## Guarded beta publication (not executed in P7 preparation)
 
@@ -107,7 +107,7 @@ The documentation workflow builds the static site separately from the library's 
 - [ ] Release source and channel are approved.
 - [ ] Package/lock/changelog/docs agree on the exact version.
 - [ ] Source, consumer, SSR, bundle and tarball checks pass on the final commit.
-- [ ] P6-01 and screen-reader risk decisions are accepted with evidence.
+- [x] P6-01 partial and VoiceOver/NVDA out-of-scope decisions are recorded by explicit user instruction.
 - [ ] Dependency audit findings are triaged/accepted or fixed.
 - [ ] Working tree is clean; unrelated user files were preserved.
 - [ ] Official registry confirms version availability and expected tags.

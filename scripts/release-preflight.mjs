@@ -19,8 +19,11 @@ export function validateRelease({version, channel, branch, status, readiness, p6
   if (status.trim()) errors.push('Release checkout must be clean, including unrelated untracked files.');
   if (readiness?.version !== version) errors.push('Release-readiness version does not match package metadata.');
   if (readiness?.channel !== channel) errors.push('Release-readiness channel does not match the requested channel.');
-  if (readiness?.p6AutomationAccepted !== true || p6?.status !== 'passed' || p6?.failures?.length !== 0 || p6?.unavailable?.some((item) => item.startsWith('Headless Chromium'))) errors.push('P6 automation is not accepted; partial is not a release pass.');
-  if (!['passed', 'explicitly-accepted-manual-follow-up'].includes(readiness?.screenReaderDecision)) errors.push('Screen-reader acceptance/risk decision is still pending.');
+  const excludedNotice = (item) => typeof item === 'string' && (item.startsWith('Real VoiceOver/NVDA speech:') || item.startsWith('Headless Chromium did not expose Polaris s-menu menuitems for keyboard harness:'));
+  const p6AcceptedRisk = readiness?.p6Decision === 'accepted-risk' && p6?.status === 'partial' && Array.isArray(p6.failures) && p6.failures.every((failure) => failure.case === 'bulk-menu-keyboard') && Array.isArray(p6.unavailable) && p6.unavailable.every(excludedNotice) && (p6.failures.length > 0 || p6.unavailable.length > 0);
+  const p6Passed = p6?.status === 'passed' && p6?.failures?.length === 0 && !p6?.unavailable?.some((item) => item.startsWith('Headless Chromium'));
+  if (readiness?.p6AutomationAccepted !== true || (!p6Passed && !p6AcceptedRisk)) errors.push('P6 automation is not accepted and no explicit accepted-risk decision is recorded.');
+  if (!['passed', 'explicitly-accepted-manual-follow-up', 'accepted-risk', 'not-in-scope'].includes(readiness?.screenReaderDecision)) errors.push('Screen-reader acceptance/risk decision is still pending.');
   if (readiness?.publishAuthorized !== true) errors.push('A separate explicit human publish authorization is required.');
   if (readiness?.dependencyAuditAccepted !== true) errors.push('Dependency audit risk decision is still pending.');
   return errors;

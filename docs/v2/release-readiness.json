@@ -1,14 +1,15 @@
 {
   "version": "2.0.0",
   "channel": "latest",
-  "p6AutomationAccepted": false,
-  "screenReaderDecision": "pending",
+  "p6AutomationAccepted": true,
+  "p6Decision": "accepted-risk",
+  "screenReaderDecision": "accepted-risk",
   "publishAuthorized": false,
   "dependencyAuditAccepted": false,
   "notes": [
     "P7 stable-release preparation is authorized; npm publishing is not authorized.",
-    "P6-01 Chromium bulk-menu keyboard acceptance is still partial.",
-    "Real VoiceOver/NVDA remains a manual follow-up; delivery acceptance is not publish-risk acceptance.",
+    "P6-01 Chromium bulk-menu keyboard remains partial and is explicitly accepted as a non-blocking risk.",
+    "VoiceOver/NVDA is explicitly out of scope for this release decision and will not be added as a future release blocker.",
     "No npm dist-tag was changed."
   ]
 }

@@ -35,6 +35,17 @@
 | [BestFeed AI](https://apps.shopify.com/bestfeed?utm_source=GitHub&utm_medium=social) | 面向 AI 搜索体验的商品内容优化。 |
 | [BestBundle: AI Bundles](https://apps.shopify.com/bestbundle?utm_source=GitHub&utm_medium=social) | AI 辅助组合、赠品与优惠效果追踪。 |
 
+## 版本线：请按项目技术栈选择
+
+| 版本 | 适用场景 | 安装方式 | Runtime / peer 契约 |
+|---|---|---|---|
+| `v1.x` | 已有 Polaris React 项目，继续使用 V1 renderer | `npm install @standhigher/polaris-data-table@^1` | React 18，Admin renderer 使用 `@shopify/polaris` 12–13；维护线为 `maintenance/v1.x` |
+| `v2.x` | 新项目或已迁移到 React 19 + Polaris 2 Web Components 的项目 | V2 另行发布后使用 `npm install @standhigher/polaris-data-table@^2` | React 19；宿主在挂载 React 前加载 Polaris 2 Runtime；不再使用 Polaris React `AppProvider` |
+
+**v1 和 v2 是两条兼容性不同的版本线，v2 不是无改造的替换升级。** 现有 V1 项目不要直接切到 `@^2`；必须先完成 renderer、peer 依赖和 Runtime 加载方式的迁移。需要继续运行旧 Polaris React 技术栈时请固定使用 `@^1`。
+
+`latest` 在 V2 获批发布前仍指向 V1。本地 `2.0.0` 只是发布准备元数据，目前尚未发布，不能把准备完成理解为已经上线。
+
 ## 安装
 
 ```bash
