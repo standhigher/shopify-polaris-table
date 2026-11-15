@@ -44,7 +44,7 @@ It renders familiar Polaris table UI while your application retains control of f
 
 These are separate compatibility lines, not a drop-in minor upgrade. Do not install `@^2` in a V1 Polaris React application without completing the V2 migration. Do not upgrade a V2 application back to `@^1` without restoring its V1 renderer and peer dependencies.
 
-`latest` remains V1 until a separately approved V2 release. The local `2.0.0` metadata is preparation only; it is not published yet.
+V2 is published on `latest`. Pin `@^1` or `@^2` deliberately instead of relying on an unqualified install; check the npm registry for the exact available patch versions.
 
 ## Installation
 
