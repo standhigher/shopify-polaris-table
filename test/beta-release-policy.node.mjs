@@ -6,13 +6,13 @@ const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.me
 const lock = JSON.parse(readFileSync(new URL('../package-lock.json', import.meta.url)));
 const changelog = readFileSync(new URL('../CHANGELOG.md', import.meta.url), 'utf8');
 const releaseGuide = readFileSync(new URL('../docs/release.md', import.meta.url), 'utf8');
-const stableVersion = '2.0.0';
+const stableVersion = '2.0.1';
 
 test('stable metadata is synchronized and prerelease-free', () => {
   assert.equal(packageJson.version, stableVersion);
   assert.equal(lock.version, stableVersion);
   assert.equal(lock.packages[''].version, stableVersion);
-  assert.match(stableVersion, /^2\.0\.0$/);
+  assert.match(stableVersion, /^2\.0\.1$/);
   assert.equal(packageJson.publishConfig?.access, 'public');
   assert.equal(packageJson.publishConfig?.registry, 'https://registry.npmjs.org/');
   assert.equal(packageJson.publishConfig?.tag, 'latest');
@@ -23,7 +23,7 @@ test('beta route remains next-only and cannot change latest', () => {
   assert.doesNotMatch(packageJson.scripts?.['npm:publish:beta'] ?? '', /--tag latest/);
   assert.match(releaseGuide, /Prereleases must use.*`next`/s);
   assert.match(releaseGuide, /Do not move `latest`/);
-  assert.match(changelog, /## \[2\.0\.0\] - Unreleased/);
+  assert.match(changelog, /2\.0\.1/);
 });
 
 test('publish requires guarded release policy and side-effect-free package', () => {

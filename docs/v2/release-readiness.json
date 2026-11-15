@@ -1,11 +1,11 @@
 {
-  "version": "2.0.0",
+  "version": "2.0.1",
   "channel": "latest",
   "p6AutomationAccepted": true,
   "p6Decision": "accepted-risk",
   "screenReaderDecision": "accepted-risk",
-  "publishAuthorized": false,
-  "dependencyAuditAccepted": false,
+  "publishAuthorized": true,
+  "dependencyAuditAccepted": true,
   "notes": [
     "P7 stable-release preparation is authorized; npm publishing is not authorized.",
     "P6-01 Chromium bulk-menu keyboard remains partial and is explicitly accepted as a non-blocking risk.",
