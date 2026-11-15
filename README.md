@@ -49,7 +49,7 @@ V2 is published on `latest`. Pin `@^1` or `@^2` deliberately instead of relying 
 ## Installation
 
 ```bash
-# After the separately approved V2 release is published (not available yet):
+# V2: React 19 + Polaris 2 Web Components
 npm install @standhigher/polaris-data-table@2 react@19 react-dom@19
 # Current stable V1 consumers should use @standhigher/polaris-data-table@^1.
 # The host application must load the Polaris 2 Runtime before mounting React:
