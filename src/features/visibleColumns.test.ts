@@ -39,6 +39,23 @@ describe('visible column state', () => {
     expect(getVisibleColumns(columns, result.visibleColumnKeys, ['id']).map((column) => column.key)).toEqual(['id', 'status']);
   });
 
+  it('deduplicates required keys when restoring stale preferences', () => {
+    expect(sanitizeVisibleColumnKeys(['status'], columns, ['id', 'id', 'missing'])).toEqual(['status', 'id']);
+    expect(sanitizeVisibleColumnKeys([], columns, ['name', 'name'])).toEqual(['name']);
+    expect(sanitizeVisibleColumnKeys([], [], ['id', 'id'])).toEqual([]);
+  });
+
+  it('reconciles an external schema change without mutating preferences or query', () => {
+    const visibleColumnKeys = ['status', 'removed', 'status'];
+    const query = {page: 3, pageSize: 25, sort: {field: 'status', direction: 'desc' as const}, filters: {status: {operator: 'equals' as const, value: 'active'}}};
+    const result = reconcileVisibleColumnState({columns: columns.slice(0, 2), visibleColumnKeys, requiredColumnKeys: ['name', 'name'], query});
+    expect(result.visibleColumnKeys).toEqual(['name']);
+    expect(result.query).toEqual({page: 3, pageSize: 25});
+    expect(visibleColumnKeys).toEqual(['status', 'removed', 'status']);
+    expect(query.sort?.field).toBe('status');
+    expect(query.filters.status.value).toBe('active');
+  });
+
   it('keeps the first declared column when a stale preference hides every column', () => {
     expect(sanitizeVisibleColumnKeys([], columns)).toEqual(['id']);
   });

@@ -1,5 +1,7 @@
 export * from './types';
 export {Table} from './components/Table/Table';
+export {TableSkeleton} from './components/Table/TableSkeleton';
+export type {TableSkeletonProps} from './components/Table/TableSkeleton';
 export {ExtensionTable, EXTENSION_TABLE_MAX_COLUMNS} from './components/ExtensionTable/ExtensionTable';
 export type {
   ExtensionTableCellContext,

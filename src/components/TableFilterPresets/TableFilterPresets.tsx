@@ -12,6 +12,6 @@ export interface TableFilterPresetsProps {
 export function TableFilterPresets({presets, query, onQueryChange}: TableFilterPresetsProps) {
   if (presets.length === 0) return null;
   return <s-button-group>
-    {presets.map((preset) => <s-button slot="secondary-actions" key={preset.id} onClick={() => onQueryChange(applyFilterPreset(query, preset))}>{preset.label}</s-button>)}
+    {presets.map((preset) => <s-button slot="secondary-actions" variant="secondary" key={preset.id} onClick={() => onQueryChange(applyFilterPreset(query, preset))}>{preset.label}</s-button>)}
   </s-button-group>;
 }

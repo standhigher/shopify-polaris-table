@@ -40,7 +40,7 @@ test('typechecks a React 19 NodeNext consumer without Polaris React', () => {
         );
         writeFileSync(
           join(consumerDirectory, 'index.ts'),
-          "import {Table, type TableQuery} from '@standhigher/polaris-data-table';\n\nconst query: TableQuery = {page: 1, pageSize: 25};\nconst table: typeof Table = Table;\n\nvoid query;\nvoid table;\n",
+          "import {Table, TableSkeleton, type TableQuery, type TableSkeletonProps} from '@standhigher/polaris-data-table';\n\nconst query: TableQuery = {page: 1, pageSize: 25};\nconst table: typeof Table = Table;\nconst skeleton: typeof TableSkeleton = TableSkeleton;\nconst skeletonProps: TableSkeletonProps<{id: string}> = {columns: [{key: 'id', title: 'ID'}]};\n\nvoid query;\nvoid table;\nvoid skeleton;\nvoid skeletonProps;\n",
         );
         writeFileSync(
           join(consumerDirectory, 'tsconfig.json'),
@@ -84,9 +84,10 @@ test('typechecks a React 19 NodeNext consumer without Polaris React', () => {
 import assert from 'node:assert/strict';
 import {createElement} from 'react';
 import {renderToString} from 'react-dom/server';
-import {Table} from '@standhigher/polaris-data-table';
+import {Table, TableSkeleton} from '@standhigher/polaris-data-table';
 assert.equal(typeof window, 'undefined');
 assert.equal(typeof document, 'undefined');
+assert.equal(typeof TableSkeleton, 'function');
 const html = renderToString(createElement(Table, {
   columns: [{key: 'name', title: 'Name', sortable: true}],
   data: [{id: '1', name: 'Inventory item'}], rowId: 'id',
@@ -99,6 +100,11 @@ const html = renderToString(createElement(Table, {
 assert.match(html, /<s-table /);
 assert.match(html, /Inventory item/);
 assert.doesNotMatch(html, /<script|polaris-types/);
+const skeletonHtml = renderToString(createElement(TableSkeleton, {columns: [{key: 'name', title: 'Name'}], rowCount: 2, label: 'Loading inventory'}));
+assert.match(skeletonHtml, /Loading inventory/);
+assert.match(skeletonHtml, /aria-hidden="true"/);
+assert.equal((skeletonHtml.match(/<s-table-row>/g) ?? []).length, 2);
+assert.doesNotMatch(skeletonHtml, /<script|polaris-types/);
 assert.equal(typeof window, 'undefined');
 assert.equal(typeof document, 'undefined');
 `);

@@ -11,6 +11,7 @@ import {TableFilters} from '../TableFilters/TableFilters';
 import {useTableSelection} from '../../hooks/useTableSelection';
 import {TableRenderer} from './TableRenderer';
 import {TableState} from './TableState';
+import {TableSkeleton} from './TableSkeleton';
 import {TableBulkActions} from './TableBulkActions';
 
 export function Table<T extends object>(props: TableProps<T>) {
@@ -47,9 +48,11 @@ export function Table<T extends object>(props: TableProps<T>) {
     selectFailed={selectionModel.selectFailed}
     onClear={selectionModel.clear}
   /> : null;
-  const state = <TableState error={error} loading={loading} empty={data.length === 0 && !loading} emptyState={emptyState} onRetry={onRetry} labels={labels} />;
-  const showState = Boolean(error) || data.length === 0;
-  const showTable = !error && (data.length > 0 || (!loading && pagination.total > 0));
+  const initialLoading = Boolean(loading && data.length === 0 && !error);
+  const empty = !loading && !error && data.length === 0;
+  const state = <TableState error={error} loading={loading} hasData={data.length > 0} empty={empty} emptyState={emptyState} onRetry={onRetry} labels={labels} />;
+  const showState = Boolean(error) || empty;
+  const showTable = data.length > 0;
   return <>
     {onVisibleColumnsChange ? <TableColumnVisibility columns={columns} visibleColumnKeys={visibleColumnKeys} onVisibleColumnsChange={onVisibleColumnsChange} label={labels.columns ?? 'Columns'} resetLabel={labels.resetColumns ?? 'Reset columns'} {...(requiredColumnKeys ? {requiredColumnKeys} : {})} /> : null}
     {filters ? <TableFilters query={query} filters={filters} onQueryChange={onQueryChange} loading={loading ?? false} /> : null}
@@ -76,6 +79,7 @@ export function Table<T extends object>(props: TableProps<T>) {
     {selectionExpired ? <s-banner tone="warning">{labels.selectionExpired ?? 'Selection has expired. Please select the rows again.'}</s-banner> : null}
     {actions}
     {actionFeedback}
+    {initialLoading ? <TableSkeleton columns={visibleColumns} label={labels.loading ?? 'Loading'} showActions={rowActions.length > 0} actionsLabel={labels.actions ?? 'Actions'} /> : null}
     {showState ? state : null}
     {showTable ? <TableRenderer
       columns={visibleColumns}
@@ -110,7 +114,7 @@ export function Table<T extends object>(props: TableProps<T>) {
       showActions={rowActions.length > 0 && !visibleColumns.some((column) => column.type === 'actions')}
       actionsLabel={labels.actions ?? 'Actions'}
     /> : null}
-    <TablePagination query={query} total={pagination.total} onQueryChange={onQueryChange} loading={loading ?? false} labels={labels} {...(pageSizeOptions ? {pageSizeOptions} : {})} />
+    {showTable ? <TablePagination query={query} total={pagination.total} onQueryChange={onQueryChange} loading={loading ?? false} labels={labels} {...(pageSizeOptions ? {pageSizeOptions} : {})} /> : null}
     {onSelectAllMatching && !selectionExpired && selection.mode === 'explicit' && pagination.total > data.length && allPageSelected ? <s-button disabled={selectionModel.selectingAll || Boolean(loading)} onClick={() => { void selectionModel.selectAll(); }}>{`Select all ${pagination.total} matching results`}</s-button> : null}
     {selectionModel.error ? <s-banner tone="critical">{selectionModel.error}</s-banner> : null}
   </>;

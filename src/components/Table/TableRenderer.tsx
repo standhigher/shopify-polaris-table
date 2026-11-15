@@ -19,6 +19,7 @@ interface TableRendererProps<T extends object> {
   columns: readonly TableColumn<T>[];
   rows: readonly TableRenderedRow[];
   loading: boolean;
+  paginate?: boolean;
   hasPreviousPage: boolean;
   hasNextPage: boolean;
   onPreviousPage: () => void;
@@ -34,7 +35,7 @@ interface TableRendererProps<T extends object> {
 
 /** Presentation only: the host Table owns querying, selection and action execution. */
 export function TableRenderer<T extends object>({
-  columns, rows, loading, hasPreviousPage, hasNextPage, onPreviousPage, onNextPage,
+  columns, rows, loading, paginate = true, hasPreviousPage, hasNextPage, onPreviousPage, onNextPage,
   allPageSelected, somePageSelected, interactionDisabled, onSelectPage, onSelectRow, showActions, actionsLabel,
 }: TableRendererProps<T>) {
   if (new Set(columns.map((column) => column.key)).size !== columns.length) throw new Error('Table columns must have unique keys.');
@@ -51,7 +52,7 @@ export function TableRenderer<T extends object>({
   });
   return <s-table
     variant="auto"
-    paginate
+    {...(paginate ? {paginate: true} : {})}
     loading={loading}
     hasPreviousPage={hasPreviousPage}
     hasNextPage={hasNextPage}

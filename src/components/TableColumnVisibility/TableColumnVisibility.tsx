@@ -28,7 +28,7 @@ export function TableColumnVisibility<T extends object>({
     [allColumnKeys, columns, requiredColumnKeys, visibleColumnKeys],
   );
   const visibleKeySet = new Set(visibleKeys);
-  const requiredKeySet = new Set(sanitizeVisibleColumnKeys(requiredColumnKeys, columns));
+  const requiredKeySet = new Set(requiredColumnKeys.filter((key) => allColumnKeys.includes(key)));
   const canReset = visibleKeys.length !== allColumnKeys.length || allColumnKeys.some((key) => !visibleKeySet.has(key));
 
   const updateVisibleColumns = (nextKeys: readonly string[]) => {
@@ -38,7 +38,7 @@ export function TableColumnVisibility<T extends object>({
   return <>
     <s-button commandFor={popoverId}>{label}</s-button>
     <s-popover id={popoverId} inlineSize="280px">
-      <s-box padding="base">
+      <div style={{maxBlockSize: 'min(70vh, 480px)', overflowY: 'auto'}}><s-box padding="base">
         <s-stack gap="base">
           {columns.map((column) => {
             const key = String(column.key);
@@ -53,13 +53,17 @@ export function TableColumnVisibility<T extends object>({
               disabled={required || isLastVisibleColumn}
               onChange={(event) => {
                 const nextChecked = event.currentTarget.checked;
+                // Preferences are controlled: keep the authoritative value if
+                // the host rejects this request, and let accepted props commit it.
+                event.currentTarget.checked = checked;
+                if (required || isLastVisibleColumn || nextChecked === checked) return;
                 updateVisibleColumns(nextChecked ? [...visibleKeys, key] : visibleKeys.filter((visibleKey) => visibleKey !== key));
               }}
             />{richTitle ? <span>{column.title}</span> : null}</s-stack>;
           })}
-          <s-button variant="secondary" disabled={!canReset} onClick={() => updateVisibleColumns(allColumnKeys)}>{resetLabel}</s-button>
+          <s-button variant="secondary" disabled={!canReset} onClick={() => { if (canReset) updateVisibleColumns(allColumnKeys); }}>{resetLabel}</s-button>
         </s-stack>
-      </s-box>
+      </s-box></div>
     </s-popover>
   </>;
 }

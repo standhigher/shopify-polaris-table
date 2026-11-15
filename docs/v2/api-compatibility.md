@@ -1,6 +1,6 @@
 # V2 API 兼容性清单（P0）
 
-状态：P0 设计已确认，P1/P2/P3/P4 已完成对应阶段验收；P5–P7 尚未完成。根包名称保持 `@standhigher/polaris-data-table`；V1 与 V2 通过 major version 和分支维护隔离。
+状态：P0 设计已确认，P1/P2/P3/P4/P5 已完成对应阶段验收；P6–P7 尚未完成。根包名称保持 `@standhigher/polaris-data-table`；V1 与 V2 通过 major version 和分支维护隔离。
 
 ## 保持不变
 

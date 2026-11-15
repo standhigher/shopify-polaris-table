@@ -32,7 +32,7 @@ class TestPolarisElement extends HTMLElement {
     if (this.label) this.setAttribute('aria-label', this.label);
   }
 }
-for (const tagName of ['s-table', 's-table-header-row', 's-table-header', 's-table-body', 's-table-row', 's-table-cell', 's-checkbox', 's-spinner', 's-text', 's-heading', 's-banner', 's-button', 's-stack', 's-box', 's-search-field', 's-text-field', 's-select', 's-option', 's-choice-list', 's-choice', 's-clickable-chip', 's-popover', 's-badge', 's-thumbnail']) {
+for (const tagName of ['s-table', 's-table-header-row', 's-table-header', 's-table-body', 's-table-row', 's-table-cell', 's-checkbox', 's-spinner', 's-text', 's-heading', 's-empty-state', 's-banner', 's-button', 's-stack', 's-box', 's-search-field', 's-text-field', 's-select', 's-option', 's-choice-list', 's-choice', 's-clickable-chip', 's-popover', 's-badge', 's-thumbnail']) {
   if (!customElements.get(tagName)) {
     class ElementDouble extends TestPolarisElement {}
     // Testing Library looks for value setters on the immediate prototype.

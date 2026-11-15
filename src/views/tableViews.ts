@@ -29,6 +29,7 @@ export class StaleWriteError extends Error {
 }
 
 export interface TableViewManagerOptions {
+  /** Observer exceptions do not replace repository results or errors. */
   onError?: (error: unknown) => void;
   onStateChange?: (state: TableViewManagerState) => void;
 }
@@ -45,48 +46,77 @@ export interface TableViewManager {
   update: (input: UpdateTableViewInput) => Promise<TableView>;
   remove: (id: string) => Promise<void>;
   getState: () => TableViewManagerState;
+  /** Optional external state subscription for controlled UI pending/error updates. */
+  subscribe?: (listener: () => void) => () => void;
 }
 
-export function createTableViewManager(
-  repository: TableViewRepository,
-  options: TableViewManagerOptions = {},
-): TableViewManager {
+export function createTableViewManager(repository: TableViewRepository, options: TableViewManagerOptions = {}): TableViewManager {
   let latestWrite = 0;
-  let pendingWrites = 0;
+  let latestRead = 0;
+  let activeWrites = 0;
+  let activeOperations = 0;
   let state: TableViewManagerState = {pending: false};
-  const notify = () => options.onStateChange?.(state);
-  const setState = (next: TableViewManagerState) => { state = next; notify(); };
+  const listeners = new Set<() => void>();
+  const publish = () => {
+    // Observers cannot turn a committed write into a rejected write or leak pending.
+    try { options.onStateChange?.({...state}); } catch { /* Isolated observer. */ }
+    for (const listener of [...listeners]) {
+      try { listener(); } catch { /* Isolated subscriber. */ }
+    }
+  };
+  const reportError = (error: unknown) => {
+    try { options.onError?.(error); } catch { /* Preserve the repository rejection. */ }
+  };
+  const updateState = (error?: unknown) => {
+    state = error === undefined ? {pending: activeOperations > 0} : {pending: activeOperations > 0, error};
+    publish();
+  };
+  const finish = () => { activeOperations -= 1; updateState(state.error); };
 
   async function write<T>(operation: () => Promise<T>): Promise<T> {
     const operationId = ++latestWrite;
-    pendingWrites += 1;
-    setState({pending: true});
+    activeOperations += 1;
+    activeWrites += 1;
+    updateState();
     try {
       const result = await operation();
       if (operationId !== latestWrite) throw new StaleWriteError();
-      setState({pending: pendingWrites > 1});
+      updateState();
       return result;
     } catch (error) {
-      if (!(error instanceof StaleWriteError)) {
-        setState({pending: pendingWrites > 1, error});
-        options.onError?.(error);
-      }
+      if (operationId !== latestWrite) throw new StaleWriteError();
+      if (!(error instanceof StaleWriteError)) { updateState(error); reportError(error); }
       throw error;
     } finally {
-      pendingWrites -= 1;
-      if (pendingWrites === 0 && state.pending) setState(state.error === undefined ? {pending: false} : {pending: false, error: state.error});
+      activeWrites -= 1;
+      finish();
     }
   }
 
+  const list = async () => {
+    const readId = ++latestRead;
+    const writeEpoch = latestWrite;
+    const beganWithoutWrite = activeWrites === 0;
+    const ownsReadState = () => beganWithoutWrite && activeWrites === 0 && latestWrite === writeEpoch && latestRead === readId;
+    activeOperations += 1;
+    updateState(beganWithoutWrite ? undefined : state.error);
+    try {
+      const result = await repository.list();
+      if (ownsReadState()) updateState();
+      return result;
+    } catch (error) {
+      if (ownsReadState()) { updateState(error); reportError(error); }
+      throw error;
+    } finally { finish(); }
+  };
+
   return {
-    list: async () => {
-      try { return await repository.list(); }
-      catch (error) { setState({pending: false, error}); options.onError?.(error); throw error; }
-    },
+    list,
     create: (input) => write(() => repository.create(input)),
     update: (input) => write(() => repository.update(input)),
-    rename: (id, name, updatedAt) => write(() => repository.update({id, name, ...(updatedAt ? {updatedAt} : {})})),
+    rename: (id, name, updatedAt) => write(() => repository.update({id, name, ...(updatedAt !== undefined ? {updatedAt} : {})})),
     remove: (id) => write(() => repository.remove(id)),
-    getState: () => state,
+    getState: () => ({...state}),
+    subscribe: (listener) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
   };
 }
