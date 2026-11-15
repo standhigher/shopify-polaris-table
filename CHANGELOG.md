@@ -8,6 +8,12 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 P7 stable release preparation targets `2.0.1` on `latest`. This is release preparation only: P6 remains partial, no package has been published, and `latest` remains V1 `1.1.0`.
 
+## [2.0.1] - Unreleased
+
+### Changed
+
+- Patch release metadata for the published V2 `2.0.0` line; no new API surface. Release remains blocked until the final clean-tree and release gate checks complete.
+
 ## [2.0.0] - Unreleased
 
 ### Added
