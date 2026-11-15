@@ -1,6 +1,8 @@
 # P7 V2 beta 发布准备验收
 
-状态：P7 准备已开始；**尚未发布 npm、尚未创建/推送版本 tag、尚未移动 latest**。
+状态：P7 beta 准备正在验收；**尚未发布 npm、尚未创建/推送版本 tag、尚未移动 latest**。
+
+本地合并提交：`65af5ea`。P7 准备提交位于本地 `main`；未推送远端。V1 maintenance 与 `v1.1.0` 标签保持原基线。
 
 ## 当前 metadata
 
@@ -20,7 +22,7 @@
   - P6 必须是完全通过状态，不能接受 `partial`。
   - 必须有真实读屏风险决策和单独的 publish authorization。
 - 当前 readiness 明确是：`p6AutomationAccepted=false`、`screenReaderDecision=pending`、`publishAuthorized=false`，所以 preflight 必须失败。
-- `latest` 稳定发布脚本保持独立，P7 不会自动移动它。
+- 旧 `npm:publish` 在 V2 beta 准备线上被明确禁用；raw npm publish 生命周期也会再次运行 preflight。`publishConfig.tag=next`，不会把 beta 默认发到 latest。V1 maintenance 保留原发布流程。
 
 ## 消费者和 tree-shaking
 
@@ -30,6 +32,14 @@
 - Table consumer 不拉入 Extension/experimental。
 - `/extension` consumer 不拉入 Admin Table/Bulk/Runtime。
 - root 与 `/extension` exports、生成声明和 `TableSkeleton` / `ExtensionTable` 保持存在。
+
+## 本轮准备门禁结果
+
+`npm run release:prepare:beta` 已完整通过：ESLint、41 文件/240 项 Vitest、2 项 compatibility policy、TypeScript、Build、Storybook、Typedoc API、Docusaurus 英文/中文构建、pack dry-run、3 项 package consumer、6 项 beta policy、5 项 tree-shaking/installed-tarball consumer checks。
+
+本地实际执行环境为 Node 24.20.0。CI 已配置 Node 20/22/24 的 beta policy 与 bundler 检查；本轮未推送，不能宣称远端矩阵已执行。
+
+`release:preflight:beta` 则按预期返回非零并阻止发布；准备门禁通过不等价于发布放行。
 
 ## 尚未放行
 
