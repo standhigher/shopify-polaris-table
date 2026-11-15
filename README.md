@@ -43,7 +43,7 @@ npm install @standhigher/polaris-data-table react react-dom
 # https://cdn.shopify.com/shopifycloud/polaris-2.js
 ```
 
-This V2 development branch targets React 19, React DOM 19, and host-loaded Polaris 2 Web Components. Load the Runtime before mounting React; the package does not inject scripts or require Polaris React `AppProvider`. Published V1 users should remain on `@standhigher/polaris-data-table@^1` and the `maintenance/v1.x` branch. V2 is not yet released; see the [P1 validation record](docs/v2/validation.md).
+This V2 beta-preparation line targets React 19, React DOM 19, and host-loaded Polaris 2 Web Components. Load the Runtime before mounting React; the package does not inject scripts or require Polaris React `AppProvider`. Published V1 users should remain on `@standhigher/polaris-data-table@^1` and the `maintenance/v1.x` branch. `2.0.0-beta.1` metadata is prepared locally for the opt-in `next` channel, but V2 has not been published; see the [P7 readiness record](docs/v2/p7-validation.md).
 
 Extension-only consumers can omit Polaris and import the renderer from the official `@standhigher/polaris-data-table/extension` entrypoint. All other deep imports are unsupported.
 

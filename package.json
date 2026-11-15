@@ -1,6 +1,6 @@
 {
   "name": "@standhigher/polaris-data-table",
-  "version": "1.1.0",
+  "version": "2.0.0-beta.1",
   "description": "Controlled, server-driven data tables for Shopify Polaris applications.",
   "keywords": [
     "typescript",
@@ -55,7 +55,8 @@
   ],
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "tag": "next"
   },
   "workspaces": [
     "website"
@@ -72,9 +73,16 @@
     "test:compatibility": "node --test test/compatibility-policy.node.mjs",
     "test:package": "npm run build && node --test test/package-entry.node.mjs test/package-consumer.node.mjs",
     "lint": "eslint .",
+    "prepublishOnly": "node scripts/release-preflight.mjs --npm-lifecycle",
     "npm:login": "npm login --auth-type=web --registry=https://registry.npmjs.org/",
     "npm:whoami": "npm whoami --registry=https://registry.npmjs.org/",
-    "npm:publish": "npm run release:check && npm publish --access public --tag latest --auth-type=web --registry=https://registry.npmjs.org/",
+    "npm:publish": "node scripts/publish-disabled.mjs",
+    "test:beta-policy": "node --test test/beta-release-policy.node.mjs test/release-preflight.node.mjs",
+    "test:tree-shaking": "npm run build && node --test test/tree-shaking.node.mjs",
+    "release:prepare:beta": "npm run release:check && npm run test:beta-policy && npm run test:tree-shaking",
+    "release:check:beta": "npm run release:prepare:beta && npm run release:preflight:beta",
+    "release:preflight:beta": "node scripts/release-preflight.mjs --channel next",
+    "npm:publish:beta": "npm run release:check:beta && npm run release:preflight:beta && npm publish --access public --tag next --auth-type=web --registry=https://registry.npmjs.org/",
     "build-storybook": "storybook build --output-dir website/static/storybook",
     "docs:api": "typedoc --options website/typedoc.json",
     "docs:build": "npm run build-storybook && npm run build && npm run docs:api && npm --prefix website run build",
@@ -97,6 +105,7 @@
     "@types/react-dom": "19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
+    "esbuild": "0.28.2",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "jsdom": "^26.1.0",

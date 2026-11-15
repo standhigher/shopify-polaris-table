@@ -6,6 +6,21 @@ This project follows [Semantic Versioning](https://semver.org/). Release notes u
 
 ## [Unreleased]
 
+P7 beta preparation targets `2.0.0-beta.1` on the opt-in `next` dist-tag. This is release preparation only: P6 remains partial, no package has been published, and `latest` remains V1 `1.1.0`.
+
+## [2.0.0-beta.1] - Unreleased
+
+### Added
+
+- React 19 and Polaris 2 Web Components controlled table renderer.
+- Controlled query, selection, bulk-action, lifecycle, Saved View, Column Visibility, Filter Preset, RTL, axe and visual regression infrastructure.
+
+### Validation status
+
+- Library and package gates pass on the merged local `main` commit.
+- P6 Chromium bulk-menu keyboard harness remains partial; Safari desktop and ExtensionTable matrices pass.
+- Real VoiceOver/NVDA and BestSourcing production pages remain outside this beta preparation and require separate acceptance.
+
 ### Added
 
 - Added the V2 architecture proposal, V1 feature/API migration inventory, compatibility checklist, and validation evidence under `docs/v2`. V2 development is isolated from the V1 maintenance branch; the full V2 migration is not yet complete.
